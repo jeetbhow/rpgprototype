@@ -1,0 +1,36 @@
+{
+	"root": [
+		{
+			"name": "Jeet",
+			"portrait": "Jeet",
+			"text": "Ready do head out?",
+			"options": [
+				{
+					"text": "Sure, let's go",
+					"next": "Yes"
+				},
+				{
+					"text": "Hell no. Begone, freak.",
+					"next": "No"
+				}
+			]
+		}
+	],
+
+	"Yes": [
+		{
+			"name": "Jeet",
+			"portrait": "Jeet", 
+			"text": "Alright, I'll follow you around all over the place like a weirdo."
+		}
+	],
+
+	"No": [
+		{
+			"name": "Jeet",
+			"portrait": "Jeet",
+			"text": "Suit yourself."
+		}
+	]
+
+}

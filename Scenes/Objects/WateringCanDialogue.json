@@ -1,0 +1,58 @@
+{
+	"root": [
+		{
+			"type": "jump",
+			"text": "You encounter an odly dented watering can. It still holds a little water.",
+			"next": "options"
+		}
+	],
+	
+	"options": [
+		{
+			"type": "option",
+			"text": "What do you want to do?",
+			"options": [
+				{
+					"text": "What is this doing here?",
+					"next": "inquire"
+				},
+				{
+					"text": "Kick the watering can. [color=red](Raw Power 8)[/color]",
+					"next": "kick"
+				},
+				{
+					"text": "Lick the watering can. [color=purple](Inner Mind 8)[/color]",
+					"next": "pet"
+				},
+				{
+					"text": "Leave it alone."
+				}
+			]
+		}
+	],
+	
+	"inquire": [
+		{
+			"type": "jump",
+			"name": "Jeet",
+			"portrait": "Jeet",
+			"text": "This must be the gardener's watering can. I've actually seen
+			her every now and then coming here to water the flowers. She's pretty attentive.",
+			"next": "options"
+		}
+	],
+	
+	"kick": [
+		{
+			"type": "text",
+			"text": "You kick the watering can."
+		}
+	],
+	
+	"pet": [
+		{
+			"type": "text",
+			"text": "You pet the watering can."
+		}
+	]
+}

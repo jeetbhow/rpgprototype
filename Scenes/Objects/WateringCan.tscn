@@ -1,0 +1,36 @@
+[gd_scene load_steps=6 format=3 uid="uid://cp62ghq133fdc"]
+
+[ext_resource type="Texture2D" uid="uid://rndhnyicig2x" path="res://Assets/forest.png" id="1_pdt3g"]
+[ext_resource type="Script" uid="uid://bgxayc6by246k" path="res://Scripts/Components/DialogueHitbox/DialogueHitbox.cs" id="2_opmx8"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_opmx8"]
+atlas = ExtResource("1_pdt3g")
+region = Rect2(674, 779, 27.2515, 14.7964)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_146wt"]
+size = Vector2(26, 10)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_opmx8"]
+radius = 14.0
+
+[node name="WateringCan" type="StaticBody2D"]
+collision_layer = 4
+collision_mask = 3
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("AtlasTexture_opmx8")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 2)
+shape = SubResource("RectangleShape2D_146wt")
+
+[node name="DialogueHitbox" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 3
+script = ExtResource("2_opmx8")
+DialogueFile = "res://Scenes/Objects/WateringCanDialogue.json"
+metadata/_custom_type_script = "uid://bgxayc6by246k"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DialogueHitbox"]
+shape = SubResource("CircleShape2D_opmx8")
+debug_color = Color(0.483244, 0.584613, 0.131325, 0.42)

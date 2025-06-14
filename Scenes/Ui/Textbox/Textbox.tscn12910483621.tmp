@@ -1,0 +1,114 @@
+[gd_scene load_steps=9 format=3 uid="uid://bia45c3wkth5k"]
+
+[ext_resource type="FontFile" uid="uid://rs3vfprhj0ad" path="res://Resources/Silver.ttf" id="1_alx14"]
+[ext_resource type="StyleBox" path="res://Resources/PanelStyle.tres" id="2_dcdod"]
+[ext_resource type="Script" uid="uid://bn4yw4yxpcbv2" path="res://Scenes/Ui/Textbox/Textbox.cs" id="3_oidgp"]
+[ext_resource type="AudioStream" uid="uid://dplvin265m11t" path="res://Assets/sfx/ui/JDSherbert - Pixel UI SFX Pack - Cursor 1 (Saw).mp3" id="4_hqk5e"]
+[ext_resource type="Script" uid="uid://c6hmuq7bnmysi" path="res://Scripts/Components/StateMachine/StateMachine.cs" id="6_hiqc3"]
+[ext_resource type="Script" uid="uid://5kdkg0lbwsvp" path="res://Scenes/Ui/Textbox/State/Disabled.cs" id="6_oidgp"]
+
+[sub_resource type="Theme" id="Theme_w1bcc"]
+default_font = ExtResource("1_alx14")
+default_font_size = 32
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kis4o"]
+bg_color = Color(0.145098, 0.133333, 0.152941, 0.776471)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[node name="Textbox" type="PanelContainer"]
+process_mode = 2
+offset_right = 640.0
+offset_bottom = 115.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme = SubResource("Theme_w1bcc")
+theme_override_styles/panel = ExtResource("2_dcdod")
+script = ExtResource("3_oidgp")
+
+[node name="OuterMargin" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="OuterMargin"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Panel" type="PanelContainer" parent="OuterMargin/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_kis4o")
+
+[node name="Portrait" type="TextureRect" parent="OuterMargin/HBoxContainer/Panel"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+expand_mode = 5
+stretch_mode = 5
+
+[node name="ScrollContainer" type="ScrollContainer" parent="OuterMargin/HBoxContainer"]
+layout_mode = 2
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="OuterMargin/HBoxContainer/ScrollContainer"]
+clip_contents = true
+layout_mode = 2
+
+[node name="Name" type="RichTextLabel" parent="OuterMargin/HBoxContainer/ScrollContainer/VBoxContainer"]
+clip_contents = false
+custom_minimum_size = Vector2(80, 35)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+scroll_active = false
+
+[node name="Text" type="RichTextLabel" parent="OuterMargin/HBoxContainer/ScrollContainer/VBoxContainer"]
+clip_contents = false
+custom_minimum_size = Vector2(500, 60)
+layout_mode = 2
+size_flags_vertical = 0
+bbcode_enabled = true
+fit_content = true
+scroll_active = false
+
+[node name="MarginContainer" type="MarginContainer" parent="OuterMargin/HBoxContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 100
+theme_override_constants/margin_right = 100
+theme_override_constants/margin_bottom = 5
+
+[node name="Buttons" type="VBoxContainer" parent="OuterMargin/HBoxContainer/ScrollContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="TextAdvanceTimer" type="Timer" parent="."]
+wait_time = 0.02
+
+[node name="SFXTimer" type="Timer" parent="."]
+wait_time = 0.1
+
+[node name="TextAdvanceSFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_hqk5e")
+volume_db = -15.0
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("CurrStateNode")]
+script = ExtResource("6_hiqc3")
+CurrStateNode = NodePath("Disabled")
+
+[node name="Disabled" type="Node" parent="StateMachine" node_paths=PackedStringArray("Textbox")]
+script = ExtResource("6_oidgp")
+Textbox = NodePath("../..")
+
+[node name="Enabled" type="Node" parent="StateMachine"]
+
+[node name="Waiting" type="Node" parent="StateMachine"]
+
+[node name="Option" type="Node" parent="StateMachine"]
+
+[connection signal="timeout" from="TextAdvanceTimer" to="StateMachine/Enabled" method="_on_text_advance_timer_timeout"]
+[connection signal="timeout" from="SFXTimer" to="StateMachine/Enabled" method="_on_sfx_timer_timeout"]

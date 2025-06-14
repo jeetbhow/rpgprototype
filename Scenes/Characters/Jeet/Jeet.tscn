@@ -1,0 +1,43 @@
+[gd_scene load_steps=7 format=3 uid="uid://dlkisbfbk2cgn"]
+
+[ext_resource type="Script" uid="uid://dai66304ed53p" path="res://Scripts/Classes/Party/PartyMember.cs" id="1_nw66i"]
+[ext_resource type="SpriteFrames" uid="uid://com4faoipnl31" path="res://Resources/Spriteframes/Jeet.tres" id="1_xdrrn"]
+[ext_resource type="Texture2D" uid="uid://4eerix34hw16" path="res://Assets/Characters/shadow.png" id="2_djaeq"]
+[ext_resource type="Script" uid="uid://bmi4nkbpemjay" path="res://Scenes/Characters/Jeet/JeetDialogueHitbox.cs" id="4_nhrnt"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nw66i"]
+size = Vector2(13, 13)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_nhrnt"]
+radius = 19.0
+
+[node name="Jeet" type="CharacterBody2D"]
+z_index = 3
+collision_layer = 4
+collision_mask = 5
+script = ExtResource("1_nw66i")
+
+[node name="Shadow" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.196078)
+texture = ExtResource("2_djaeq")
+offset = Vector2(0, 15)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = ExtResource("1_xdrrn")
+animation = &"IdleDown"
+autoplay = "IdleDown"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 8)
+shape = SubResource("RectangleShape2D_nw66i")
+
+[node name="DialogueHitbox" type="Area2D" parent="." node_paths=PackedStringArray("Parent")]
+collision_layer = 4
+script = ExtResource("4_nhrnt")
+DialogueFile = "res://Scenes/Characters/Jeet/JeetDialogue.json"
+Parent = NodePath("..")
+metadata/_custom_type_script = "uid://bgxayc6by246k"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DialogueHitbox"]
+shape = SubResource("CircleShape2D_nhrnt")
+debug_color = Color(0.545447, 0.565544, 7.70092e-07, 0.42)
