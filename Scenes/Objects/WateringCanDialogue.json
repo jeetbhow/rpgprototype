@@ -9,22 +9,32 @@
 	
 	"options": [
 		{
-			"type": "option",
+			"type": "choice",
 			"text": "What do you want to do?",
-			"options": [
+			"choices": [
 				{
+					"type": "regular",
 					"text": "What is this doing here?",
 					"next": "inquire"
 				},
 				{
-					"text": "Kick the watering can. [color=red](Raw Power 8)[/color]",
-					"next": "kick"
+					"type": "skill",
+					"skillId": 0,
+					"text": "Kick the watering can. [color=red](Raw Power 10)[/color]",
+					"difficulty": 10,
+					"success": "kickSuccess",
+					"failure": "kickFail"
 				},
 				{
-					"text": "Lick the watering can. [color=purple](Inner Mind 8)[/color]",
-					"next": "pet"
+					"type": "skill",
+					"skillId": 1,
+					"text": "Lick the watering can. [color=purple](Inner Mind 10)[/color]",
+					"difficulty": 10,
+					"success": "lickSuccess",
+					"failure": "lickFail"
 				},
 				{
+					"type": "exit",
 					"text": "Leave it alone."
 				}
 			]
@@ -42,17 +52,32 @@
 		}
 	],
 	
-	"kick": [
+	"kickSuccess": [
 		{
-			"type": "text",
+			"type": "regular",
 			"text": "You kick the watering can."
 		}
 	],
-	
-	"pet": [
+
+	"kickFail": [
 		{
-			"type": "text",
-			"text": "You pet the watering can."
+			"type": "regular",
+			"text": "You broke your leg."
+		}
+	],
+
+	
+	"lickSuccess": [
+		{
+			"type": "regular",
+			"text": "You lick the watering can."
+		}
+	],
+
+	"lickFail": [
+		{
+			"type": "regular",
+			"text": "You're too embarrassed."
 		}
 	]
 }

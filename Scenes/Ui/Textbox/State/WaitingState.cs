@@ -1,6 +1,6 @@
 using Godot;
 
-public partial class Waiting : StateNode
+public partial class WaitingState : StateNode
 {
     [Export]
     public Textbox Textbox;
@@ -25,11 +25,11 @@ public partial class Waiting : StateNode
             if (Textbox.CurrNode != null)
             {
                 TextLabel.VisibleCharacters = 0;
-                EmitSignal(SignalName.StateUpdate, "Enabled");
+                EmitSignal(SignalName.StateUpdate, "EnabledState");
             }
             else
             {
-                EmitSignal(SignalName.StateUpdate, "Disabled");
+                EmitSignal(SignalName.StateUpdate, "DisabledState");
             }
         }
     }

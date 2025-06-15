@@ -1,7 +1,6 @@
-using System.Linq;
 using Godot;
 
-public partial class Disabled : StateNode
+public partial class DisabledState : StateNode
 {
     [Export]
     public Textbox Textbox;
@@ -18,7 +17,7 @@ public partial class Disabled : StateNode
         Textbox.Tree     = dialogueTree;
         Textbox.CurrNode = dialogueTree.Root;
 
-        EmitSignal(nameof(StateUpdate), "Enabled");
+        EmitSignal(nameof(StateUpdate), "EnabledState");
     }
 
     public override void Exit()

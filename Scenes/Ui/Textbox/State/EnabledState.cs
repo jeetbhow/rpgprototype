@@ -1,8 +1,7 @@
 using Godot;
-using System;
 using System.Collections.Generic;
 
-public partial class Enabled : StateNode
+public partial class EnabledState : StateNode
 {
     [Export] public Textbox Textbox;
     [Export] public RichTextLabel NameLabel;
@@ -98,13 +97,13 @@ public partial class Enabled : StateNode
         SfxTimer.Stop();
         TextAdvanceTimer.Stop();
 
-        if (Textbox.CurrNode.Options != null)
+        if (Textbox.CurrNode is ChoiceNode)
         {
-            EmitSignal(SignalName.StateUpdate, "Option");
+            EmitSignal(SignalName.StateUpdate, "ChoiceState");
         }
         else
         {
-            EmitSignal(SignalName.StateUpdate, "Waiting");
+            EmitSignal(SignalName.StateUpdate, "WaitingState");
         }
     }
 

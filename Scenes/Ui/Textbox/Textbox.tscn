@@ -5,10 +5,10 @@
 [ext_resource type="Script" uid="uid://bn4yw4yxpcbv2" path="res://Scenes/Ui/Textbox/Textbox.cs" id="3_oidgp"]
 [ext_resource type="AudioStream" uid="uid://dplvin265m11t" path="res://Assets/sfx/ui/JDSherbert - Pixel UI SFX Pack - Cursor 1 (Saw).mp3" id="4_hqk5e"]
 [ext_resource type="Script" uid="uid://c6hmuq7bnmysi" path="res://Scripts/Components/StateMachine/StateMachine.cs" id="6_hiqc3"]
-[ext_resource type="Script" uid="uid://5kdkg0lbwsvp" path="res://Scenes/Ui/Textbox/State/Disabled.cs" id="6_oidgp"]
-[ext_resource type="Script" uid="uid://dt3cxcwbyrkge" path="res://Scenes/Ui/Textbox/State/Enabled.cs" id="7_cyybk"]
-[ext_resource type="Script" uid="uid://b08h61sm7woh7" path="res://Scenes/Ui/Textbox/State/Waiting.cs" id="8_c65vf"]
-[ext_resource type="Script" uid="uid://dto78bia2b8fo" path="res://Scenes/Ui/Textbox/State/Option.cs" id="9_c65vf"]
+[ext_resource type="Script" uid="uid://5kdkg0lbwsvp" path="res://Scenes/Ui/Textbox/State/DisabledState.cs" id="6_oidgp"]
+[ext_resource type="Script" uid="uid://dt3cxcwbyrkge" path="res://Scenes/Ui/Textbox/State/EnabledState.cs" id="7_cyybk"]
+[ext_resource type="Script" uid="uid://b08h61sm7woh7" path="res://Scenes/Ui/Textbox/State/WaitingState.cs" id="8_c65vf"]
+[ext_resource type="Script" uid="uid://dq325kx3pmcf0" path="res://Scenes/Ui/Textbox/State/ChoiceState.cs" id="9_c65vf"]
 
 [sub_resource type="Theme" id="Theme_w1bcc"]
 default_font = ExtResource("1_alx14")
@@ -105,13 +105,13 @@ volume_db = -15.0
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("CurrStateNode")]
 script = ExtResource("6_hiqc3")
-CurrStateNode = NodePath("Disabled")
+CurrStateNode = NodePath("DisabledState")
 
-[node name="Disabled" type="Node" parent="StateMachine" node_paths=PackedStringArray("Textbox")]
+[node name="DisabledState" type="Node" parent="StateMachine" node_paths=PackedStringArray("Textbox")]
 script = ExtResource("6_oidgp")
 Textbox = NodePath("../..")
 
-[node name="Enabled" type="Node" parent="StateMachine" node_paths=PackedStringArray("Textbox", "NameLabel", "TextLabel", "Portrait", "Buttons", "TextAdvanceTimer", "SfxTimer", "Sfx")]
+[node name="EnabledState" type="Node" parent="StateMachine" node_paths=PackedStringArray("Textbox", "NameLabel", "TextLabel", "Portrait", "Buttons", "TextAdvanceTimer", "SfxTimer", "Sfx")]
 script = ExtResource("7_cyybk")
 Textbox = NodePath("../..")
 NameLabel = NodePath("../../OuterMargin/HBoxContainer/ScrollContainer/VBoxContainer/Name")
@@ -122,20 +122,20 @@ TextAdvanceTimer = NodePath("../../TextAdvanceTimer")
 SfxTimer = NodePath("../../SFXTimer")
 Sfx = NodePath("../../TextAdvanceSFX")
 
-[node name="Waiting" type="Node" parent="StateMachine" node_paths=PackedStringArray("Textbox", "NameLabel", "TextLabel", "Portrait")]
+[node name="WaitingState" type="Node" parent="StateMachine" node_paths=PackedStringArray("Textbox", "NameLabel", "TextLabel", "Portrait")]
 script = ExtResource("8_c65vf")
 Textbox = NodePath("../..")
 NameLabel = NodePath("../../OuterMargin/HBoxContainer/ScrollContainer/VBoxContainer/Name")
 TextLabel = NodePath("../../OuterMargin/HBoxContainer/ScrollContainer/VBoxContainer/Text")
 Portrait = NodePath("../../OuterMargin/HBoxContainer/Panel/Portrait")
 
-[node name="Option" type="Node" parent="StateMachine" node_paths=PackedStringArray("textbox", "nameLabel", "textLabel", "portrait", "buttonsContainer")]
+[node name="ChoiceState" type="Node" parent="StateMachine" node_paths=PackedStringArray("Textbox", "NameLabel", "TextLabel", "Portrait", "ButtonsContainer")]
 script = ExtResource("9_c65vf")
-textbox = NodePath("../..")
-nameLabel = NodePath("../../OuterMargin/HBoxContainer/ScrollContainer/VBoxContainer/Name")
-textLabel = NodePath("../../OuterMargin/HBoxContainer/ScrollContainer/VBoxContainer/Text")
-portrait = NodePath("../../OuterMargin/HBoxContainer/Panel/Portrait")
-buttonsContainer = NodePath("../../OuterMargin/HBoxContainer/ScrollContainer/VBoxContainer/MarginContainer/Buttons")
+Textbox = NodePath("../..")
+NameLabel = NodePath("../../OuterMargin/HBoxContainer/ScrollContainer/VBoxContainer/Name")
+TextLabel = NodePath("../../OuterMargin/HBoxContainer/ScrollContainer/VBoxContainer/Text")
+Portrait = NodePath("../../OuterMargin/HBoxContainer/Panel/Portrait")
+ButtonsContainer = NodePath("../../OuterMargin/HBoxContainer/ScrollContainer/VBoxContainer/MarginContainer/Buttons")
 
-[connection signal="timeout" from="TextAdvanceTimer" to="StateMachine/Enabled" method="_on_text_advance_timer_timeout"]
-[connection signal="timeout" from="SFXTimer" to="StateMachine/Enabled" method="_on_sfx_timer_timeout"]
+[connection signal="timeout" from="TextAdvanceTimer" to="StateMachine/EnabledState" method="_on_text_advance_timer_timeout"]
+[connection signal="timeout" from="SFXTimer" to="StateMachine/EnabledState" method="_on_sfx_timer_timeout"]

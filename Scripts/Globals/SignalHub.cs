@@ -13,6 +13,9 @@ public partial class SignalHub : Node
     [Signal]
     public delegate void SkillCheckFailedEventHandler();
 
+    [Signal]
+    public delegate void SkillCheckPassedEventHandler();
+
     // Party Signals
     [Signal]
     public delegate void PartyMemberAddedEventHandler(PartyMember partyMember);
