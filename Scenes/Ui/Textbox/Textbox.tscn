@@ -23,6 +23,7 @@ corner_radius_bottom_left = 5
 
 [node name="Textbox" type="PanelContainer" node_paths=PackedStringArray("TextLabel", "NameLabel", "PortraitTexture")]
 process_mode = 2
+visible = false
 offset_right = 640.0
 offset_bottom = 115.0
 size_flags_horizontal = 0

@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Godot;
 using Newtonsoft.Json;
 
@@ -69,7 +70,6 @@ public partial class ChoiceState : StateNode
                     signalHub.EmitSignal(SignalHub.SignalName.SkillCheckFailed);
                     EmitSignal(SignalName.StateUpdate, "EnabledState");
                 }
-
                 GD.Print($"You rolled a {roll}!");
                 break;
             case "exit":

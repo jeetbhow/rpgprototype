@@ -1,5 +1,6 @@
 using Godot;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 public partial class EnabledState : StateNode
 {
@@ -44,7 +45,7 @@ public partial class EnabledState : StateNode
 
     public void ResetTextboxState()
     {
-        Textbox.TextLabel.VisibleCharacters = 0;
+        TextLabel.VisibleCharacters = 0;
         NameLabel.CustomMinimumSize = nameLabelSize;
         TextLabel.CustomMinimumSize = textLabelSize;
         Portrait.CustomMinimumSize = portraitSize;
@@ -63,7 +64,6 @@ public partial class EnabledState : StateNode
         {
             NameLabel.CustomMinimumSize = Vector2.Zero;
         }
-
         if (node.Portrait != null && _portraits.TryGetValue(node.Portrait, out var tex))
         {
             Portrait.Texture = tex;
@@ -84,7 +84,6 @@ public partial class EnabledState : StateNode
     public override void _Input(InputEvent @event)
     {
         GetViewport().SetInputAsHandled();
-
         if (@event.IsActionPressed("Accept"))
         {
             TextLabel.VisibleRatio = 1.0f;
