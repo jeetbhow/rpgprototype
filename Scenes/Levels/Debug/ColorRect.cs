@@ -8,7 +8,7 @@ public partial class ColorRect : Godot.ColorRect
     public override void _Ready()
     {
         base._Ready();
-        var signalHub = GetNode<EventBus>("/root/EventBus");
+        var signalHub = GetNode<EventBus>(EventBus.Path);
         signalHub.SkillCheckFailed += () => FlashScreen(new Color(1.0f, 0.0f, 0.0f));
         signalHub.SkillCheckPassed += () => FlashScreen(new Color(0.0f, 1.0f, 0.0f));
     }

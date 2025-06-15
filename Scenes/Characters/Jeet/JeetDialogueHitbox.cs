@@ -8,7 +8,7 @@ public partial class JeetDialogueHitbox : DialogueHitbox
     public override void _Ready()
     {
         base._Ready();
-        signalHub = GetNode<EventBus>("/root/EventBus");
+        signalHub = GetNode<EventBus>(EventBus.Path);
         signalHub.TextboxOptionSelected += OnTextboxOptionSelected;
     }
 

@@ -18,7 +18,7 @@ public partial class Party : Node2D
 
     public override void _Ready()
     {
-        eventBus = GetNode<EventBus>("/root/EventBus");
+        eventBus = GetNode<EventBus>(EventBus.Path);
         eventBus.PartyMemberAdded += OnPartyMemberAdded;
         RemoveChild(Camera);
         PartyLeader.AddChild(Camera);

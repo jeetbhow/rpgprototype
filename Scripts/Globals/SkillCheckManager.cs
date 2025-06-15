@@ -8,7 +8,7 @@ public partial class SkillCheckManager : Node
 
     public override void _Ready()
     {
-        eventBus = GetNode<EventBus>("/root/EventBus");
+        eventBus = GetNode<EventBus>(EventBus.Path);
     }
 
 }

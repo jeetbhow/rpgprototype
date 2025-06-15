@@ -1,22 +1,18 @@
 using Godot;
-using System;
 
 [GlobalClass]
 public partial class DialogueHitbox : Area2D
 {
-    [Export(PropertyHint.File, "*.json")]
-    public string DialogueFile { get; set; }
+    [Export(PropertyHint.File, "*.json")] public string DialogueFile { get; set; }
+    [Export] public Node2D Parent { get; set; }
 
-    [Export]
-    public Node2D Parent { get; set; }
-
-    private EventBus eventBus;
     private bool playerNearby = false;
+    private EventBus eventBus;
 
     public override void _Ready()
     {
         base._Ready();
-        eventBus = GetNode<EventBus>("/root/EventBus");
+        eventBus = GetNode<EventBus>(EventBus.Path);
         BodyEntered += OnBodyEntered;
         BodyExited += OnBodyExited;
     }

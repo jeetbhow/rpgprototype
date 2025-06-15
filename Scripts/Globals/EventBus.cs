@@ -1,7 +1,8 @@
 using Godot;
 
 public partial class EventBus : Node
-{   
+{
+    public const string Path = "/root/EventBus";
     // UI Signals
     [Signal]
     public delegate void DialogueStartedEventHandler(DialogueTree dialogueTree);

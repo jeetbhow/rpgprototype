@@ -10,7 +10,7 @@ public partial class DisabledState : StateNode
     public override void _Ready()
     {
         base._Ready();
-        eventBus = GetNode<EventBus>("/root/EventBus");
+        eventBus = GetNode<EventBus>(EventBus.Path);
     }
 
     public override async void Enter()
