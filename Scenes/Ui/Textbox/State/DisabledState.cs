@@ -2,8 +2,8 @@ using Godot;
 
 public partial class DisabledState : StateNode
 {
-    [Export]
-    public Textbox Textbox;
+    [Export] public Textbox Textbox;
+    [Export] public StateNode EnabledStateNode;
 
     public override async void Enter()
     {
@@ -11,13 +11,13 @@ public partial class DisabledState : StateNode
         Textbox.Visible = false;
 
         var signalHub = GetNode<SignalHub>("/root/SignalHub");
-        var result  = await ToSignal(signalHub, SignalHub.SignalName.DialogueStarted);
+        var result = await ToSignal(signalHub, SignalHub.SignalName.DialogueStarted);
 
         var dialogueTree = (DialogueTree)result[0];
-        Textbox.Tree     = dialogueTree;
+        Textbox.Tree = dialogueTree;
         Textbox.CurrNode = dialogueTree.Root;
 
-        EmitSignal(nameof(StateUpdate), "EnabledState");
+        EmitSignal(nameof(StateUpdate), EnabledStateNode.Name);
     }
 
     public override void Exit()

@@ -2,17 +2,12 @@ using Godot;
 
 public partial class WaitingState : StateNode
 {
-    [Export]
-    public Textbox Textbox;
-
-    [Export]
-    public RichTextLabel NameLabel;
-
-    [Export]
-    public RichTextLabel TextLabel;
-
-    [Export]
-    public TextureRect Portrait;
+    [Export] public Textbox Textbox;
+    [Export] public RichTextLabel NameLabel;
+    [Export] public RichTextLabel TextLabel;
+    [Export] public TextureRect Portrait;
+    [Export] public StateNode EnabledStateNode;
+    [Export] public StateNode DisabledStateNode;
 
     public override void _Input(InputEvent @event)
     {
@@ -25,11 +20,11 @@ public partial class WaitingState : StateNode
             if (Textbox.CurrNode != null)
             {
                 TextLabel.VisibleCharacters = 0;
-                EmitSignal(SignalName.StateUpdate, "EnabledState");
+                EmitSignal(SignalName.StateUpdate, EnabledStateNode.Name);
             }
             else
             {
-                EmitSignal(SignalName.StateUpdate, "DisabledState");
+                EmitSignal(SignalName.StateUpdate, DisabledStateNode.Name);
             }
         }
     }

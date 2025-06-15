@@ -1,6 +1,4 @@
-using System.Threading.Tasks;
 using Godot;
-using Newtonsoft.Json;
 
 public partial class ChoiceState : StateNode
 {
@@ -8,11 +6,13 @@ public partial class ChoiceState : StateNode
         "res://Scenes/UI/Textbox/Button/TextboxOptionPanel.tscn"
     );
 
-    [Export] public Textbox Textbox { get; set; }
-    [Export] public RichTextLabel NameLabel { get; set; }
-    [Export] public RichTextLabel TextLabel { get; set; }
-    [Export] public TextureRect Portrait { get; set; }
-    [Export] public VBoxContainer ButtonsContainer { get; set; }
+    [Export] public Textbox Textbox;
+    [Export] public RichTextLabel NameLabel;
+    [Export] public RichTextLabel TextLabel;
+    [Export] public TextureRect Portrait;
+    [Export] public VBoxContainer ButtonsContainer;
+    [Export] public StateNode EnabledState;
+    [Export] public StateNode DisabledState;
 
     public override void Enter()
     {
@@ -29,8 +29,9 @@ public partial class ChoiceState : StateNode
     public override void Exit()
     {
         foreach (Node btn in ButtonsContainer.GetChildren())
+        {
             btn.QueueFree();
-
+        }
         Textbox.TextLabel.VisibleCharacters = 0;
     }
 
@@ -47,7 +48,7 @@ public partial class ChoiceState : StateNode
                 Textbox.CurrNode = cd.Next;
 
                 signalHub.EmitSignal(SignalHub.SignalName.TextboxOptionSelected, Textbox.CurrNode.Key);
-                EmitSignal(SignalName.StateUpdate, "EnabledState");
+                EmitSignal(SignalName.StateUpdate, EnabledState.Name);
                 break;
             case "skill":
                 SkillCheckData scd = (SkillCheckData)cd;
@@ -62,19 +63,19 @@ public partial class ChoiceState : StateNode
                 {
                     signalHub.EmitSignal(SignalHub.SignalName.SkillCheckPassed);
                     Textbox.CurrNode = scd.SuccessNext;
-                    EmitSignal(SignalName.StateUpdate, "EnabledState");
+                    EmitSignal(SignalName.StateUpdate, EnabledState.Name);
                 }
                 else
                 {
                     Textbox.CurrNode = scd.FailNext;
                     signalHub.EmitSignal(SignalHub.SignalName.SkillCheckFailed);
-                    EmitSignal(SignalName.StateUpdate, "EnabledState");
+                    EmitSignal(SignalName.StateUpdate, EnabledState.Name);
                 }
                 GD.Print($"You rolled a {roll}!");
                 break;
             case "exit":
                 Textbox.CurrNode = null;
-                EmitSignal(SignalName.StateUpdate, "DisabledState");
+                EmitSignal(SignalName.StateUpdate, EnabledState.Name);
                 break;
         }
     }
