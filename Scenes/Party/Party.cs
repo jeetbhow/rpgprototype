@@ -6,27 +6,20 @@ using Godot.Collections;
 public partial class Party : Node2D
 {
 
-    // --- exported properties ---
-    [Export]
-    public NPCDataType.Facing Facing { get; set; }
-    [Export]
-    public float MoveSpeed { get; set; } = 30.0f;
-    [Export]
-    public float PartyFollowDistance { get; set; } = 15.0f;
-    [Export]
-    public float PartyFollowLag { get; set; } = 15.0f;
-    [Export]
-    public Array<PartyMember> PartyMembers { get; set; }
-    [Export]
-    public PartyMember PartyLeader { get; set; }
-    [Export]
-    public Camera2D Camera { get; set; }
-    
+    [Export] public NPCDataType.Facing Facing { get; set; }
+    [Export] public float MoveSpeed { get; set; } = 30.0f;
+    [Export] public float PartyFollowDistance { get; set; } = 15.0f;
+    [Export] public float PartyFollowLag { get; set; } = 15.0f;
+    [Export] public Array<PartyMember> PartyMembers { get; set; }
+    [Export] public PartyMember PartyLeader { get; set; }
+    [Export] public Camera2D Camera { get; set; }
+
+    private EventBus eventBus;
+
     public override void _Ready()
     {
-        // connect to your global signal hub
-        SignalHub signalHub = GetNode<SignalHub>("/root/SignalHub");
-        signalHub.PartyMemberAdded += OnPartyMemberAdded;
+        eventBus = GetNode<EventBus>("/root/EventBus");
+        eventBus.PartyMemberAdded += OnPartyMemberAdded;
         RemoveChild(Camera);
         PartyLeader.AddChild(Camera);
         UpdateParty();

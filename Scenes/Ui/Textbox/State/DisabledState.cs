@@ -5,12 +5,12 @@ public partial class DisabledState : StateNode
     [Export] public Textbox Textbox;
     [Export] public StateNode EnabledStateNode;
 
-    private SignalHub signalHub;
+    private EventBus eventBus;
 
     public override void _Ready()
     {
         base._Ready();
-        signalHub = GetNode<SignalHub>("/root/SignalHub");
+        eventBus = GetNode<EventBus>("/root/EventBus");
     }
 
     public override async void Enter()
@@ -18,7 +18,7 @@ public partial class DisabledState : StateNode
         GetTree().Paused = false;
         Textbox.Visible = false;
 
-        var result = await ToSignal(signalHub, SignalHub.SignalName.DialogueStarted);
+        var result = await ToSignal(eventBus, EventBus.SignalName.DialogueStarted);
         DialogueTree dialogueTree = (DialogueTree)result[0];
 
         Textbox.Tree = dialogueTree;

@@ -8,7 +8,7 @@ shader = ExtResource("1_u4guq")
 shader_parameter/flash_strength = 0.0
 shader_parameter/flash_color = Vector4(1, 0, 0, 1)
 
-[node name="ColorRect" type="ColorRect"]
+[node name="ScreenEffect" type="ColorRect"]
 process_mode = 3
 material = SubResource("ShaderMaterial_nwe3n")
 anchors_preset = 15

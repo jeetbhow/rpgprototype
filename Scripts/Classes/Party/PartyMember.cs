@@ -1,18 +1,13 @@
 using Godot;
-using System;
 
 [GlobalClass]
 public partial class PartyMember : CharacterBody2D
 {
-    // --- exported property ---
-    [Export]
-    public NPCDataType.Facing Facing { get; set; }
+    [Export] public NPCDataType.Facing Facing { get; set; }
 
-    // --- runtime references ---
     public AnimatedSprite2D _animatedSprite2D;
     private CollisionShape2D _collisionShape2D;
 
-    // --- leader flag ---
     private bool _isPartyLeader = false;
     public bool IsPartyLeader
     {

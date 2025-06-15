@@ -1,6 +1,6 @@
 using Godot;
 
-public partial class SignalHub : Node
+public partial class EventBus : Node
 {   
     // UI Signals
     [Signal]

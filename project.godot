@@ -17,7 +17,8 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-SignalHub="*res://Scripts/Globals/SignalHub.cs"
+EventBus="*res://Scripts/Globals/EventBus.cs"
+SkillCheckManager="*res://Scripts/Globals/SkillCheckManager.cs"
 
 [display]
 

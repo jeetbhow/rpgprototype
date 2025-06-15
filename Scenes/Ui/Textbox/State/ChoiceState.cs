@@ -1,3 +1,4 @@
+using System;
 using Godot;
 
 public partial class ChoiceState : StateNode
@@ -5,6 +6,14 @@ public partial class ChoiceState : StateNode
     [Export] public Textbox Textbox;
     [Export] public StateNode EnabledState;
     [Export] public StateNode DisabledState;
+
+    private EventBus eventBus;
+
+    public override void _Ready()
+    {
+        base._Ready();
+        eventBus = GetNode<EventBus>("/root/EventBus");
+    }
 
     public override void Enter()
     {
@@ -23,17 +32,17 @@ public partial class ChoiceState : StateNode
 
     private void OnChoiceSelected(TextboxChoice panel)
     {
-        int index = panel.GetIndex();
-        ChoiceNode node = (ChoiceNode)Textbox.CurrNode;
-        ChoiceData cd = node.ChoiceData[index];
-        var signalHub = GetNode<SignalHub>("/root/SignalHub");
+        if (Textbox.CurrNode is not ChoiceNode node)
+        {
+            throw new InvalidOperationException("Expected curent node to be an instance of ChoiceNode");
+        }
 
+        ChoiceData cd = node.ChoiceData[panel.GetIndex()];
         switch (cd.Type)
         {
             case "regular":
                 Textbox.CurrNode = cd.Next;
-
-                signalHub.EmitSignal(SignalHub.SignalName.TextboxOptionSelected, Textbox.CurrNode.Key);
+                eventBus.EmitSignal(EventBus.SignalName.TextboxOptionSelected, Textbox.CurrNode.Key);
                 EmitSignal(SignalName.StateUpdate, EnabledState.Name);
                 break;
             case "skill":
@@ -47,14 +56,14 @@ public partial class ChoiceState : StateNode
 
                 if (roll >= scd.Difficulty)
                 {
-                    signalHub.EmitSignal(SignalHub.SignalName.SkillCheckPassed);
+                    eventBus.EmitSignal(EventBus.SignalName.SkillCheckPassed);
                     Textbox.CurrNode = scd.SuccessNext;
                     EmitSignal(SignalName.StateUpdate, EnabledState.Name);
                 }
                 else
                 {
                     Textbox.CurrNode = scd.FailNext;
-                    signalHub.EmitSignal(SignalHub.SignalName.SkillCheckFailed);
+                    eventBus.EmitSignal(EventBus.SignalName.SkillCheckFailed);
                     EmitSignal(SignalName.StateUpdate, EnabledState.Name);
                 }
                 GD.Print($"You rolled a {roll}!");

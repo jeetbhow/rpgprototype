@@ -8,12 +8,12 @@ public partial class ColorRect : Godot.ColorRect
     public override void _Ready()
     {
         base._Ready();
-        var signalHub = GetNode<SignalHub>("/root/SignalHub");
+        var signalHub = GetNode<EventBus>("/root/EventBus");
         signalHub.SkillCheckFailed += () => FlashScreen(new Color(1.0f, 0.0f, 0.0f));
         signalHub.SkillCheckPassed += () => FlashScreen(new Color(0.0f, 1.0f, 0.0f));
     }
 
-    public async void FlashScreen(Color color, float duration = 0.3f)
+    public void FlashScreen(Color color, float duration = 0.3f)
     {
         ShaderMaterial mat = (ShaderMaterial)Material;
         mat.SetShaderParameter("flash_color", color);

@@ -7,7 +7,7 @@
 [ext_resource type="Script" uid="uid://cw4fe2r8yjb30" path="res://Scripts/Components/Camera/CameraMarkers.cs" id="5_o1kgu"]
 [ext_resource type="PackedScene" uid="uid://dlkisbfbk2cgn" path="res://Scenes/Characters/Jeet/Jeet.tscn" id="6_etvs2"]
 [ext_resource type="PackedScene" uid="uid://bia45c3wkth5k" path="res://Scenes/Ui/Textbox/Textbox.tscn" id="7_ie6ax"]
-[ext_resource type="PackedScene" uid="uid://bqvqxehf5a4k5" path="res://Scenes/Ui/ScreenRect/ScreenRect.tscn" id="8_lpro8"]
+[ext_resource type="PackedScene" uid="uid://bqvqxehf5a4k5" path="res://Scenes/Ui/ScreenEffect/ScreenEffect.tscn" id="8_lpro8"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_4av0q"]
 texture = ExtResource("1_tkqpj")

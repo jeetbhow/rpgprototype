@@ -3,12 +3,12 @@ using System;
 
 public partial class JeetDialogueHitbox : DialogueHitbox
 {
-    private SignalHub signalHub;
+    private EventBus signalHub;
 
     public override void _Ready()
     {
         base._Ready();
-        signalHub = GetNode<SignalHub>("/root/SignalHub");
+        signalHub = GetNode<EventBus>("/root/EventBus");
         signalHub.TextboxOptionSelected += OnTextboxOptionSelected;
     }
 
@@ -16,7 +16,7 @@ public partial class JeetDialogueHitbox : DialogueHitbox
     {
         if (option == "Yes" && Parent is PartyMember)
         {
-            signalHub.EmitSignal(SignalHub.SignalName.PartyMemberAdded, Parent);
+            signalHub.EmitSignal(EventBus.SignalName.PartyMemberAdded, Parent);
             Monitoring = false;
         }
     }
