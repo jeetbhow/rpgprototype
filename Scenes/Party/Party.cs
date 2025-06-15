@@ -96,7 +96,7 @@ public partial class Party : Node2D
 
     public void ChangeAnimSpeed(float animSpeed)
     {
-        PartyLeader._animatedSprite2D.SpeedScale = animSpeed;
+        PartyLeader.AnimatedSprite2D.SpeedScale = animSpeed;
     }
 
     public void PlayAnimation(string animName)

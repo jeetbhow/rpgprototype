@@ -7,10 +7,12 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ramyt"]
 size = Vector2(16, 13)
 
-[node name="Eri" type="CharacterBody2D"]
+[node name="Eri" type="CharacterBody2D" node_paths=PackedStringArray("AnimatedSprite2D", "CollisionShape2D")]
 y_sort_enabled = true
 collision_mask = 4
 script = ExtResource("1_sf0up")
+AnimatedSprite2D = NodePath("AnimatedSprite2D")
+CollisionShape2D = NodePath("CollisionShape2D")
 
 [node name="Shadow" type="Sprite2D" parent="."]
 modulate = Color(1, 1, 1, 0.207843)
