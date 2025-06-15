@@ -2,40 +2,26 @@ using Godot;
 
 public partial class ChoiceState : StateNode
 {
-    private static readonly PackedScene TextboxOptionPanel = GD.Load<PackedScene>(
-        "res://Scenes/UI/Textbox/Button/TextboxOptionPanel.tscn"
-    );
-
     [Export] public Textbox Textbox;
-    [Export] public RichTextLabel NameLabel;
-    [Export] public RichTextLabel TextLabel;
-    [Export] public TextureRect Portrait;
-    [Export] public VBoxContainer ButtonsContainer;
     [Export] public StateNode EnabledState;
     [Export] public StateNode DisabledState;
 
     public override void Enter()
     {
-        ChoiceNode node = (ChoiceNode)Textbox.CurrNode;
-        foreach (ChoiceData choice in node.ChoiceData)
+        Textbox.PopulateChoiceContainer();
+        foreach (var child in Textbox.ChoiceContainer.GetChildren())
         {
-            var optionPanel = TextboxOptionPanel.Instantiate() as TextboxOptionPanel;
-            ButtonsContainer.AddChild(optionPanel);
-            optionPanel.Label.Text = choice.Text;
-            optionPanel.Pressed += OnButtonPressed;
+            var choice = child as TextboxChoice;
+            choice.Pressed += OnChoiceSelected;
         }
     }
 
     public override void Exit()
     {
-        foreach (Node btn in ButtonsContainer.GetChildren())
-        {
-            btn.QueueFree();
-        }
-        Textbox.TextLabel.VisibleCharacters = 0;
+        Textbox.CleanUpChoiceContainer();
     }
 
-    private void OnButtonPressed(TextboxOptionPanel panel)
+    private void OnChoiceSelected(TextboxChoice panel)
     {
         int index = panel.GetIndex();
         ChoiceNode node = (ChoiceNode)Textbox.CurrNode;
@@ -75,7 +61,7 @@ public partial class ChoiceState : StateNode
                 break;
             case "exit":
                 Textbox.CurrNode = null;
-                EmitSignal(SignalName.StateUpdate, EnabledState.Name);
+                EmitSignal(SignalName.StateUpdate, DisabledState.Name);
                 break;
         }
     }

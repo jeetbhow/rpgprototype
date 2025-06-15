@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://c0m7uhwsb6b20"]
 
-[ext_resource type="Script" uid="uid://h4xcpgeul0ea" path="res://Scenes/Ui/Textbox/Button/TextboxOptionPanel.cs" id="1_7nn5e"]
+[ext_resource type="Script" uid="uid://h4xcpgeul0ea" path="res://Scenes/Ui/Textbox/Button/TextboxChoice.cs" id="1_7nn5e"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wh7hm"]
 content_margin_left = 0.0

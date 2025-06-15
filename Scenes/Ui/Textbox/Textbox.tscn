@@ -21,7 +21,7 @@ corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
-[node name="Textbox" type="PanelContainer" node_paths=PackedStringArray("TextLabel", "NameLabel", "PortraitTexture")]
+[node name="Textbox" type="PanelContainer" node_paths=PackedStringArray("TextLabel", "NameLabel", "Portrait", "ChoiceContainer", "TextAdvanceTimer", "SfxTimer", "Sfx")]
 process_mode = 2
 visible = false
 offset_right = 640.0
@@ -33,7 +33,11 @@ theme_override_styles/panel = ExtResource("2_dcdod")
 script = ExtResource("3_oidgp")
 TextLabel = NodePath("OuterMargin/HBoxContainer/ScrollContainer/VBoxContainer/Text")
 NameLabel = NodePath("OuterMargin/HBoxContainer/ScrollContainer/VBoxContainer/Name")
-PortraitTexture = NodePath("OuterMargin/HBoxContainer/Panel/Portrait")
+Portrait = NodePath("OuterMargin/HBoxContainer/Panel/Portrait")
+ChoiceContainer = NodePath("OuterMargin/HBoxContainer/ScrollContainer/VBoxContainer/MarginContainer/Choices")
+TextAdvanceTimer = NodePath("TextAdvanceTimer")
+SfxTimer = NodePath("SFXTimer")
+Sfx = NodePath("TextAdvanceSFX")
 
 [node name="OuterMargin" type="MarginContainer" parent="."]
 layout_mode = 2
@@ -91,7 +95,7 @@ theme_override_constants/margin_left = 100
 theme_override_constants/margin_right = 100
 theme_override_constants/margin_bottom = 5
 
-[node name="Buttons" type="VBoxContainer" parent="OuterMargin/HBoxContainer/ScrollContainer/VBoxContainer/MarginContainer"]
+[node name="Choices" type="VBoxContainer" parent="OuterMargin/HBoxContainer/ScrollContainer/VBoxContainer/MarginContainer"]
 layout_mode = 2
 
 [node name="TextAdvanceTimer" type="Timer" parent="."]
@@ -113,33 +117,21 @@ script = ExtResource("6_oidgp")
 Textbox = NodePath("../..")
 EnabledStateNode = NodePath("../EnabledState")
 
-[node name="EnabledState" type="Node" parent="StateMachine" node_paths=PackedStringArray("Textbox", "NameLabel", "TextLabel", "Portrait", "Buttons", "TextAdvanceTimer", "SfxTimer", "Sfx")]
+[node name="EnabledState" type="Node" parent="StateMachine" node_paths=PackedStringArray("Textbox", "ChoiceStateNode", "WaitingStateNode")]
 script = ExtResource("7_cyybk")
 Textbox = NodePath("../..")
-NameLabel = NodePath("../../OuterMargin/HBoxContainer/ScrollContainer/VBoxContainer/Name")
-TextLabel = NodePath("../../OuterMargin/HBoxContainer/ScrollContainer/VBoxContainer/Text")
-Portrait = NodePath("../../OuterMargin/HBoxContainer/Panel/Portrait")
-Buttons = NodePath("../../OuterMargin/HBoxContainer/ScrollContainer/VBoxContainer/MarginContainer/Buttons")
-TextAdvanceTimer = NodePath("../../TextAdvanceTimer")
-SfxTimer = NodePath("../../SFXTimer")
-Sfx = NodePath("../../TextAdvanceSFX")
+ChoiceStateNode = NodePath("../ChoiceState")
+WaitingStateNode = NodePath("../WaitingState")
 
-[node name="WaitingState" type="Node" parent="StateMachine" node_paths=PackedStringArray("Textbox", "NameLabel", "TextLabel", "Portrait", "EnabledStateNode", "DisabledStateNode")]
+[node name="WaitingState" type="Node" parent="StateMachine" node_paths=PackedStringArray("Textbox", "EnabledStateNode", "DisabledStateNode")]
 script = ExtResource("8_c65vf")
 Textbox = NodePath("../..")
-NameLabel = NodePath("../../OuterMargin/HBoxContainer/ScrollContainer/VBoxContainer/Name")
-TextLabel = NodePath("../../OuterMargin/HBoxContainer/ScrollContainer/VBoxContainer/Text")
-Portrait = NodePath("../../OuterMargin/HBoxContainer/Panel/Portrait")
 EnabledStateNode = NodePath("../EnabledState")
 DisabledStateNode = NodePath("../DisabledState")
 
-[node name="ChoiceState" type="Node" parent="StateMachine" node_paths=PackedStringArray("Textbox", "NameLabel", "TextLabel", "Portrait", "ButtonsContainer", "EnabledState", "DisabledState")]
+[node name="ChoiceState" type="Node" parent="StateMachine" node_paths=PackedStringArray("Textbox", "EnabledState", "DisabledState")]
 script = ExtResource("9_c65vf")
 Textbox = NodePath("../..")
-NameLabel = NodePath("../../OuterMargin/HBoxContainer/ScrollContainer/VBoxContainer/Name")
-TextLabel = NodePath("../../OuterMargin/HBoxContainer/ScrollContainer/VBoxContainer/Text")
-Portrait = NodePath("../../OuterMargin/HBoxContainer/Panel/Portrait")
-ButtonsContainer = NodePath("../../OuterMargin/HBoxContainer/ScrollContainer/VBoxContainer/MarginContainer/Buttons")
 EnabledState = NodePath("../EnabledState")
 DisabledState = NodePath("../DisabledState")
 

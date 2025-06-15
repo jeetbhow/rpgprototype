@@ -3,9 +3,6 @@ using Godot;
 public partial class WaitingState : StateNode
 {
     [Export] public Textbox Textbox;
-    [Export] public RichTextLabel NameLabel;
-    [Export] public RichTextLabel TextLabel;
-    [Export] public TextureRect Portrait;
     [Export] public StateNode EnabledStateNode;
     [Export] public StateNode DisabledStateNode;
 
@@ -16,15 +13,13 @@ public partial class WaitingState : StateNode
         if (@event.IsActionPressed("Accept"))
         {
             Textbox.CurrNode = Textbox.CurrNode.Next;
-
-            if (Textbox.CurrNode != null)
+            if (Textbox.CurrNode == null)
             {
-                TextLabel.VisibleCharacters = 0;
-                EmitSignal(SignalName.StateUpdate, EnabledStateNode.Name);
+                EmitSignal(SignalName.StateUpdate, DisabledStateNode.Name);
             }
             else
             {
-                EmitSignal(SignalName.StateUpdate, DisabledStateNode.Name);
+                EmitSignal(SignalName.StateUpdate, EnabledStateNode.Name);
             }
         }
     }

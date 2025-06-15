@@ -1,9 +1,9 @@
 using Godot;
 
-public partial class TextboxOptionPanel : PanelContainer
+public partial class TextboxChoice : PanelContainer
 {
     [Signal]
-    public delegate void PressedEventHandler(TextboxOptionPanel panel);
+    public delegate void PressedEventHandler(TextboxChoice panel);
 
     public RichTextLabel Label { get; set; }
 

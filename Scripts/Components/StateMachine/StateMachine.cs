@@ -15,7 +15,6 @@ public partial class StateMachine : Node
         if (CurrStateNode == null)
             throw new InvalidOperationException("The current state node should be initialized.");
 
-        // Register all child StateNode instances
         foreach (Node child in GetChildren())
         {
             if (child is not StateNode stateNode)
@@ -24,7 +23,6 @@ public partial class StateMachine : Node
             }
 
             stateNodes[stateNode.Name.ToString()] = stateNode;
-            // Connect the GDScript signal "state_update" to our C# handler
             stateNode.StateUpdate += OnStateTransition;
         }
 
