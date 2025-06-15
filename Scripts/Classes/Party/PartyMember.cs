@@ -6,7 +6,8 @@ public partial class PartyMember : CharacterBody2D
     [Export] public NPCDataType.Facing Facing { get; set; }
     [Export] public AnimatedSprite2D AnimatedSprite2D { get; set; }
     [Export] public CollisionShape2D CollisionShape2D { get; set; }
-    [Export] public bool IsPartyLeader { get; set; }
+
+    public bool IsPartyLeader { get; set; }
 
     public override void _Ready()
     {
@@ -20,8 +21,6 @@ public partial class PartyMember : CharacterBody2D
             Visible = true;
             CollisionShape2D.Disabled = false;
         }
-
-        // play the correct idle animation based on facing
         switch (Facing)
         {
             case NPCDataType.Facing.UP:

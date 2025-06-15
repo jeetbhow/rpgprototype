@@ -9,8 +9,17 @@ public partial class ColorRect : Godot.ColorRect
     {
         base._Ready();
         var signalHub = GetNode<EventBus>(EventBus.Path);
-        signalHub.SkillCheckFailed += () => FlashScreen(new Color(1.0f, 0.0f, 0.0f));
-        signalHub.SkillCheckPassed += () => FlashScreen(new Color(0.0f, 1.0f, 0.0f));
+        signalHub.FinishedSkillCheck += (passed) =>
+        {
+            if (passed)
+            {
+                FlashScreen(new Color(0.0f, 1.0f, 0.0f));
+            }
+            else
+            {
+                FlashScreen(new Color(1.0f, 0.0f, 0.0f));
+            }
+        };
     }
 
     public void FlashScreen(Color color, float duration = 0.3f)

@@ -12,7 +12,6 @@ public partial class CameraMarkers : Node2D
         foreach (var child in GetChildren())
         {
             var marker = (Marker2D)child;
-
             Camera2D cam = Party.Camera;
             string name = marker.Name;
             switch (name)

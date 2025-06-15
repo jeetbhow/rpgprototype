@@ -12,10 +12,7 @@ public partial class EventBus : Node
 
     // Skill Check Signals
     [Signal]
-    public delegate void SkillCheckFailedEventHandler();
-
-    [Signal]
-    public delegate void SkillCheckPassedEventHandler();
+    public delegate void FinishedSkillCheckEventHandler(bool result);
 
     // Party Signals
     [Signal]

@@ -8,11 +8,13 @@ public partial class ChoiceState : StateNode
     [Export] public StateNode DisabledState;
 
     private EventBus eventBus;
+    private SkillCheckManager skillCheckManager;
 
     public override void _Ready()
     {
         base._Ready();
         eventBus = GetNode<EventBus>(EventBus.Path);
+        skillCheckManager = GetNode <SkillCheckManager>(SkillCheckManager.Path);
     }
 
     public override void Enter()
@@ -47,26 +49,7 @@ public partial class ChoiceState : StateNode
                 break;
             case "skill":
                 SkillCheckData scd = (SkillCheckData)cd;
-
-                RandomNumberGenerator rng = new();
-                rng.Randomize();
-                int roll = rng.RandiRange(1, 20);
-
-                GD.Print(scd.Difficulty);
-
-                if (roll >= scd.Difficulty)
-                {
-                    eventBus.EmitSignal(EventBus.SignalName.SkillCheckPassed);
-                    Textbox.CurrNode = scd.SuccessNext;
-                    EmitSignal(SignalName.StateUpdate, EnabledState.Name);
-                }
-                else
-                {
-                    Textbox.CurrNode = scd.FailNext;
-                    eventBus.EmitSignal(EventBus.SignalName.SkillCheckFailed);
-                    EmitSignal(SignalName.StateUpdate, EnabledState.Name);
-                }
-                GD.Print($"You rolled a {roll}!");
+                skillCheckManager.PerformSkillCheck(scd.SkillId, scd.Difficulty);
                 break;
             case "exit":
                 Textbox.CurrNode = null;
