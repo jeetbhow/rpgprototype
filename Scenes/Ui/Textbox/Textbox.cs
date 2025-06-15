@@ -25,7 +25,7 @@ public partial class Textbox : PanelContainer
     };
 
     private static readonly PackedScene TextboxChoiceScene = GD.Load<PackedScene>(
-        "res://Scenes/UI/Textbox/Button/TextboxChoice.tscn"
+        "res://Scenes/UI/Textbox/Choice/TextboxChoice.tscn"
     );
 
     public override void _Ready()
@@ -82,7 +82,7 @@ public partial class Textbox : PanelContainer
         {
             var choiceScene = TextboxChoiceScene.Instantiate() as TextboxChoice;
             ChoiceContainer.AddChild(choiceScene);
-            choiceScene.Label.Text = choice.Text;
+            choiceScene.RichTextLabel.Text = choice.Text;
         }
     }
 

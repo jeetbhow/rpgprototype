@@ -5,17 +5,15 @@ public partial class TextboxChoice : PanelContainer
     [Signal]
     public delegate void PressedEventHandler(TextboxChoice panel);
 
-    public RichTextLabel Label { get; set; }
+    [Export]
+    public RichTextLabel RichTextLabel { get; set; }
 
     private Color defaultColor;
 
     public override void _Ready()
     {
-        Label = GetNode<RichTextLabel>("./MarginContainer/RichTextLabel");
-
-        var baseStyle = (StyleBoxFlat)GetThemeStylebox("Panel").Duplicate();
+        var baseStyle = (StyleBoxFlat)GetThemeStylebox("panel").Duplicate();
         defaultColor = baseStyle.BgColor;
-
         MouseEntered += OnHoverStart;
         MouseExited += OnHoverEnd;
     }
@@ -32,16 +30,16 @@ public partial class TextboxChoice : PanelContainer
 
     private void OnHoverStart()
     {
-        var stylebox = (StyleBoxFlat)GetThemeStylebox("Panel").Duplicate();
+        var stylebox = (StyleBoxFlat)GetThemeStylebox("panel").Duplicate();
         EnableBorder(stylebox);
-        AddThemeStyleboxOverride("Panel", stylebox);
+        AddThemeStyleboxOverride("panel", stylebox);
     }
 
     private void OnHoverEnd()
     {
-        var stylebox = (StyleBoxFlat)GetThemeStylebox("Panel").Duplicate();
+        var stylebox = (StyleBoxFlat)GetThemeStylebox("panel").Duplicate();
         DisableBorder(stylebox);
-        AddThemeStyleboxOverride("Panel", stylebox);
+        AddThemeStyleboxOverride("panel", stylebox);
     }
 
     private static void SetupContentMargins(StyleBoxFlat stylebox)
