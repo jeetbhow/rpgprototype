@@ -1,4 +1,5 @@
 using Godot;
+using System.Threading.Tasks;
 
 public partial class DisabledState : StateNode
 {
@@ -13,7 +14,7 @@ public partial class DisabledState : StateNode
         eventBus = GetNode<EventBus>(EventBus.Path);
     }
 
-    public override async void Enter()
+    public override async Task Enter()
     {
         GetTree().Paused = false;
         Textbox.Visible = false;
@@ -26,7 +27,7 @@ public partial class DisabledState : StateNode
         EmitSignal(nameof(StateUpdate), EnabledStateNode.Name);
     }
 
-    public override void Exit()
+    public override async Task Exit()
     {
         GetTree().Paused = true;
         Textbox.Visible = true;

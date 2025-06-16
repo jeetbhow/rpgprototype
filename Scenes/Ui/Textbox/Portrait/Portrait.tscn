@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=3 uid="uid://un7c1a7ily8n"]
+
+[ext_resource type="StyleBox" uid="uid://68msogk2h6y6" path="res://Resources/PanelStyle.tres" id="1_5tiuf"]
+[ext_resource type="Script" uid="uid://b7tum384p368b" path="res://Scenes/Ui/Textbox/Portrait/Portrait.cs" id="2_kuy2m"]
+
+[node name="Portrait" type="PanelContainer" node_paths=PackedStringArray("Texture")]
+offset_right = 120.0
+offset_bottom = 20.0
+size_flags_horizontal = 0
+size_flags_vertical = 8
+theme_override_styles/panel = ExtResource("1_5tiuf")
+script = ExtResource("2_kuy2m")
+Texture = NodePath("MarginContainer/Texture")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Texture" type="TextureRect" parent="MarginContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+expand_mode = 5
+stretch_mode = 5

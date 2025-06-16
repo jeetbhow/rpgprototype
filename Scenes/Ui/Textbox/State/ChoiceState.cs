@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using Godot;
 
 public partial class ChoiceState : StateNode
@@ -17,7 +18,7 @@ public partial class ChoiceState : StateNode
         skillCheckManager = GetNode <SkillCheckManager>(SkillCheckManager.Path);
     }
 
-    public override void Enter()
+    public override async Task Enter()
     {
         Textbox.PopulateChoiceContainer();
         foreach (var child in Textbox.ChoiceContainer.GetChildren())
@@ -27,7 +28,7 @@ public partial class ChoiceState : StateNode
         }
     }
 
-    public override void Exit()
+    public override async Task Exit()
     {
         Textbox.CleanUpChoiceContainer();
     }

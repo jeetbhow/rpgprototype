@@ -1,16 +1,16 @@
 using Godot;
 using System.Collections.Generic;
 
-public partial class Textbox : PanelContainer
+public partial class Textbox : Control
 {
+
     [Export] public DialogueTree Tree { get; set; }
     [Export] public RichTextLabel TextLabel { get; set; }
     [Export] public RichTextLabel NameLabel { get; set; }
-    [Export] public TextureRect Portrait { get; set; }
+    [Export] public Portrait Portrait { get; set; }
     [Export] public VBoxContainer ChoiceContainer { get; set; }
-    [Export] public Timer TextAdvanceTimer;
-    [Export] public Timer SfxTimer;
-    [Export] public AudioStreamPlayer Sfx;
+    [Export] public Timer SfxTimer { get; set; }
+    [Export] public AudioStreamPlayer Sfx { get; set; }
 
     public DialogueNode CurrNode { get; set; }
 
@@ -31,9 +31,12 @@ public partial class Textbox : PanelContainer
     public override void _Ready()
     {
         base._Ready();
+
+        // This timer plays the typewriter sfx.
+        SfxTimer.Timeout += OnSfxTimeout;
+
         nameLabelSize = NameLabel.CustomMinimumSize;
         textLabelSize = TextLabel.CustomMinimumSize;
-        portraitSize = Portrait.CustomMinimumSize;
     }
 
     public void ResetTextboxState()
@@ -41,38 +44,32 @@ public partial class Textbox : PanelContainer
         TextLabel.VisibleCharacters = 0;
         NameLabel.CustomMinimumSize = nameLabelSize;
         TextLabel.CustomMinimumSize = textLabelSize;
-        Portrait.CustomMinimumSize = portraitSize;
     }
 
-    public void StartTimers()
-    {
-        TextAdvanceTimer.Start();
-        SfxTimer.Start();
-    }
-
-    public void LoadNextNode()
+    public string LoadNextNode()
     {
         if (CurrNode == null)
         {
             GD.PrintErr("CurrNode is null. Cannot load the next node.");
-            return;
+            return null;
         }
 
-        TextLabel.Text = CurrNode.Text ?? string.Empty;
         NameLabel.Text = CurrNode.Name ?? string.Empty;
         NameLabel.CustomMinimumSize = string.IsNullOrEmpty(NameLabel.Text) ? Vector2.Zero : nameLabelSize;
 
         if (!string.IsNullOrEmpty(CurrNode.Portrait) && portraits.TryGetValue(CurrNode.Portrait, out var tex))
         {
-            Portrait.Texture = tex;
-            Portrait.CustomMinimumSize = portraitSize;
+            Portrait.SetTexture(tex);
+            Portrait.Show();
         }
         else
         {
-            Portrait.Texture = null;
-            Portrait.CustomMinimumSize = Vector2.Zero;
-            TextLabel.CustomMinimumSize += portraitSize;
+            Portrait.SetTexture(null);
+            Portrait.Hide();
+            TextLabel.CustomMinimumSize += Portrait.GetSize();
         }
+
+        return CurrNode.Text;
     }
 
     public void PopulateChoiceContainer()
@@ -93,5 +90,18 @@ public partial class Textbox : PanelContainer
             choice.QueueFree();
         }
         TextLabel.VisibleCharacters = 0;
+    }
+
+    public void OnSfxTimeout()
+    {
+        RandomNumberGenerator rng = new();
+        float randf = rng.RandfRange(0.85f, 1.15f);
+        Sfx.PitchScale = randf;
+        Sfx.Play();
+    }
+
+    public void SetVisibleChars(int value)
+    {
+        TextLabel.VisibleCharacters = value;
     }
 }

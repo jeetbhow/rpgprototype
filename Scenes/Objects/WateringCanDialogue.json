@@ -47,7 +47,7 @@
 			"name": "Jeet",
 			"portrait": "Jeet",
 			"text": "This must be the gardener's watering can. I've actually seen
-			her every now and then coming here to water the flowers. She's pretty attentive.",
+			her every now and then coming here to water the flowers. [pause=1]She's pretty attentive.",
 			"next": "options"
 		}
 	],

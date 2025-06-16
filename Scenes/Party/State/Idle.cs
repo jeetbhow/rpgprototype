@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Threading.Tasks;
 
 public partial class Idle : StateNode
 {
@@ -21,7 +22,7 @@ public partial class Idle : StateNode
         }
     }
 
-    public override void Enter()
+    public override async Task Enter()
     {
         switch (Party.Facing)
         {
@@ -39,4 +40,6 @@ public partial class Idle : StateNode
                 break;
         }
     }
+
+    public override async Task Exit() {}
 }

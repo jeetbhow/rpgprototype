@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Threading.Tasks;
 
 public partial class Walk : StateNode
 {
@@ -51,9 +52,12 @@ public partial class Walk : StateNode
         }
     }
 
-    public override void Enter()
+    public override async Task Enter()
     {
         if (Party == null)
             throw new InvalidOperationException("Expected a valid reference to the party upon state entry.");
     }
+
+    public override async Task Exit() {}
+
 }

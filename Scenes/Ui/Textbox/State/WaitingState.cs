@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Godot;
 
 public partial class WaitingState : StateNode
@@ -5,6 +6,9 @@ public partial class WaitingState : StateNode
     [Export] public Textbox Textbox;
     [Export] public StateNode EnabledStateNode;
     [Export] public StateNode DisabledStateNode;
+
+    public override async Task Enter() {}
+    public override async Task Exit() {}
 
     public override void _Input(InputEvent @event)
     {
