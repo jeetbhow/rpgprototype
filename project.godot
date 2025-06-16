@@ -18,7 +18,6 @@ config/icon="res://icon.svg"
 [autoload]
 
 EventBus="*res://Scripts/Globals/EventBus.cs"
-SkillCheckManager="*res://Scripts/Globals/SkillCheckManager.cs"
 
 [display]
 

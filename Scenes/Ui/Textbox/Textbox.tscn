@@ -1,14 +1,15 @@
-[gd_scene load_steps=12 format=3 uid="uid://bia45c3wkth5k"]
+[gd_scene load_steps=13 format=3 uid="uid://bia45c3wkth5k"]
 
 [ext_resource type="FontFile" uid="uid://rs3vfprhj0ad" path="res://Resources/Silver.ttf" id="1_alx14"]
-[ext_resource type="AudioStream" uid="uid://be6o4b0xye6xr" path="res://Assets/sfx/ui/JDSherbert - Pixel UI SFX Pack - Cursor 3 (Saw).mp3" id="3_i6yp8"]
 [ext_resource type="Script" uid="uid://bn4yw4yxpcbv2" path="res://Scenes/Ui/Textbox/Textbox.cs" id="3_oidgp"]
+[ext_resource type="AudioStream" uid="uid://bug10pryr50nf" path="res://Assets/sfx/ui/JDSherbert - Pixel UI SFX Pack - Cursor 3 (Sine).mp3" id="3_xlrsu"]
 [ext_resource type="Script" uid="uid://c6hmuq7bnmysi" path="res://Scripts/Components/StateMachine/StateMachine.cs" id="6_hiqc3"]
 [ext_resource type="Script" uid="uid://5kdkg0lbwsvp" path="res://Scenes/Ui/Textbox/State/DisabledState.cs" id="6_oidgp"]
 [ext_resource type="Script" uid="uid://dt3cxcwbyrkge" path="res://Scenes/Ui/Textbox/State/EnabledState.cs" id="7_cyybk"]
 [ext_resource type="Script" uid="uid://b08h61sm7woh7" path="res://Scenes/Ui/Textbox/State/WaitingState.cs" id="8_c65vf"]
 [ext_resource type="Script" uid="uid://dq325kx3pmcf0" path="res://Scenes/Ui/Textbox/State/ChoiceState.cs" id="9_c65vf"]
 [ext_resource type="StyleBox" uid="uid://68msogk2h6y6" path="res://Resources/PanelStyle.tres" id="9_i6yp8"]
+[ext_resource type="Script" uid="uid://cds70asbgwbke" path="res://Scenes/Ui/Textbox/State/SkillCheckState.cs" id="9_q8sd0"]
 [ext_resource type="PackedScene" uid="uid://un7c1a7ily8n" path="res://Scenes/Ui/Textbox/Portrait/Portrait.tscn" id="9_xlrsu"]
 
 [sub_resource type="Theme" id="Theme_w1bcc"]
@@ -33,8 +34,8 @@ SfxTimer = NodePath("SfxTimer")
 Sfx = NodePath("Sfx")
 
 [node name="Sfx" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("3_i6yp8")
-volume_db = -20.0
+stream = ExtResource("3_xlrsu")
+volume_db = -15.0
 
 [node name="SfxTimer" type="Timer" parent="."]
 wait_time = 0.1
@@ -60,11 +61,16 @@ Textbox = NodePath("../..")
 EnabledStateNode = NodePath("../EnabledState")
 DisabledStateNode = NodePath("../DisabledState")
 
-[node name="ChoiceState" type="Node" parent="StateMachine" node_paths=PackedStringArray("Textbox", "EnabledState", "DisabledState")]
+[node name="ChoiceState" type="Node" parent="StateMachine" node_paths=PackedStringArray("Textbox", "EnabledStateNode", "DisabledStateNode", "SkillCheckStateNode")]
 script = ExtResource("9_c65vf")
 Textbox = NodePath("../..")
-EnabledState = NodePath("../EnabledState")
-DisabledState = NodePath("../DisabledState")
+EnabledStateNode = NodePath("../EnabledState")
+DisabledStateNode = NodePath("../DisabledState")
+SkillCheckStateNode = NodePath("../SkillCheckState")
+
+[node name="SkillCheckState" type="Node" parent="StateMachine" node_paths=PackedStringArray("Textbox")]
+script = ExtResource("9_q8sd0")
+Textbox = NodePath("../..")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -95,7 +101,7 @@ theme_override_styles/panel = ExtResource("9_i6yp8")
 
 [node name="OuterMargin" type="MarginContainer" parent="MarginContainer/HBoxContainer/Textbox"]
 layout_mode = 2
-theme_override_constants/margin_left = 20
+theme_override_constants/margin_left = 40
 theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20

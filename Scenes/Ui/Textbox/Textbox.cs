@@ -1,5 +1,7 @@
 using Godot;
+using System.Text.RegularExpressions;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 public partial class Textbox : Control
 {
@@ -13,11 +15,15 @@ public partial class Textbox : Control
     [Export] public AudioStreamPlayer Sfx { get; set; }
 
     public DialogueNode CurrNode { get; set; }
+    public SkillCheckData CurrSkillCheck { get; set; }
+    public bool SkipRequested { get; set; }
+    public string  FullText { get; set; }
+
 
     // We store the sizes of the UI elements so that we can restore them later.
-    private Vector2 nameLabelSize;
-    private Vector2 textLabelSize;
-    private Vector2 portraitSize;
+    private Vector2 _nameLabelSize;
+    private Vector2 _textLabelSize;
+    private Vector2 _portraitSize;
 
     private readonly Dictionary<string, Texture2D> portraits = new()
     {
@@ -35,15 +41,17 @@ public partial class Textbox : Control
         // This timer plays the typewriter sfx.
         SfxTimer.Timeout += OnSfxTimeout;
 
-        nameLabelSize = NameLabel.CustomMinimumSize;
-        textLabelSize = TextLabel.CustomMinimumSize;
+        _nameLabelSize = NameLabel.CustomMinimumSize;
+        _textLabelSize = TextLabel.CustomMinimumSize;
     }
 
     public void ResetTextboxState()
     {
+        SkipRequested = false;
+        TextLabel.Text = "";
         TextLabel.VisibleCharacters = 0;
-        NameLabel.CustomMinimumSize = nameLabelSize;
-        TextLabel.CustomMinimumSize = textLabelSize;
+        NameLabel.CustomMinimumSize = _nameLabelSize;
+        TextLabel.CustomMinimumSize = _textLabelSize;
     }
 
     public string LoadNextNode()
@@ -55,7 +63,7 @@ public partial class Textbox : Control
         }
 
         NameLabel.Text = CurrNode.Name ?? string.Empty;
-        NameLabel.CustomMinimumSize = string.IsNullOrEmpty(NameLabel.Text) ? Vector2.Zero : nameLabelSize;
+        NameLabel.CustomMinimumSize = string.IsNullOrEmpty(NameLabel.Text) ? Vector2.Zero : _nameLabelSize;
 
         if (!string.IsNullOrEmpty(CurrNode.Portrait) && portraits.TryGetValue(CurrNode.Portrait, out var tex))
         {
@@ -70,6 +78,63 @@ public partial class Textbox : Control
         }
 
         return CurrNode.Text;
+    }
+
+    public async Task Typewriter(int start, int end)
+    {
+        SfxTimer.Start();
+
+        int curr = start;
+        while (curr < end)
+        {
+            SetVisibleChars(++curr);
+            await ToSignal(GetTree().CreateTimer(0.02f), Timer.SignalName.Timeout);
+            if (SkipRequested) return;
+        }
+
+        SfxTimer.Stop();
+    }
+
+    public async Task ProcessAndWriteText(string text)
+    {
+        string pattern = @"(\[\w+=\d+\])";
+        FullText = Regex.Replace(text, pattern, "");
+        string[] parts = Regex.Split(text, pattern);
+        int visibleChars = 0;
+
+        foreach (var part in parts)
+        {
+            if (SkipRequested) break;
+
+            // Parse the command
+            if (part.StartsWith('[') && part.EndsWith(']'))
+            {
+                string inner = part[1..^1];
+                string[] tokens = inner.Split('=');
+                string command = tokens[0];
+                string value = tokens[1];
+
+                switch (command)
+                {
+                    case "pause":
+                        await ToSignal(
+                            GetTree().CreateTimer(float.Parse(value)),
+                            Timer.SignalName.Timeout
+                        );
+                        break;
+                }
+                continue;
+            }
+
+            // Render the actual text with the scrolling effect.
+            int start = visibleChars;
+            int end = start + part.Length;
+            TextLabel.Text += part;
+
+            await Typewriter(start, end);
+
+            visibleChars = end;
+        }
     }
 
     public void PopulateChoiceContainer()

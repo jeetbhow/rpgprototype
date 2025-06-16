@@ -5,17 +5,16 @@ using Godot;
 public partial class ChoiceState : StateNode
 {
     [Export] public Textbox Textbox;
-    [Export] public StateNode EnabledState;
-    [Export] public StateNode DisabledState;
+    [Export] public StateNode EnabledStateNode;
+    [Export] public StateNode DisabledStateNode;
+    [Export] public StateNode SkillCheckStateNode;
 
     private EventBus eventBus;
-    private SkillCheckManager skillCheckManager;
 
     public override void _Ready()
     {
         base._Ready();
         eventBus = GetNode<EventBus>(EventBus.Path);
-        skillCheckManager = GetNode <SkillCheckManager>(SkillCheckManager.Path);
     }
 
     public override async Task Enter()
@@ -46,15 +45,15 @@ public partial class ChoiceState : StateNode
             case "regular":
                 Textbox.CurrNode = cd.Next;
                 eventBus.EmitSignal(EventBus.SignalName.TextboxOptionSelected, Textbox.CurrNode.Key);
-                EmitSignal(SignalName.StateUpdate, EnabledState.Name);
+                EmitSignal(SignalName.StateUpdate, EnabledStateNode.Name);
                 break;
             case "skill":
-                SkillCheckData scd = (SkillCheckData)cd;
-                skillCheckManager.PerformSkillCheck(scd.SkillId, scd.Difficulty);
+                Textbox.CurrSkillCheck = (SkillCheckData)cd;
+                EmitSignal(SignalName.StateUpdate, SkillCheckStateNode.Name);
                 break;
             case "exit":
                 Textbox.CurrNode = null;
-                EmitSignal(SignalName.StateUpdate, DisabledState.Name);
+                EmitSignal(SignalName.StateUpdate, DisabledStateNode.Name);
                 break;
         }
     }
