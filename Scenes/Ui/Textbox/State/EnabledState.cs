@@ -28,8 +28,12 @@ public partial class EnabledState : StateNode
         Textbox.ResetTextboxState();
         await RenderLine(Textbox.LoadNextNode());
     }
-    
-    public override async Task Exit() {}
+
+    public override async Task Exit()
+    {
+        _skipRequested = false;
+        _fullText = "";
+    }
     
 
     public async Task RenderLine(string line)
@@ -46,28 +50,34 @@ public partial class EnabledState : StateNode
             // Parse the command
             if (part.StartsWith('[') && part.EndsWith(']'))
             {
-                var inner = part[1..^1];
-                var tokens = inner.Split('=');
-                if (tokens.Length == 2 && tokens[0] == "pause")
+                string inner = part[1..^1];
+                string[] tokens = inner.Split('=');
+                string command = tokens[0];
+                string value = tokens[1];
+
+                switch (command)
                 {
-                    float pauseSeconds = float.Parse(tokens[1]);
-                    await ToSignal(
-                        GetTree().CreateTimer(pauseSeconds),
-                        Timer.SignalName.Timeout
-                    );
+                    case "pause":
+                        await ToSignal(
+                            GetTree().CreateTimer(float.Parse(value)),
+                            Timer.SignalName.Timeout
+                        );
+                        break;
                 }
                 continue;
             }
 
             // Render the actual text with the scrolling effect.
             int start = visibleChars;
+            int end = start + part.Length;
             Textbox.TextLabel.Text += part;
-            await Typewriter(start, part.Length);
-            visibleChars = part.Length;
+
+            await Typewriter(start, end);
+
+            visibleChars = end;
         }
 
         Textbox.SfxTimer.Stop();
-        _skipRequested = false;
         UpdateState();
     }
 
