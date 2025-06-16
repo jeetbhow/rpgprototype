@@ -2,7 +2,7 @@
 
 [ext_resource type="FontFile" uid="uid://rs3vfprhj0ad" path="res://Resources/Silver.ttf" id="1_alx14"]
 [ext_resource type="Script" uid="uid://bn4yw4yxpcbv2" path="res://Scenes/Ui/Textbox/Textbox.cs" id="3_oidgp"]
-[ext_resource type="AudioStream" uid="uid://bug10pryr50nf" path="res://Assets/sfx/ui/JDSherbert - Pixel UI SFX Pack - Cursor 3 (Sine).mp3" id="3_xlrsu"]
+[ext_resource type="AudioStream" uid="uid://cnqk4vr8l78gj" path="res://Audio/SFX/blip.wav" id="3_xlrsu"]
 [ext_resource type="Script" uid="uid://c6hmuq7bnmysi" path="res://Scripts/Components/StateMachine/StateMachine.cs" id="6_hiqc3"]
 [ext_resource type="Script" uid="uid://5kdkg0lbwsvp" path="res://Scenes/Ui/Textbox/State/DisabledState.cs" id="6_oidgp"]
 [ext_resource type="Script" uid="uid://dt3cxcwbyrkge" path="res://Scenes/Ui/Textbox/State/EnabledState.cs" id="7_cyybk"]
@@ -35,7 +35,7 @@ Sfx = NodePath("Sfx")
 
 [node name="Sfx" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_xlrsu")
-volume_db = -15.0
+pitch_scale = 0.9
 
 [node name="SfxTimer" type="Timer" parent="."]
 wait_time = 0.1
@@ -68,8 +68,9 @@ EnabledStateNode = NodePath("../EnabledState")
 DisabledStateNode = NodePath("../DisabledState")
 SkillCheckStateNode = NodePath("../SkillCheckState")
 
-[node name="SkillCheckState" type="Node" parent="StateMachine" node_paths=PackedStringArray("Textbox")]
+[node name="SkillCheckState" type="Node" parent="StateMachine" node_paths=PackedStringArray("WaitingStateNode", "Textbox")]
 script = ExtResource("9_q8sd0")
+WaitingStateNode = NodePath("../WaitingState")
 Textbox = NodePath("../..")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]

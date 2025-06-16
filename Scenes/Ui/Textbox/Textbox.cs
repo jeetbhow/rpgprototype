@@ -19,7 +19,6 @@ public partial class Textbox : Control
     public bool SkipRequested { get; set; }
     public string  FullText { get; set; }
 
-
     // We store the sizes of the UI elements so that we can restore them later.
     private Vector2 _nameLabelSize;
     private Vector2 _textLabelSize;
@@ -52,6 +51,13 @@ public partial class Textbox : Control
         TextLabel.VisibleCharacters = 0;
         NameLabel.CustomMinimumSize = _nameLabelSize;
         TextLabel.CustomMinimumSize = _textLabelSize;
+    }
+
+    public void ResetText()
+    {   
+        SkipRequested = false;
+        TextLabel.Text = "";
+        TextLabel.VisibleCharacters = 0;
     }
 
     public string LoadNextNode()
@@ -118,7 +124,7 @@ public partial class Textbox : Control
                 {
                     case "pause":
                         await ToSignal(
-                            GetTree().CreateTimer(float.Parse(value)),
+                            GetTree().CreateTimer(float.Parse(value) / 1000),       // Convert ms to s.
                             Timer.SignalName.Timeout
                         );
                         break;
@@ -159,9 +165,6 @@ public partial class Textbox : Control
 
     public void OnSfxTimeout()
     {
-        RandomNumberGenerator rng = new();
-        float randf = rng.RandfRange(0.85f, 1.15f);
-        Sfx.PitchScale = randf;
         Sfx.Play();
     }
 

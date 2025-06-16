@@ -9,12 +9,14 @@ public partial class ChoiceState : StateNode
     [Export] public StateNode DisabledStateNode;
     [Export] public StateNode SkillCheckStateNode;
 
-    private EventBus eventBus;
+    private EventBus _eventBus;
+    private SoundManager _soundManager;
 
     public override void _Ready()
     {
         base._Ready();
-        eventBus = GetNode<EventBus>(EventBus.Path);
+        _eventBus = GetNode<EventBus>(EventBus.Path);
+        _soundManager = GetNode<SoundManager>(SoundManager.Path);
     }
 
     public override async Task Enter()
@@ -38,13 +40,20 @@ public partial class ChoiceState : StateNode
         {
             throw new InvalidOperationException("Expected curent node to be an instance of ChoiceNode");
         }
-
         ChoiceData cd = node.ChoiceData[panel.GetIndex()];
+        _ = ProcessChoice(cd);
+    }
+
+    private async Task ProcessChoice(ChoiceData cd)
+    {
+        _soundManager.PlaySfx(SoundManager.Sfx.Confirm);
+        await ToSignal(GetTree().CreateTimer(0.2f), Timer.SignalName.Timeout);
+
         switch (cd.Type)
         {
             case "regular":
                 Textbox.CurrNode = cd.Next;
-                eventBus.EmitSignal(EventBus.SignalName.TextboxOptionSelected, Textbox.CurrNode.Key);
+                _eventBus.EmitSignal(EventBus.SignalName.TextboxOptionSelected, Textbox.CurrNode.Key);
                 EmitSignal(SignalName.StateUpdate, EnabledStateNode.Name);
                 break;
             case "skill":

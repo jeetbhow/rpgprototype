@@ -12,8 +12,6 @@ public partial class WaitingState : StateNode
 
     public override void _Input(InputEvent @event)
     {
-        GetViewport().SetInputAsHandled();
-
         if (@event.IsActionPressed("Accept"))
         {
             Textbox.CurrNode = Textbox.CurrNode.Next;
@@ -25,6 +23,7 @@ public partial class WaitingState : StateNode
             {
                 EmitSignal(SignalName.StateUpdate, EnabledStateNode.Name);
             }
+            GetViewport().SetInputAsHandled();
         }
     }
 }
