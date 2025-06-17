@@ -24,7 +24,7 @@ public partial class ChoiceState : StateNode
         Textbox.PopulateChoiceContainer();
         foreach (var child in Textbox.ChoiceContainer.GetChildren())
         {
-            var choice = child as TextboxChoice;
+            var choice = child as ChoiceButton;
             choice.Pressed += OnChoiceSelected;
         }
     }
@@ -34,7 +34,7 @@ public partial class ChoiceState : StateNode
         Textbox.CleanUpChoiceContainer();
     }
 
-    private void OnChoiceSelected(TextboxChoice panel)
+    private void OnChoiceSelected(ChoiceButton panel)
     {
         if (Textbox.CurrNode is not ChoiceNode node)
         {

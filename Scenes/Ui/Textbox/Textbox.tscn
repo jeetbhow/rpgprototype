@@ -1,9 +1,10 @@
-[gd_scene load_steps=14 format=3 uid="uid://d0qsc28ydi047"]
+[gd_scene load_steps=15 format=3 uid="uid://d0qsc28ydi047"]
 
 [ext_resource type="Theme" uid="uid://x6m3btvacua5" path="res://Resources/Styles/TextboxDefaultTheme.tres" id="1_uadx1"]
 [ext_resource type="Script" uid="uid://b4f1xkx37w7sw" path="res://Scenes/UI/Textbox/Textbox.cs" id="2_p3gdj"]
 [ext_resource type="Resource" uid="uid://btw1r02kwnms0" path="res://Resources/PlayerData.tres" id="3_0t7jo"]
 [ext_resource type="AudioStream" uid="uid://cnqk4vr8l78gj" path="res://Assets/Audio/SFX/blip.wav" id="3_4p0l2"]
+[ext_resource type="PackedScene" uid="uid://btrajdgilaf0d" path="res://Scenes/UI/Textbox/Choice/ChoiceButton.tscn" id="4_c1p30"]
 [ext_resource type="Script" uid="uid://c6hmuq7bnmysi" path="res://Scripts/Components/StateMachine/StateMachine.cs" id="4_iqufr"]
 [ext_resource type="Script" uid="uid://cyhcb4t5seldl" path="res://Scenes/UI/Textbox/State/DisabledState.cs" id="5_7wtfr"]
 [ext_resource type="Script" uid="uid://73p56e3l0yjx" path="res://Scenes/UI/Textbox/State/EnabledState.cs" id="6_8q15s"]
@@ -34,6 +35,7 @@ Tooltip = NodePath("MarginContainer/ChoiceTooltip")
 SfxTimer = NodePath("SfxTimer")
 Sfx = NodePath("Sfx")
 PlayerData = ExtResource("3_0t7jo")
+ChoiceButtonScene = ExtResource("4_c1p30")
 
 [node name="Sfx" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_4p0l2")

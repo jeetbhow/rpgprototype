@@ -20,16 +20,7 @@ public static class SkillManager
     {
         return type switch
         {
-            SkillType.Strength => DarkRed,
-            _ => throw new ArgumentOutOfRangeException(nameof(type), "Invalid skill id.")
-        };
-    }
-
-    public static string GetSkillName(SkillType type)
-    {
-        return type switch
-        {
-            SkillType.Strength => "Strength",
+            SkillType.Strength => LightRed,
             _ => throw new ArgumentOutOfRangeException(nameof(type), "Invalid skill id.")
         };
     }

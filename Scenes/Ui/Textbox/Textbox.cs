@@ -15,6 +15,7 @@ public partial class Textbox : Control
     [Export] public Timer SfxTimer { get; set; }
     [Export] public AudioStreamPlayer Sfx { get; set; }
     [Export] public PlayerData PlayerData { get; set; }
+    [Export] public PackedScene ChoiceButtonScene { get; set; }
 
     public DialogueNode CurrNode { get; set; }
     public SkillCheckData CurrSkillCheck { get; set; }
@@ -30,10 +31,6 @@ public partial class Textbox : Control
     {
         { "Jeet", (Texture2D)GD.Load("res://assets/characters/jeet/jeet-face.png") }
     };
-
-    private static readonly PackedScene TextboxChoiceScene = GD.Load<PackedScene>(
-        "res://Scenes/UI/Textbox/Choice/TextboxChoice.tscn"
-    );
 
     public override void _Ready()
     {
@@ -148,15 +145,16 @@ public partial class Textbox : Control
     public void PopulateChoiceContainer()
     {
         ChoiceNode node = (ChoiceNode)CurrNode;
-        foreach (ChoiceData choice in node.ChoiceData)
+        foreach (ChoiceData data in node.ChoiceData)
         {
-            var choiceButton = TextboxChoiceScene.Instantiate() as TextboxChoice;
-            choiceButton.RichTextLabel.Text = choice.Text;
+            var choiceButton = ChoiceButtonScene.Instantiate() as ChoiceButton;
+            choiceButton.Label.Text = data.Text;
 
-            if (choice.Type == "skill")
+            if (data.Type == "skill")
             {
-                choiceButton.SkillCheckData = (SkillCheckData)choice;
-                choiceButton.MouseEntered += () => OnSkillCheckHover(choiceButton.SkillCheckData);
+                var skillCheckData = (SkillCheckData)data;
+                choiceButton.SetColor(SkillManager.GetSkillColor(skillCheckData.Skill.Type));
+                choiceButton.MouseEntered += () => OnSkillCheckHover((SkillCheckData)data);
                 choiceButton.MouseExited += () => OnSkillCheckExit();
             }
             ChoiceContainer.AddChild(choiceButton);
