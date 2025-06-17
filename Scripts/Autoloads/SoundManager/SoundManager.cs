@@ -15,11 +15,12 @@ public partial class SoundManager : Node
         Confirm,
     }
 
+    private const string _sfxBasePath = "res://Assets/Audio/SFX/";
     private readonly Dictionary<Sfx, AudioStream> _sfx = new()
     {
-        { Sfx.Confirm, GD.Load<AudioStream>("res://Audio/SFX/confirm.wav") },
-        { Sfx.Success, GD.Load<AudioStream>("res://Audio/SFX/success.wav") },
-        { Sfx.Fail, GD.Load<AudioStream>("res://Audio/SFX/fail.wav") }
+        { Sfx.Confirm, GD.Load<AudioStream>(_sfxBasePath + "confirm.wav") },
+        { Sfx.Success, GD.Load<AudioStream>(_sfxBasePath + "success.wav") },
+        { Sfx.Fail, GD.Load<AudioStream>(_sfxBasePath + "fail.wav") }
     };
 
     public void PlaySfx(Sfx sfxName)

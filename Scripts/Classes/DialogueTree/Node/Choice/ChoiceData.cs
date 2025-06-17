@@ -1,8 +1,8 @@
 #nullable enable
 
-using System;
+using Godot;
 
-public partial class ChoiceData
+public partial class ChoiceData : Resource
 {
     public required string Type { get; set; }
     public required string Text { get; set; }

@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://dlkisbfbk2cgn"]
 
-[ext_resource type="Script" uid="uid://dai66304ed53p" path="res://Scripts/Classes/Party/PartyMember.cs" id="1_nw66i"]
+[ext_resource type="Script" uid="uid://dai66304ed53p" path="res://Scripts/Classes/PartyMember.cs" id="1_nw66i"]
 [ext_resource type="SpriteFrames" uid="uid://com4faoipnl31" path="res://Resources/Spriteframes/Jeet.tres" id="1_xdrrn"]
 [ext_resource type="Texture2D" uid="uid://4eerix34hw16" path="res://Assets/Characters/shadow.png" id="2_djaeq"]
 [ext_resource type="Script" uid="uid://bmi4nkbpemjay" path="res://Scenes/Party/Jeet/JeetDialogueHitbox.cs" id="4_nhrnt"]

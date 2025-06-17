@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://bi2b0cm7mniaa"]
 
 [ext_resource type="SpriteFrames" uid="uid://5wttaetuicnt" path="res://Resources/Spriteframes/Eri.tres" id="1_ramyt"]
-[ext_resource type="Script" uid="uid://dai66304ed53p" path="res://Scripts/Classes/Party/PartyMember.cs" id="1_sf0up"]
+[ext_resource type="Script" uid="uid://dai66304ed53p" path="res://Scripts/Classes/PartyMember.cs" id="1_sf0up"]
 [ext_resource type="Texture2D" uid="uid://4eerix34hw16" path="res://Assets/Characters/shadow.png" id="2_sf0up"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ramyt"]

@@ -17,8 +17,8 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-EventBus="*res://Scripts/Globals/EventBus.cs"
-SoundManager="*res://Scripts/Globals/SoundManager/SoundManager.tscn"
+EventBus="*res://Scripts/Autoloads/EventBus.cs"
+SoundManager="*res://Scripts/Autoloads/SoundManager/SoundManager.tscn"
 
 [display]
 
@@ -36,6 +36,7 @@ project/assembly_name="RPGPrototype"
 [file_customization]
 
 folder_colors={
+"res://Resources/": "yellow",
 "res://Scenes/": "red",
 "res://Scripts/": "purple"
 }

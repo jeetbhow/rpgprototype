@@ -1,0 +1,63 @@
+[gd_scene load_steps=4 format=3 uid="uid://dlsdfp742qnou"]
+
+[ext_resource type="Theme" uid="uid://x6m3btvacua5" path="res://Resources/Styles/TextboxDefaultTheme.tres" id="1_dfkcu"]
+[ext_resource type="StyleBox" uid="uid://68msogk2h6y6" path="res://Resources/Styles/UIPanel.tres" id="2_5nhej"]
+[ext_resource type="Script" uid="uid://wenjpo4hmdbu" path="res://Scenes/UI/Textbox/Choice/ChoiceTooltip.cs" id="3_7l7cv"]
+
+[node name="ChoiceTooltip" type="PanelContainer" node_paths=PackedStringArray("SkillLabel", "DifficultyLabel", "OddsLabel", "ProbabilityLabel")]
+offset_right = 180.0
+offset_bottom = 164.0
+size_flags_horizontal = 0
+theme = ExtResource("1_dfkcu")
+theme_override_styles/panel = ExtResource("2_5nhej")
+script = ExtResource("3_7l7cv")
+SkillLabel = NodePath("MarginContainer/VBoxContainer/Skill")
+DifficultyLabel = NodePath("MarginContainer/VBoxContainer/Difficulty")
+OddsLabel = NodePath("MarginContainer/VBoxContainer/Odds")
+ProbabilityLabel = NodePath("MarginContainer/VBoxContainer/Probability")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+alignment = 1
+
+[node name="Skill" type="RichTextLabel" parent="MarginContainer/VBoxContainer"]
+clip_contents = false
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+bbcode_enabled = true
+text = "[color=#f55442]Strength: 2[/color]"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 1
+
+[node name="Difficulty" type="RichTextLabel" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Difficulty: 10"
+fit_content = true
+horizontal_alignment = 1
+
+[node name="Odds" type="RichTextLabel" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "Odds: [color=#56db5a]High[/color]"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 1
+
+[node name="Probability" type="RichTextLabel" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 64
+text = "92%"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 1

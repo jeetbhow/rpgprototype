@@ -18,30 +18,22 @@ public partial class SkillCheckState : StateNode
 
     public override async Task Enter()
     {
-        SkillCheckData skill = Textbox.CurrSkillCheck;
-        bool result = PerformSkillCheck(skill.SkillId, skill.Difficulty);
         Textbox.ResetText();
+
+        bool result = SkillManager.PerformSkillCheck(Textbox.PlayerData, Textbox.CurrSkillCheck);
         if (result)
         {
             await Textbox.ProcessAndWriteText(".[pause=1000] .[pause=1000] .[pause=1000] You passed!");
             _soundManager.PlaySfx(SoundManager.Sfx.Success);
-            Textbox.CurrNode.Next = skill.SuccessNext;
+            Textbox.CurrNode.Next = Textbox.CurrSkillCheck.SuccessNext;
         }
         else
         {
             await Textbox.ProcessAndWriteText(".[pause=1000] .[pause=1000] .[pause=1000] You failed!");
             _soundManager.PlaySfx(SoundManager.Sfx.Fail);
-            Textbox.CurrNode.Next = skill.FailNext;
+            Textbox.CurrNode.Next = Textbox.CurrSkillCheck.FailNext;
         }
         EmitSignal(SignalName.StateUpdate, WaitingStateNode.Name);
-    }
-
-    public static bool PerformSkillCheck(int skillId, int difficulty)
-    {
-        RandomNumberGenerator rng = new();
-        rng.Randomize();
-        int roll = rng.RandiRange(1, 20);
-        return roll >= difficulty;
     }
 
     public override async Task Exit()

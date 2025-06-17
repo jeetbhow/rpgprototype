@@ -11,13 +11,15 @@ public partial class Textbox : Control
     [Export] public RichTextLabel NameLabel { get; set; }
     [Export] public Portrait Portrait { get; set; }
     [Export] public VBoxContainer ChoiceContainer { get; set; }
+    [Export] public ChoiceTooltip Tooltip { get; set; }
     [Export] public Timer SfxTimer { get; set; }
     [Export] public AudioStreamPlayer Sfx { get; set; }
+    [Export] public PlayerData PlayerData { get; set; }
 
     public DialogueNode CurrNode { get; set; }
     public SkillCheckData CurrSkillCheck { get; set; }
     public bool SkipRequested { get; set; }
-    public string  FullText { get; set; }
+    public string FullText { get; set; }
 
     // We store the sizes of the UI elements so that we can restore them later.
     private Vector2 _nameLabelSize;
@@ -54,7 +56,7 @@ public partial class Textbox : Control
     }
 
     public void ResetText()
-    {   
+    {
         SkipRequested = false;
         TextLabel.Text = "";
         TextLabel.VisibleCharacters = 0;
@@ -148,9 +150,16 @@ public partial class Textbox : Control
         ChoiceNode node = (ChoiceNode)CurrNode;
         foreach (ChoiceData choice in node.ChoiceData)
         {
-            var choiceScene = TextboxChoiceScene.Instantiate() as TextboxChoice;
-            ChoiceContainer.AddChild(choiceScene);
-            choiceScene.RichTextLabel.Text = choice.Text;
+            var choiceButton = TextboxChoiceScene.Instantiate() as TextboxChoice;
+            choiceButton.RichTextLabel.Text = choice.Text;
+
+            if (choice.Type == "skill")
+            {
+                choiceButton.SkillCheckData = (SkillCheckData)choice;
+                choiceButton.MouseEntered += () => OnSkillCheckHover(choiceButton.SkillCheckData);
+                choiceButton.MouseExited += () => OnSkillCheckExit();
+            }
+            ChoiceContainer.AddChild(choiceButton);
         }
     }
 
@@ -171,5 +180,23 @@ public partial class Textbox : Control
     public void SetVisibleChars(int value)
     {
         TextLabel.VisibleCharacters = value;
+    }
+
+    public void OnSkillCheckHover(SkillCheckData skillCheck)
+    {
+        Tooltip.SkillColor = SkillManager.GetSkillColor(skillCheck.Skill.Type);
+        Tooltip.SkillName = Skill.StringFromType(skillCheck.Skill.Type);
+        Tooltip.SkillValue = PlayerData.GetSkill(skillCheck.Skill.Type).Value;
+        Tooltip.Difficulty = skillCheck.Skill.Value;
+        Tooltip.Probability = SkillManager.GetSuccessChance(PlayerData, skillCheck);
+        Tooltip.Category = SkillManager.GetProbabilityCategory(Tooltip.Probability);
+
+        Tooltip.Update();
+        Tooltip.Visible = true;
+    }
+
+    public void OnSkillCheckExit()
+    {
+        Tooltip.Visible = false;
     }
 }

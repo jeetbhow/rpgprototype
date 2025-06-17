@@ -2,18 +2,19 @@ using Godot;
 
 public partial class TextboxChoice : PanelContainer
 {
-    [Signal]
-    public delegate void PressedEventHandler(TextboxChoice panel);
+    [Signal] public delegate void PressedEventHandler(TextboxChoice panel);
 
-    [Export]
-    public RichTextLabel RichTextLabel { get; set; }
+    [Export] public PackedScene ToolTipScene { get; set; }
+    [Export] public RichTextLabel RichTextLabel { get; set; }
 
-    private Color defaultColor;
+    public SkillCheckData SkillCheckData { get; set; }
+
+    private StyleBoxFlat _defaultStyle = GD.Load<StyleBoxFlat>("res://Resources/Styles/UIPanel.tres");
+    private StyleBoxFlat _hoverStyle = GD.Load<StyleBoxFlat>("res://Resources/Styles/UIPanelHover.tres");
 
     public override void _Ready()
     {
-        var baseStyle = (StyleBoxFlat)GetThemeStylebox("panel").Duplicate();
-        defaultColor = baseStyle.BgColor;
+        Theme.SetStylebox("TooltipPanel", "panel", _defaultStyle);
         MouseEntered += OnHoverStart;
         MouseExited += OnHoverEnd;
     }
@@ -30,39 +31,11 @@ public partial class TextboxChoice : PanelContainer
 
     private void OnHoverStart()
     {
-        var stylebox = (StyleBoxFlat)GetThemeStylebox("panel").Duplicate();
-        EnableBorder(stylebox);
-        AddThemeStyleboxOverride("panel", stylebox);
+        AddThemeStyleboxOverride("panel", _hoverStyle);
     }
 
     private void OnHoverEnd()
     {
-        var stylebox = (StyleBoxFlat)GetThemeStylebox("panel").Duplicate();
-        DisableBorder(stylebox);
-        AddThemeStyleboxOverride("panel", stylebox);
-    }
-
-    private static void SetupContentMargins(StyleBoxFlat stylebox)
-    {
-        stylebox.ContentMarginLeft = 0;
-        stylebox.ContentMarginRight = 0;
-        stylebox.ContentMarginTop = 0;
-        stylebox.ContentMarginBottom = 0;
-    }
-
-    private static void DisableBorder(StyleBoxFlat stylebox)
-    {
-        stylebox.BorderWidthLeft = 0;
-        stylebox.BorderWidthRight = 0;
-        stylebox.BorderWidthTop = 0;
-        stylebox.BorderWidthBottom = 0;
-    }
-
-    private static void EnableBorder(StyleBoxFlat stylebox)
-    {
-        stylebox.BorderWidthLeft = 2;
-        stylebox.BorderWidthRight = 2;
-        stylebox.BorderWidthTop = 2;
-        stylebox.BorderWidthBottom = 2;
+        AddThemeStyleboxOverride("panel", _defaultStyle);
     }
 }

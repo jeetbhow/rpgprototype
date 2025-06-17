@@ -1,7 +1,6 @@
 using Godot;
-using System;
 
-public static partial class InputManager
+public static class InputManager
 {
     public static Vector2 GetInputVector()
     {

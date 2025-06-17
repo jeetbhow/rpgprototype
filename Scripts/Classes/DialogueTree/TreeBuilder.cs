@@ -9,76 +9,80 @@ using Godot;
 
 public static class TreeBuilder
 {
-    public static DialogueTree CreateTree(string jsonPath)
+
+    public static string ReadFile(string path)
     {
-        var file = FileAccess.Open(jsonPath, FileAccess.ModeFlags.Read);
+        var file = FileAccess.Open(path, FileAccess.ModeFlags.Read);
         if (file == null)
         {
-            throw new ArgumentException($"Cannot open file: {jsonPath}");
+            throw new ArgumentException($"Cannot open file: {path}");
         }
 
         string jsonStr = file.GetAsText();
         file.Close();
 
-        var root = JObject.Parse(jsonStr);
-        var nodes = new Dictionary<string, DialogueNode[]>();
+        return jsonStr;
+    }
 
-        foreach (var prop in root.Properties())
+    public static DialogueTree CreateTree(string jsonPath)
+    {
+        JObject rootObj = JObject.Parse(ReadFile(jsonPath));
+        Dictionary<string, DialogueNode[]> nodes = [];
+
+        foreach (var prop in rootObj.Properties())
         {
-            string key = prop.Name;
-            var arr = (JArray)prop.Value;
-            nodes[key] = new DialogueNode[arr.Count];
+            string dialogueKey = prop.Name;
+            var dialogueTokens = (JArray)prop.Value;
+            nodes[dialogueKey] = new DialogueNode[dialogueTokens.Count];
 
-            for (int i = 0; i < arr.Count; i++)
+            for (int i = 0; i < dialogueTokens.Count; i++)
             {
-                JToken entry = arr[i];
-                string type = entry["type"]?.Value<string>()
-                              ?? throw new JsonException($"Missing type in entry {i} of '{key}'");
+                JToken token = dialogueTokens[i];
+                string type = token["type"]?.Value<string>()
+                              ?? throw new JsonException($"Missing type in entry {i} of '{dialogueKey}'");
 
                 DialogueNode node;
                 switch (type)
                 {
                     case "regular":
                         {
-                            // Only the base fields
-                            var data = entry.ToObject<SerializedDialogue>()!;
+                            var dialog = token.ToObject<SerializedDialogue>()!;
                             node = new DialogueNode
                             {
-                                Key = key,
-                                Type = data.Type,
-                                Text = data.Text,
-                                Name = data.Name,
-                                Portrait = data.Portrait,
+                                Key = dialogueKey,
+                                Type = dialog.Type,
+                                Text = dialog.Text,
+                                Name = dialog.Name,
+                                Portrait = dialog.Portrait,
                                 Next = null
                             };
                             break;
                         }
                     case "jump":
                         {
-                            var data = entry.ToObject<SerializedDialogue>()!;
+                            var dialogue = token.ToObject<SerializedDialogue>()!;
                             node = new JumpNode
                             {
-                                Key = key,
-                                Type = data.Type,
-                                Text = data.Text,
-                                Name = data.Name,
-                                Portrait = data.Portrait,
-                                NextId = data.Next,
+                                Key = dialogueKey,
+                                Type = dialogue.Type,
+                                Text = dialogue.Text,
+                                Name = dialogue.Name,
+                                Portrait = dialogue.Portrait,
+                                NextId = dialogue.Next,
                                 Next = null
                             };
                             break;
                         }
                     case "choice":
                         {
-                            node = CreateChoiceNode(entry, key);
+                            node = CreateChoiceNode(token, dialogueKey);
                             break;
                         }
                     default:
                         throw new ArgumentException($"Unknown dialogue type: {type}");
                 }
-
                 node.Text = CleanText(node.Text);
-                nodes[key][i] = node;
+                nodes[dialogueKey][i] = node;
             }
         }
 
@@ -130,15 +134,15 @@ public static class TreeBuilder
         return tree;
     }
 
-    private static ChoiceNode CreateChoiceNode(JToken entry, String key)
+    private static ChoiceNode CreateChoiceNode(JToken token, String dialogueKey)
     {
-        var common = entry.ToObject<SerializedDialogue>()!;
-        var jChoices = (JArray)entry["choices"]!;
-        var choiceDataArray = new ChoiceData[jChoices.Count];
+        var dialogue = token.ToObject<SerializedDialogue>()!;
+        var choices = (JArray)token["choices"]!;
+        var choiceDataArray = new ChoiceData[choices.Count];
 
-        for (int i = 0; i < jChoices.Count; i++)
+        for (int i = 0; i < choices.Count; i++)
         {
-            var choiceToken = jChoices[i];
+            var choiceToken = choices[i];
             string type = choiceToken["type"]!.Value<string>();
 
             ChoiceData data;
@@ -146,26 +150,26 @@ public static class TreeBuilder
             {
                 case "regular":
                 {
-                  var sc = choiceToken.ToObject<SerializedChoice>();
+                  var serChoice = choiceToken.ToObject<SerializedChoice>();
                     data = new()
                     {
-                        Type = sc.Type,
-                        Text = sc.Text,
-                        NextId = sc.Next,
+                        Type = serChoice.Type,
+                        Text = serChoice.Text,
+                        NextId = serChoice.Next,
                     };
                     break;
                 }
                 case "skill":
                 {
-                    var ssc = choiceToken.ToObject<SerializedSkillCheck>();
+                    var serSkillCheck = choiceToken.ToObject<SerializedSkillCheck>();
+                    Skill skill = new(Skill.TypeFromString(serSkillCheck.SkillName), serSkillCheck.Difficulty);
                     data = new SkillCheckData
                     {
-                        Type = ssc.Type,
-                        Text = ssc.Text,
-                        SkillId = ssc.SkillId,
-                        Difficulty = ssc.Difficulty,
-                        SuccessNextId = ssc.Success,
-                        FailNextId = ssc.Failure,
+                        Type = serSkillCheck.Type,
+                        Text = serSkillCheck.Text,
+                        Skill = skill,
+                        SuccessNextId = serSkillCheck.Success,
+                        FailNextId = serSkillCheck.Failure,
                     };
                     break;
                 }
@@ -186,11 +190,11 @@ public static class TreeBuilder
         }
         
         return new ChoiceNode {
-            Key = key,
-            Type = common.Type,
-            Text = common.Text,
-            Name = common.Name,
-            Portrait = common.Portrait,
+            Key = dialogueKey,
+            Type = dialogue.Type,
+            Text = dialogue.Text,
+            Name = dialogue.Name,
+            Portrait = dialogue.Portrait,
             ChoiceData = choiceDataArray
         };
     }

@@ -1,104 +1,104 @@
-[gd_scene load_steps=13 format=3 uid="uid://bia45c3wkth5k"]
+[gd_scene load_steps=14 format=3 uid="uid://d0qsc28ydi047"]
 
-[ext_resource type="FontFile" uid="uid://rs3vfprhj0ad" path="res://Resources/Silver.ttf" id="1_alx14"]
-[ext_resource type="Script" uid="uid://bn4yw4yxpcbv2" path="res://Scenes/Ui/Textbox/Textbox.cs" id="3_oidgp"]
-[ext_resource type="AudioStream" uid="uid://cnqk4vr8l78gj" path="res://Audio/SFX/blip.wav" id="3_xlrsu"]
-[ext_resource type="Script" uid="uid://c6hmuq7bnmysi" path="res://Scripts/Components/StateMachine/StateMachine.cs" id="6_hiqc3"]
-[ext_resource type="Script" uid="uid://5kdkg0lbwsvp" path="res://Scenes/Ui/Textbox/State/DisabledState.cs" id="6_oidgp"]
-[ext_resource type="Script" uid="uid://dt3cxcwbyrkge" path="res://Scenes/Ui/Textbox/State/EnabledState.cs" id="7_cyybk"]
-[ext_resource type="Script" uid="uid://b08h61sm7woh7" path="res://Scenes/Ui/Textbox/State/WaitingState.cs" id="8_c65vf"]
-[ext_resource type="Script" uid="uid://dq325kx3pmcf0" path="res://Scenes/Ui/Textbox/State/ChoiceState.cs" id="9_c65vf"]
-[ext_resource type="StyleBox" uid="uid://68msogk2h6y6" path="res://Resources/PanelStyle.tres" id="9_i6yp8"]
-[ext_resource type="Script" uid="uid://cds70asbgwbke" path="res://Scenes/Ui/Textbox/State/SkillCheckState.cs" id="9_q8sd0"]
-[ext_resource type="PackedScene" uid="uid://un7c1a7ily8n" path="res://Scenes/Ui/Textbox/Portrait/Portrait.tscn" id="9_xlrsu"]
+[ext_resource type="Theme" uid="uid://x6m3btvacua5" path="res://Resources/Styles/TextboxDefaultTheme.tres" id="1_uadx1"]
+[ext_resource type="Script" uid="uid://b4f1xkx37w7sw" path="res://Scenes/UI/Textbox/Textbox.cs" id="2_p3gdj"]
+[ext_resource type="Resource" uid="uid://btw1r02kwnms0" path="res://Resources/PlayerData.tres" id="3_0t7jo"]
+[ext_resource type="AudioStream" uid="uid://cnqk4vr8l78gj" path="res://Assets/Audio/SFX/blip.wav" id="3_4p0l2"]
+[ext_resource type="Script" uid="uid://c6hmuq7bnmysi" path="res://Scripts/Components/StateMachine/StateMachine.cs" id="4_iqufr"]
+[ext_resource type="Script" uid="uid://cyhcb4t5seldl" path="res://Scenes/UI/Textbox/State/DisabledState.cs" id="5_7wtfr"]
+[ext_resource type="Script" uid="uid://73p56e3l0yjx" path="res://Scenes/UI/Textbox/State/EnabledState.cs" id="6_8q15s"]
+[ext_resource type="Script" uid="uid://dkj5ioqi8am46" path="res://Scenes/UI/Textbox/State/WaitingState.cs" id="7_hwt5j"]
+[ext_resource type="Script" uid="uid://366fd5tl8iho" path="res://Scenes/UI/Textbox/State/ChoiceState.cs" id="8_esfui"]
+[ext_resource type="Script" uid="uid://cdfi3etqxqt8y" path="res://Scenes/UI/Textbox/State/SkillCheckState.cs" id="9_rpl4g"]
+[ext_resource type="PackedScene" uid="uid://blyv6jei4aa5x" path="res://Scenes/UI/Textbox/Portrait/Portrait.tscn" id="10_squph"]
+[ext_resource type="StyleBox" uid="uid://68msogk2h6y6" path="res://Resources/Styles/UIPanel.tres" id="11_ao6v7"]
+[ext_resource type="PackedScene" uid="uid://dlsdfp742qnou" path="res://Scenes/UI/Textbox/Choice/ChoiceTooltip.tscn" id="12_q8sd0"]
 
-[sub_resource type="Theme" id="Theme_w1bcc"]
-default_font = ExtResource("1_alx14")
-default_font_size = 34
-
-[node name="Textbox" type="Control" node_paths=PackedStringArray("TextLabel", "NameLabel", "Portrait", "ChoiceContainer", "SfxTimer", "Sfx")]
+[node name="Textbox" type="Control" node_paths=PackedStringArray("TextLabel", "NameLabel", "Portrait", "ChoiceContainer", "Tooltip", "SfxTimer", "Sfx")]
 process_mode = 2
 layout_mode = 3
-anchors_preset = 0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
-theme = SubResource("Theme_w1bcc")
-script = ExtResource("3_oidgp")
-TextLabel = NodePath("MarginContainer/HBoxContainer/Textbox/OuterMargin/HBoxContainer/ScrollContainer/VBoxContainer/Text")
-NameLabel = NodePath("MarginContainer/HBoxContainer/Textbox/OuterMargin/HBoxContainer/ScrollContainer/VBoxContainer/Name")
+theme = ExtResource("1_uadx1")
+script = ExtResource("2_p3gdj")
+TextLabel = NodePath("MarginContainer/HBoxContainer/Textbox/OuterMargin/HBoxContainer/VBoxContainer/Text")
+NameLabel = NodePath("MarginContainer/HBoxContainer/Textbox/OuterMargin/HBoxContainer/VBoxContainer/Name")
 Portrait = NodePath("MarginContainer/HBoxContainer/Portrait")
-ChoiceContainer = NodePath("MarginContainer/HBoxContainer/Textbox/OuterMargin/HBoxContainer/ScrollContainer/VBoxContainer/MarginContainer/Choices")
+ChoiceContainer = NodePath("MarginContainer/HBoxContainer/Textbox/OuterMargin/HBoxContainer/VBoxContainer/MarginContainer/Choices")
+Tooltip = NodePath("MarginContainer/ChoiceTooltip")
 SfxTimer = NodePath("SfxTimer")
 Sfx = NodePath("Sfx")
+PlayerData = ExtResource("3_0t7jo")
 
 [node name="Sfx" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("3_xlrsu")
+stream = ExtResource("3_4p0l2")
 pitch_scale = 0.9
 
 [node name="SfxTimer" type="Timer" parent="."]
 wait_time = 0.1
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("CurrStateNode")]
-script = ExtResource("6_hiqc3")
+script = ExtResource("4_iqufr")
 CurrStateNode = NodePath("DisabledState")
 
 [node name="DisabledState" type="Node" parent="StateMachine" node_paths=PackedStringArray("Textbox", "EnabledStateNode")]
-script = ExtResource("6_oidgp")
+script = ExtResource("5_7wtfr")
 Textbox = NodePath("../..")
 EnabledStateNode = NodePath("../EnabledState")
 
 [node name="EnabledState" type="Node" parent="StateMachine" node_paths=PackedStringArray("Textbox", "ChoiceStateNode", "WaitingStateNode")]
-script = ExtResource("7_cyybk")
+script = ExtResource("6_8q15s")
 Textbox = NodePath("../..")
 ChoiceStateNode = NodePath("../ChoiceState")
 WaitingStateNode = NodePath("../WaitingState")
 
 [node name="WaitingState" type="Node" parent="StateMachine" node_paths=PackedStringArray("Textbox", "EnabledStateNode", "DisabledStateNode")]
-script = ExtResource("8_c65vf")
+script = ExtResource("7_hwt5j")
 Textbox = NodePath("../..")
 EnabledStateNode = NodePath("../EnabledState")
 DisabledStateNode = NodePath("../DisabledState")
 
 [node name="ChoiceState" type="Node" parent="StateMachine" node_paths=PackedStringArray("Textbox", "EnabledStateNode", "DisabledStateNode", "SkillCheckStateNode")]
-script = ExtResource("9_c65vf")
+script = ExtResource("8_esfui")
 Textbox = NodePath("../..")
 EnabledStateNode = NodePath("../EnabledState")
 DisabledStateNode = NodePath("../DisabledState")
 SkillCheckStateNode = NodePath("../SkillCheckState")
 
 [node name="SkillCheckState" type="Node" parent="StateMachine" node_paths=PackedStringArray("WaitingStateNode", "Textbox")]
-script = ExtResource("9_q8sd0")
+script = ExtResource("9_rpl4g")
 WaitingStateNode = NodePath("../WaitingState")
 Textbox = NodePath("../..")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
+anchors_preset = 12
 anchor_top = 1.0
-anchor_right = 0.5
+anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -312.0
-offset_top = -128.0
-offset_right = 312.0
+offset_top = -184.0
 grow_horizontal = 2
 grow_vertical = 0
+theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 20
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
 layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
+size_flags_horizontal = 4
+size_flags_vertical = 8
 theme_override_constants/separation = 20
 
-[node name="Portrait" parent="MarginContainer/HBoxContainer" instance=ExtResource("9_xlrsu")]
+[node name="Portrait" parent="MarginContainer/HBoxContainer" instance=ExtResource("10_squph")]
 layout_mode = 2
 
 [node name="Textbox" type="PanelContainer" parent="MarginContainer/HBoxContainer"]
 layout_mode = 2
-theme_override_styles/panel = ExtResource("9_i6yp8")
+theme_override_styles/panel = ExtResource("11_ao6v7")
 
 [node name="OuterMargin" type="MarginContainer" parent="MarginContainer/HBoxContainer/Textbox"]
 layout_mode = 2
@@ -111,16 +111,11 @@ theme_override_constants/margin_bottom = 20
 layout_mode = 2
 theme_override_constants/separation = 20
 
-[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/HBoxContainer/Textbox/OuterMargin/HBoxContainer"]
-layout_mode = 2
-horizontal_scroll_mode = 0
-vertical_scroll_mode = 0
-
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/Textbox/OuterMargin/HBoxContainer/ScrollContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/Textbox/OuterMargin/HBoxContainer"]
 clip_contents = true
 layout_mode = 2
 
-[node name="Name" type="RichTextLabel" parent="MarginContainer/HBoxContainer/Textbox/OuterMargin/HBoxContainer/ScrollContainer/VBoxContainer"]
+[node name="Name" type="RichTextLabel" parent="MarginContainer/HBoxContainer/Textbox/OuterMargin/HBoxContainer/VBoxContainer"]
 clip_contents = false
 custom_minimum_size = Vector2(80, 35)
 layout_mode = 2
@@ -128,7 +123,7 @@ size_flags_horizontal = 0
 size_flags_vertical = 0
 scroll_active = false
 
-[node name="Text" type="RichTextLabel" parent="MarginContainer/HBoxContainer/Textbox/OuterMargin/HBoxContainer/ScrollContainer/VBoxContainer"]
+[node name="Text" type="RichTextLabel" parent="MarginContainer/HBoxContainer/Textbox/OuterMargin/HBoxContainer/VBoxContainer"]
 clip_contents = false
 custom_minimum_size = Vector2(600, 60)
 layout_mode = 2
@@ -138,11 +133,16 @@ scroll_active = false
 visible_characters = 0
 visible_ratio = 0.0
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/Textbox/OuterMargin/HBoxContainer/ScrollContainer/VBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/Textbox/OuterMargin/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 100
 theme_override_constants/margin_right = 100
 theme_override_constants/margin_bottom = 5
 
-[node name="Choices" type="VBoxContainer" parent="MarginContainer/HBoxContainer/Textbox/OuterMargin/HBoxContainer/ScrollContainer/VBoxContainer/MarginContainer"]
+[node name="Choices" type="VBoxContainer" parent="MarginContainer/HBoxContainer/Textbox/OuterMargin/HBoxContainer/VBoxContainer/MarginContainer"]
 layout_mode = 2
+
+[node name="ChoiceTooltip" parent="MarginContainer" instance=ExtResource("12_q8sd0")]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8

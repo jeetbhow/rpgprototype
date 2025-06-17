@@ -1,15 +1,15 @@
-[gd_scene load_steps=3 format=3 uid="uid://un7c1a7ily8n"]
+[gd_scene load_steps=3 format=3 uid="uid://blyv6jei4aa5x"]
 
-[ext_resource type="StyleBox" uid="uid://68msogk2h6y6" path="res://Resources/PanelStyle.tres" id="1_5tiuf"]
-[ext_resource type="Script" uid="uid://b7tum384p368b" path="res://Scenes/Ui/Textbox/Portrait/Portrait.cs" id="2_kuy2m"]
+[ext_resource type="StyleBox" uid="uid://68msogk2h6y6" path="res://Resources/Styles/UIPanel.tres" id="1_w2b7x"]
+[ext_resource type="Script" uid="uid://d4e0d51lculqo" path="res://Scenes/Ui/Textbox/Portrait/Portrait.cs" id="2_843it"]
 
 [node name="Portrait" type="PanelContainer" node_paths=PackedStringArray("Texture")]
 offset_right = 120.0
 offset_bottom = 20.0
 size_flags_horizontal = 0
 size_flags_vertical = 8
-theme_override_styles/panel = ExtResource("1_5tiuf")
-script = ExtResource("2_kuy2m")
+theme_override_styles/panel = ExtResource("1_w2b7x")
+script = ExtResource("2_843it")
 Texture = NodePath("MarginContainer/Texture")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
