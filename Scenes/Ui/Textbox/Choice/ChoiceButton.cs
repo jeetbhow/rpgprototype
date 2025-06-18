@@ -1,6 +1,6 @@
 using Godot;
 
-public partial class ChoiceButton : PanelContainer
+public partial class ChoiceButton : RichTextLabel
 {
     [Signal] public delegate void PressedEventHandler(ChoiceButton panel);
 
