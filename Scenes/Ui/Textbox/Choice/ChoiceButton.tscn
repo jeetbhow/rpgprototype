@@ -1,32 +1,17 @@
-[gd_scene load_steps=6 format=3 uid="uid://btrajdgilaf0d"]
+[gd_scene load_steps=5 format=3 uid="uid://btrajdgilaf0d"]
 
 [ext_resource type="StyleBox" uid="uid://68msogk2h6y6" path="res://Resources/Styles/UIPanel.tres" id="1_ilv2b"]
+[ext_resource type="Theme" uid="uid://x6m3btvacua5" path="res://Resources/Styles/TextboxDefaultTheme.tres" id="1_wwuf5"]
 [ext_resource type="Script" uid="uid://cf8jmuuq02ef4" path="res://Scenes/UI/Textbox/Choice/ChoiceButton.cs" id="2_wwuf5"]
 [ext_resource type="StyleBox" uid="uid://c1goa38qp8scf" path="res://Resources/Styles/UIPanelHover.tres" id="4_wwuf5"]
 
-[sub_resource type="Theme" id="Theme_333sx"]
-TooltipPanel/styles/panel = ExtResource("1_ilv2b")
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qnrx4"]
-content_margin_left = 0.0
-content_margin_top = 0.0
-content_margin_right = 0.0
-content_margin_bottom = 0.0
-bg_color = Color(0.105882, 0.00392157, 0.0117647, 0.847059)
-border_color = Color(1, 0.280104, 0.282142, 1)
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
-anti_aliasing_size = 8.0
-
 [node name="ChoiceButton" type="PanelContainer" node_paths=PackedStringArray("Label")]
-offset_right = 200.0
-offset_bottom = 30.0
+offset_right = 19.0
+offset_bottom = 10.0
 mouse_force_pass_scroll_events = false
 mouse_default_cursor_shape = 2
-theme = SubResource("Theme_333sx")
-theme_override_styles/panel = SubResource("StyleBoxFlat_qnrx4")
+theme = ExtResource("1_wwuf5")
+theme_override_styles/panel = ExtResource("1_ilv2b")
 script = ExtResource("2_wwuf5")
 Style = ExtResource("1_ilv2b")
 HoverStyle = ExtResource("4_wwuf5")
@@ -34,7 +19,9 @@ Label = NodePath("MarginContainer/RichTextLabel")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2
+theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 
 [node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer"]

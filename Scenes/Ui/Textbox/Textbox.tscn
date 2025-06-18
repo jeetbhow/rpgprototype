@@ -27,10 +27,10 @@ size_flags_horizontal = 0
 size_flags_vertical = 0
 theme = ExtResource("1_uadx1")
 script = ExtResource("2_p3gdj")
-TextLabel = NodePath("MarginContainer/HBoxContainer/Textbox/OuterMargin/HBoxContainer/VBoxContainer/Text")
-NameLabel = NodePath("MarginContainer/HBoxContainer/Textbox/OuterMargin/HBoxContainer/VBoxContainer/Name")
+TextLabel = NodePath("MarginContainer/HBoxContainer/Textbox/MarginContainer/VBoxContainer/Text")
+NameLabel = NodePath("MarginContainer/HBoxContainer/Textbox/MarginContainer/VBoxContainer/Name")
 Portrait = NodePath("MarginContainer/HBoxContainer/Portrait")
-ChoiceContainer = NodePath("MarginContainer/HBoxContainer/Textbox/OuterMargin/HBoxContainer/VBoxContainer/MarginContainer/Choices")
+ChoiceContainer = NodePath("MarginContainer/HBoxContainer/Textbox/MarginContainer/VBoxContainer/MarginContainer/Choices")
 Tooltip = NodePath("MarginContainer/ChoiceTooltip")
 SfxTimer = NodePath("SfxTimer")
 Sfx = NodePath("Sfx")
@@ -79,69 +79,67 @@ Textbox = NodePath("../..")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -184.0
+offset_left = 6.0
+offset_top = -1.0
+offset_right = 6.0
+offset_bottom = -1.0
 grow_horizontal = 2
-grow_vertical = 0
+grow_vertical = 2
 theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 20
+theme_override_constants/margin_bottom = 5
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 8
-theme_override_constants/separation = 20
+theme_override_constants/separation = 5
 
 [node name="Portrait" parent="MarginContainer/HBoxContainer" instance=ExtResource("10_squph")]
 layout_mode = 2
 
 [node name="Textbox" type="PanelContainer" parent="MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(360, 0)
 layout_mode = 2
 theme_override_styles/panel = ExtResource("11_ao6v7")
 
-[node name="OuterMargin" type="MarginContainer" parent="MarginContainer/HBoxContainer/Textbox"]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/Textbox"]
 layout_mode = 2
-theme_override_constants/margin_left = 40
-theme_override_constants/margin_top = 20
-theme_override_constants/margin_right = 20
-theme_override_constants/margin_bottom = 20
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/Textbox/OuterMargin"]
-layout_mode = 2
-theme_override_constants/separation = 20
-
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/Textbox/OuterMargin/HBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/Textbox/MarginContainer"]
 clip_contents = true
 layout_mode = 2
+theme_override_constants/separation = 10
 
-[node name="Name" type="RichTextLabel" parent="MarginContainer/HBoxContainer/Textbox/OuterMargin/HBoxContainer/VBoxContainer"]
+[node name="Name" type="RichTextLabel" parent="MarginContainer/HBoxContainer/Textbox/MarginContainer/VBoxContainer"]
 clip_contents = false
-custom_minimum_size = Vector2(80, 35)
 layout_mode = 2
-size_flags_horizontal = 0
 size_flags_vertical = 0
+fit_content = true
 scroll_active = false
 
-[node name="Text" type="RichTextLabel" parent="MarginContainer/HBoxContainer/Textbox/OuterMargin/HBoxContainer/VBoxContainer"]
-clip_contents = false
-custom_minimum_size = Vector2(600, 60)
+[node name="Text" type="RichTextLabel" parent="MarginContainer/HBoxContainer/Textbox/MarginContainer/VBoxContainer"]
 layout_mode = 2
+size_flags_vertical = 3
 bbcode_enabled = true
 fit_content = true
 scroll_active = false
 visible_characters = 0
 visible_ratio = 0.0
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/Textbox/OuterMargin/HBoxContainer/VBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/Textbox/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 100
 theme_override_constants/margin_right = 100
 theme_override_constants/margin_bottom = 5
 
-[node name="Choices" type="VBoxContainer" parent="MarginContainer/HBoxContainer/Textbox/OuterMargin/HBoxContainer/VBoxContainer/MarginContainer"]
+[node name="Choices" type="VBoxContainer" parent="MarginContainer/HBoxContainer/Textbox/MarginContainer/VBoxContainer/MarginContainer"]
 layout_mode = 2
 
 [node name="ChoiceTooltip" parent="MarginContainer" instance=ExtResource("12_q8sd0")]

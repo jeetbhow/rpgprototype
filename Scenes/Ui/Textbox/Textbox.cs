@@ -67,9 +67,17 @@ public partial class Textbox : Control
             return null;
         }
 
-        NameLabel.Text = CurrNode.Name ?? string.Empty;
-        NameLabel.CustomMinimumSize = string.IsNullOrEmpty(NameLabel.Text) ? Vector2.Zero : _nameLabelSize;
+        if (string.IsNullOrEmpty(CurrNode.Name))
+        {
+            NameLabel.Visible = false;
+        }
+        else
+        {
+            NameLabel.Text = CurrNode.Name ?? string.Empty;
+            NameLabel.Visible = true;
+        }
 
+        
         if (!string.IsNullOrEmpty(CurrNode.Portrait) && portraits.TryGetValue(CurrNode.Portrait, out var tex))
         {
             Portrait.SetTexture(tex);
@@ -79,7 +87,6 @@ public partial class Textbox : Control
         {
             Portrait.SetTexture(null);
             Portrait.Hide();
-            TextLabel.CustomMinimumSize += Portrait.GetSize();
         }
 
         return CurrNode.Text;
@@ -153,6 +160,7 @@ public partial class Textbox : Control
             if (data.Type == "skill")
             {
                 var skillCheckData = (SkillCheckData)data;
+                
                 choiceButton.SetColor(SkillManager.GetSkillColor(skillCheckData.Skill.Type));
                 choiceButton.MouseEntered += () => OnSkillCheckHover((SkillCheckData)data);
                 choiceButton.MouseExited += () => OnSkillCheckExit();

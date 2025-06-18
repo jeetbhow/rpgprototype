@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://rs3vfprhj0ad"
-path="res://.godot/imported/Silver.ttf-c31e96d40ca231465b216445d12d529b.fontdata"
+uid="uid://d3kkkbpe8fmvl"
+path="res://.godot/imported/DePixelKlein.otf-990e31a4f1986ab8c422f20c0f404090.fontdata"
 
 [deps]
 
-source_file="res://Resources/Fonts/Silver.ttf"
-dest_files=["res://.godot/imported/Silver.ttf-c31e96d40ca231465b216445d12d529b.fontdata"]
+source_file="res://Resources/Fonts/DePixelKlein.otf"
+dest_files=["res://.godot/imported/DePixelKlein.otf-990e31a4f1986ab8c422f20c0f404090.fontdata"]
 
 [params]
 

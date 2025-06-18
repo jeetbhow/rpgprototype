@@ -14,7 +14,7 @@
 			"choices": [
 				{
 					"type": "regular",
-					"text": "What is this doing here?",
+					"text": "What is this?",
 					"next": "inquire"
 				},
 				{
@@ -38,8 +38,7 @@
 			"type": "jump",
 			"name": "Jeet",
 			"portrait": "Jeet",
-			"text": "This must be the gardener's watering can. I've actually seen
-			her every now and then coming here to water the flowers. [pause=1]She's pretty attentive.",
+			"text": "It's a watering can.",
 			"next": "options"
 		}
 	],
@@ -48,6 +47,13 @@
 		{
 			"type": "regular",
 			"text": "You kick the watering can."
+		},
+		{
+			"type": "jump",
+			"name": "Jeet",
+			"portrait": "Jeet",
+			"text": "Congratulations. I'm sure you're very proud of yourself.",
+			"next": "options"
 		}
 	],
 
