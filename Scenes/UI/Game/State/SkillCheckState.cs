@@ -1,10 +1,9 @@
 using Godot;
 using System.Threading.Tasks;
 
-using Newtonsoft.Json;
-
 public partial class SkillCheckState : StateNode
 {
+    [Export] public UI UI { get; set; }
     [Export] public StateNode WaitingStateNode { get; set; }
     [Export] public Textbox Textbox { get; set; }
 
@@ -18,21 +17,22 @@ public partial class SkillCheckState : StateNode
 
     public override async Task Enter()
     {
-        Textbox.ResetText();
-
-        bool result = SkillManager.PerformSkillCheck(Textbox.PlayerData, Textbox.CurrSkillCheck);
+        UI.Reset();
+        
+        bool result = SkillManager.PerformSkillCheck(UI.PlayerData, UI.CurrSkillCheck);
         if (result)
         {
-            await Textbox.ProcessAndWriteText(".[pause=1000] .[pause=1000] .[pause=1000] You passed!");
+            await UI.ProcessAndWriteText(".[pause=1000] .[pause=1000] .[pause=1000] You passed!");
             _soundManager.PlaySfx(SoundManager.Sfx.Success);
-            Textbox.CurrNode.Next = Textbox.CurrSkillCheck.SuccessNext;
+            UI.CurrNode.Next = UI.CurrSkillCheck.SuccessNext;
         }
         else
         {
-            await Textbox.ProcessAndWriteText(".[pause=1000] .[pause=1000] .[pause=1000] You failed!");
+            await UI.ProcessAndWriteText(".[pause=1000] .[pause=1000] .[pause=1000] You failed!");
             _soundManager.PlaySfx(SoundManager.Sfx.Fail);
-            Textbox.CurrNode.Next = Textbox.CurrSkillCheck.FailNext;
+            UI.CurrNode.Next = UI.CurrSkillCheck.FailNext;
         }
+
         EmitSignal(SignalName.StateUpdate, WaitingStateNode.Name);
     }
 

@@ -6,7 +6,7 @@
 [ext_resource type="AudioStream" uid="uid://b75w38i53qt6o" path="res://Assets/Audio/omori.mp3" id="4_8eiep"]
 [ext_resource type="Script" uid="uid://cw4fe2r8yjb30" path="res://Scripts/Components/CameraMarkers/CameraMarkers.cs" id="5_o1kgu"]
 [ext_resource type="PackedScene" uid="uid://dlkisbfbk2cgn" path="res://Scenes/Party/Jeet/Jeet.tscn" id="6_etvs2"]
-[ext_resource type="PackedScene" uid="uid://blbwejmtme5rj" path="res://Scenes/UI/UI.tscn" id="7_ie6ax"]
+[ext_resource type="PackedScene" uid="uid://blbwejmtme5rj" path="res://Scenes/UI/Game/UI.tscn" id="7_ie6ax"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_4av0q"]
 texture = ExtResource("1_tkqpj")
@@ -163,6 +163,10 @@ sources/0 = SubResource("TileSetAtlasSource_4av0q")
 z_as_relative = false
 y_sort_enabled = true
 
+[node name="UICanvas" type="CanvasLayer" parent="."]
+
+[node name="UI" parent="UICanvas" instance=ExtResource("7_ie6ax")]
+
 [node name="TileMapLayers" type="Node2D" parent="."]
 y_sort_enabled = true
 
@@ -198,11 +202,6 @@ y_sort_enabled = true
 tile_map_data = PackedByteArray("AAAHAPf/AAAJAAoAAAASAPf/AAAKAAkAAAAQAPf/AAALAAcAAAAFAO7/AAAIABQAAAABAPL/AAABABMAAAABAP3/AAAAAAQAAAAKAP3/AAACAAYAAAAPAP//AAAAAAoAAAAEAAAAAAAGAAwAAAAJAAEAAAAJAAkAAAAQAAEAAAAFAAsAAAD9//j/AAABABMAAAAKAO7/AAAVABwAAAAJAO//AAAJAAQAAAACAO7/AQAAAAAAAQA=")
 tile_set = ExtResource("2_4av0q")
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-process_mode = 3
-stream = ExtResource("4_8eiep")
-parameters/looping = true
-
 [node name="CameraMarkers" type="Node2D" parent="." node_paths=PackedStringArray("Party")]
 script = ExtResource("5_o1kgu")
 Party = NodePath("../Party")
@@ -228,4 +227,7 @@ MoveSpeed = 40.0
 position = Vector2(177, -522)
 Facing = 1
 
-[node name="Ui" parent="." instance=ExtResource("7_ie6ax")]
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+process_mode = 3
+stream = ExtResource("4_8eiep")
+parameters/looping = true

@@ -2,7 +2,7 @@
 
 using Godot;
 
-public partial class ChoiceData : Resource
+public partial class Choice : Resource
 {
     public required string Type { get; set; }
     public required string Text { get; set; }

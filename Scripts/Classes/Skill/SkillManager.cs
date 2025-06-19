@@ -25,7 +25,7 @@ public static class SkillManager
         };
     }
 
-    public static bool PerformSkillCheck(PlayerData playerData, SkillCheckData skillCheckData)
+    public static bool PerformSkillCheck(PlayerData playerData, SkillCheck skillCheckData)
     {
         SkillType skillType = skillCheckData.Skill.Type;
         int playerModifier = skillType switch
@@ -43,10 +43,10 @@ public static class SkillManager
         return r1 + r2 >= difficulty;
     }
 
-    public static float GetSuccessChance(PlayerData playerData, SkillCheckData skillCheckData)
+    public static float GetSuccessChance(PlayerData playerData, SkillCheck skillCheckData)
     {
         SkillType type = skillCheckData.Skill.Type;
-        int playerModifier = playerData.GetSkill(type).Value;
+        int playerModifier = playerData.GetSkillValue(type);
 
         int difficulty = skillCheckData.Skill.Value - playerModifier;
         return difficulty switch

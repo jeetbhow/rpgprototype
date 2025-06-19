@@ -1,6 +1,6 @@
 #nullable enable
 
-public partial class SkillCheckData : ChoiceData
+public partial class SkillCheck : Choice
 {
     public required Skill Skill { get; set; }
     public required string SuccessNextId { get; set; }

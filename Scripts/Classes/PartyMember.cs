@@ -1,6 +1,5 @@
 using Godot;
 
-[GlobalClass]
 public partial class PartyMember : CharacterBody2D
 {
     [Export] public NPCDataType.Facing Facing { get; set; }

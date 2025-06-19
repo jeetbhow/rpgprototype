@@ -5,15 +5,14 @@ using Godot.Collections;
 [GlobalClass]
 public partial class Party : Node2D
 {
-
     [Export] public NPCDataType.Facing Facing { get; set; }
-    [Export] public float MoveSpeed { get; set; } = 30.0f;
-    [Export] public float PartyFollowDistance { get; set; } = 15.0f;
-    [Export] public float PartyFollowLag { get; set; } = 15.0f;
     [Export] public Array<PartyMember> PartyMembers { get; set; }
     [Export] public PartyMember PartyLeader { get; set; }
     [Export] public Camera2D Camera { get; set; }
-
+    [Export] public float MoveSpeed { get; set; } = 30.0f;
+    [Export] public float PartyFollowDistance { get; set; } = 15.0f;
+    [Export] public float PartyFollowLag { get; set; } = 15.0f;
+    
     private EventBus eventBus;
 
     public override void _Ready()

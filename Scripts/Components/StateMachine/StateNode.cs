@@ -9,6 +9,7 @@ public abstract partial class StateNode : Node
 
     public override void _Ready()
     {
+        SetProcessUnhandledInput(false);
         SetProcessInput(false);
         SetProcess(false);
         SetPhysicsProcess(false);

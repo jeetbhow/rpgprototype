@@ -41,6 +41,7 @@ public partial class StateMachine : Node
     public static void EnableStateNode(StateNode stateNode)
     {
         stateNode.Enter();
+        stateNode.SetProcessUnhandledInput(true);
         stateNode.SetProcessInput(true);
         stateNode.SetProcess(true);
         stateNode.SetPhysicsProcess(true);
@@ -48,6 +49,7 @@ public partial class StateMachine : Node
 
     public static void DisableStateNode(StateNode stateNode)
     {
+        stateNode.SetProcessUnhandledInput(false);
         stateNode.SetProcessInput(false);
         stateNode.SetProcess(false);
         stateNode.SetPhysicsProcess(false);

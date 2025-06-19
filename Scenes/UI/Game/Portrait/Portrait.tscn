@@ -1,0 +1,32 @@
+[gd_scene load_steps=4 format=3 uid="uid://blyv6jei4aa5x"]
+
+[ext_resource type="StyleBox" uid="uid://68msogk2h6y6" path="res://Resources/Styles/UIPanel.tres" id="1_w2b7x"]
+[ext_resource type="Script" uid="uid://d4e0d51lculqo" path="res://Scenes/UI/Game/Portrait/Portrait.cs" id="2_843it"]
+[ext_resource type="Texture2D" uid="uid://lrx7vtu7ef5u" path="res://Assets/Characters/Jeet/jeet-face.png" id="3_nw5hk"]
+
+[node name="Portrait" type="PanelContainer" node_paths=PackedStringArray("Texture")]
+custom_minimum_size = Vector2(50, 0)
+offset_right = 62.0
+offset_bottom = 62.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_styles/panel = ExtResource("1_w2b7x")
+script = ExtResource("2_843it")
+Texture = NodePath("MarginContainer/Texture")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+theme_override_constants/margin_left = 6
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 6
+theme_override_constants/margin_bottom = 6
+
+[node name="Texture" type="TextureRect" parent="MarginContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture = ExtResource("3_nw5hk")
+expand_mode = 5
+stretch_mode = 5

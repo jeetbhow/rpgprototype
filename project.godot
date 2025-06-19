@@ -22,8 +22,8 @@ SoundManager="*res://Scripts/Autoloads/SoundManager/SoundManager.tscn"
 
 [display]
 
-window/size/viewport_width=640
-window/size/viewport_height=360
+window/size/viewport_width=1280
+window/size/viewport_height=720
 window/size/window_width_override=1280
 window/size/window_height_override=720
 window/stretch/mode="viewport"
@@ -36,6 +36,7 @@ project/assembly_name="RPGPrototype"
 [file_customization]
 
 folder_colors={
+"res://Assets/": "green",
 "res://Resources/": "yellow",
 "res://Scenes/": "red",
 "res://Scripts/": "purple"

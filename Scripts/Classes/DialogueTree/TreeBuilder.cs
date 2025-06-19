@@ -108,7 +108,7 @@ public static class TreeBuilder
                         break;
                     case "choice":
                         ChoiceNode cn = (ChoiceNode)currNode;
-                        foreach (var choice in cn.ChoiceData)
+                        foreach (var choice in cn.Choices)
                         {
                             switch (choice.Type)
                             {
@@ -116,7 +116,7 @@ public static class TreeBuilder
                                     choice.Next = nodes[choice.NextId][0];
                                     break;
                                 case "skill":
-                                    SkillCheckData scd = (SkillCheckData)choice;
+                                    SkillCheck scd = (SkillCheck)choice;
                                     scd.SuccessNext = nodes[scd.SuccessNextId][0];
                                     scd.FailNext = nodes[scd.FailNextId][0];
                                     break;
@@ -138,14 +138,14 @@ public static class TreeBuilder
     {
         var dialogue = token.ToObject<SerializedDialogue>()!;
         var choices = (JArray)token["choices"]!;
-        var choiceDataArray = new ChoiceData[choices.Count];
+        var choiceDataArray = new Choice[choices.Count];
 
         for (int i = 0; i < choices.Count; i++)
         {
             var choiceToken = choices[i];
             string type = choiceToken["type"]!.Value<string>();
 
-            ChoiceData data;
+            Choice data;
             switch (type)
             {
                 case "regular":
@@ -163,7 +163,7 @@ public static class TreeBuilder
                 {
                     var serSkillCheck = choiceToken.ToObject<SerializedSkillCheck>();
                     Skill skill = new(Skill.TypeFromString(serSkillCheck.SkillName), serSkillCheck.Difficulty);
-                    data = new SkillCheckData
+                    data = new SkillCheck
                     {
                         Type = serSkillCheck.Type,
                         Text = serSkillCheck.Text,
@@ -195,7 +195,7 @@ public static class TreeBuilder
             Text = dialogue.Text,
             Name = dialogue.Name,
             Portrait = dialogue.Portrait,
-            ChoiceData = choiceDataArray
+            Choices = choiceDataArray
         };
     }
 
