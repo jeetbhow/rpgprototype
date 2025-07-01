@@ -11,7 +11,7 @@
 [ext_resource type="Script" uid="uid://dkj5ioqi8am46" path="res://Scenes/UI/Game/State/WaitingState.cs" id="7_nqsl3"]
 [ext_resource type="Script" uid="uid://366fd5tl8iho" path="res://Scenes/UI/Game/State/ChoiceState.cs" id="8_u6hof"]
 [ext_resource type="Script" uid="uid://cdfi3etqxqt8y" path="res://Scenes/UI/Game/State/SkillCheckState.cs" id="9_thdbn"]
-[ext_resource type="PackedScene" uid="uid://btrajdgilaf0d" path="res://Scenes/UI/Game/Choice/Button/ChoiceButton.tscn" id="10_4ayp3"]
+[ext_resource type="PackedScene" uid="uid://btrajdgilaf0d" path="res://Scenes/UI/Game/Choice/Content/ChoiceContent.tscn" id="10_4ayp3"]
 
 [node name="UI" type="MarginContainer" node_paths=PackedStringArray("Textbox", "Portrait", "Tooltip")]
 process_mode = 2

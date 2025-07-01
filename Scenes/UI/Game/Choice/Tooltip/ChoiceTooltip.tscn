@@ -6,25 +6,25 @@
 
 [node name="Tooltip" type="PanelContainer" node_paths=PackedStringArray("SkillLabel", "DifficultyLabel", "OddsLabel", "ProbabilityLabel")]
 offset_left = 1.0
-offset_right = 171.0
-offset_bottom = 127.0
+offset_right = 213.0
+offset_bottom = 150.0
 scale = Vector2(1.00253, 0.989538)
 size_flags_horizontal = 0
 size_flags_vertical = 0
 theme = ExtResource("1_dfkcu")
 theme_override_styles/panel = ExtResource("2_5nhej")
 script = ExtResource("3_7l7cv")
-SkillLabel = NodePath("Margin/Content/MarginContainer/Info/Skill")
-DifficultyLabel = NodePath("Margin/Content/MarginContainer/Info/Difficulty")
-OddsLabel = NodePath("Margin/Content/MarginContainer/Info/Odds")
-ProbabilityLabel = NodePath("Margin/Content/Probability")
+SkillLabel = NodePath("Margin/Content/Info/Skill")
+DifficultyLabel = NodePath("Margin/Content/Info/Difficulty")
+OddsLabel = NodePath("Margin/Content/Info/Odds")
+ProbabilityLabel = NodePath("Margin/Content/Info/MarginContainer/Probability")
 
 [node name="Margin" type="MarginContainer" parent="."]
 layout_mode = 2
-theme_override_constants/margin_left = 4
-theme_override_constants/margin_top = 12
-theme_override_constants/margin_right = 8
-theme_override_constants/margin_bottom = 12
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
 
 [node name="Content" type="VBoxContainer" parent="Margin"]
 custom_minimum_size = Vector2(100, 0)
@@ -32,41 +32,30 @@ layout_mode = 2
 size_flags_horizontal = 0
 theme_override_constants/separation = 8
 
-[node name="Probability" type="RichTextLabel" parent="Margin/Content"]
-clip_contents = false
-layout_mode = 2
-theme_override_font_sizes/normal_font_size = 24
-text = "92%"
-fit_content = true
-scroll_active = false
-horizontal_alignment = 1
-
-[node name="MarginContainer" type="MarginContainer" parent="Margin/Content"]
-layout_mode = 2
-theme_override_constants/margin_left = 8
-
-[node name="Info" type="VBoxContainer" parent="Margin/Content/MarginContainer"]
-custom_minimum_size = Vector2(150, 0)
+[node name="Info" type="VBoxContainer" parent="Margin/Content"]
+custom_minimum_size = Vector2(180, 0)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
-theme_override_constants/separation = 4
+theme_override_constants/separation = 8
 
-[node name="Skill" type="RichTextLabel" parent="Margin/Content/MarginContainer/Info"]
+[node name="Skill" type="RichTextLabel" parent="Margin/Content/Info"]
 clip_contents = false
 layout_mode = 2
 bbcode_enabled = true
 text = "[color=#f55442]Strength: 2[/color]"
 fit_content = true
 scroll_active = false
+horizontal_alignment = 1
 
-[node name="Difficulty" type="RichTextLabel" parent="Margin/Content/MarginContainer/Info"]
+[node name="Difficulty" type="RichTextLabel" parent="Margin/Content/Info"]
 clip_contents = false
 layout_mode = 2
 text = "Difficulty: 10"
 fit_content = true
+horizontal_alignment = 1
 
-[node name="Odds" type="RichTextLabel" parent="Margin/Content/MarginContainer/Info"]
+[node name="Odds" type="RichTextLabel" parent="Margin/Content/Info"]
 clip_contents = false
 layout_mode = 2
 size_flags_vertical = 3
@@ -74,3 +63,18 @@ bbcode_enabled = true
 text = "Odds: [color=#56db5a]High[/color]"
 fit_content = true
 scroll_active = false
+horizontal_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="Margin/Content/Info"]
+layout_mode = 2
+theme_override_constants/margin_top = 8
+
+[node name="Probability" type="RichTextLabel" parent="Margin/Content/Info/MarginContainer"]
+clip_contents = false
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_font_sizes/normal_font_size = 32
+text = "92%"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 1

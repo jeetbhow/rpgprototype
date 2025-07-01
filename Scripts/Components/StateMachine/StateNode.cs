@@ -2,11 +2,11 @@ using Godot;
 using System.Threading.Tasks;
 
 [GlobalClass]
-public abstract partial class StateNode : Node
+public partial class StateNode : Node
 {
     [Signal]
     public delegate void StateUpdateEventHandler(string eventName);
-
+    
     public override void _Ready()
     {
         SetProcessUnhandledInput(false);
@@ -15,6 +15,6 @@ public abstract partial class StateNode : Node
         SetPhysicsProcess(false);
     }
 
-    public abstract Task Enter();
-    public abstract Task Exit();
+    public virtual Task Enter() => Task.CompletedTask;
+    public virtual Task Exit() => Task.CompletedTask;
 }

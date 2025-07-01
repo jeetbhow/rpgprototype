@@ -9,7 +9,7 @@ public partial class EnabledState : StateNode
 
     public override void _Input(InputEvent @event)
     {
-        if (!@event.IsActionPressed("Accept") || UI.SkipRequested) return;
+        if (!@event.IsActionPressed("Accept") || UI.Textbox.SkipRequested) return;
             UI.Skip();
         GetViewport().SetInputAsHandled();
     }

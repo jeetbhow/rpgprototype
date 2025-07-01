@@ -15,8 +15,6 @@ public partial class UI : Control
 
     public DialogueNode CurrNode { get; set; }
     public SkillCheck CurrSkillCheck { get; set; }
-    public bool SkipRequested { get; set; }
-    public string TextBuffer { get; set; }      // Contains the entire text buffer with patterns removed.
 
     private SoundManager _soundManager;
     private EventBus _eventBus;
@@ -64,21 +62,21 @@ public partial class UI : Control
     public async Task WriteText()
     {
         Reset();
-        await ProcessAndWriteText(LoadCurrNode());
+        await Textbox.ProcessAndWriteText(LoadCurrNode());
     }
 
     public void Reset()
     {
-        SkipRequested = false;
+        Textbox.SkipRequested = false;
         Textbox.TextLabel.Text = "";
         Textbox.TextLabel.VisibleCharacters = 0;
     }
 
     public void Skip()
     {
-        SkipRequested = true;
-        Textbox.SetText(TextBuffer);
-        Textbox.SetVisibleChars(TextBuffer.Length);
+        Textbox.SkipRequested = true;
+        Textbox.SetText(Textbox.TextBuffer);
+        Textbox.SetVisibleChars(Textbox.TextBuffer.Length);
         Textbox.SfxTimer.Stop();
     }
 
@@ -94,64 +92,6 @@ public partial class UI : Control
             HidePortrait();
         else ShowPortrait(_portraits[CurrNode.Portrait]);
         return CurrNode.Text;
-    }
-
-    public async Task ProcessAndWriteText(string text)
-    {
-        const string pattern = @"(\[\w+=\d+\])";
-
-        TextBuffer = Regex.Replace(text, pattern, "");
-
-        string[] parts = Regex.Split(text, pattern);
-        int visibleChars = 0;
-        foreach (var part in parts)
-        {
-            if (SkipRequested) break;
-
-            // Parse the command
-            if (part.StartsWith('[') && part.EndsWith(']'))
-            {
-                string inner = part[1..^1];
-                string[] tokens = inner.Split('=');
-                string command = tokens[0];
-                string value = tokens[1];
-
-                switch (command)
-                {
-                    case "pause":
-                        await ToSignal(
-                            GetTree().CreateTimer(float.Parse(value) / 1000),       // Convert ms to s.
-                            Timer.SignalName.Timeout
-                        );
-                        break;
-                }
-                continue;
-            }
-
-            // Render the actual text with the scrolling effect.
-            int start = visibleChars;
-            int end = start + part.Length;
-            Textbox.AppendText(part);
-
-            await Typewriter(start, end);
-
-            visibleChars = end;
-        }
-    }
-
-    public async Task Typewriter(int start, int end)
-    {
-        Textbox.SfxTimer.Start();
-
-        int curr = start;
-        while (curr < end)
-        {
-            Textbox.SetVisibleChars(++curr);
-            await ToSignal(GetTree().CreateTimer(0.02f), Timer.SignalName.Timeout);
-            if (SkipRequested) return;
-        }
-
-        Textbox.SfxTimer.Stop();
     }
 
     public void SetAndShowTooltip(SkillCheck skillCheck)

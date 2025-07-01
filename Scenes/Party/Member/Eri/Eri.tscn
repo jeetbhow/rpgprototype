@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://bi2b0cm7mniaa"]
+
+[ext_resource type="SpriteFrames" uid="uid://5wttaetuicnt" path="res://Resources/Spriteframes/Eri.tres" id="1_ramyt"]
+[ext_resource type="Script" uid="uid://mkyx5w0l1qd4" path="res://Scenes/Party/Member/PartyMember.cs" id="1_sf0up"]
+[ext_resource type="Texture2D" uid="uid://4eerix34hw16" path="res://Assets/Characters/shadow.png" id="2_sf0up"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ramyt"]
+size = Vector2(16, 13)
+
+[node name="Eri" type="CharacterBody2D" node_paths=PackedStringArray("AnimatedSprite2D", "CollisionShape2D")]
+y_sort_enabled = true
+collision_mask = 4
+script = ExtResource("1_sf0up")
+AnimatedSprite2D = NodePath("AnimatedSprite2D")
+CollisionShape2D = NodePath("CollisionShape2D")
+
+[node name="Shadow" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.207843)
+y_sort_enabled = true
+position = Vector2(0, 1)
+texture = ExtResource("2_sf0up")
+offset = Vector2(0, 15)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+y_sort_enabled = true
+sprite_frames = ExtResource("1_ramyt")
+animation = &"WalkUp"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 8.5)
+shape = SubResource("RectangleShape2D_ramyt")
+disabled = true

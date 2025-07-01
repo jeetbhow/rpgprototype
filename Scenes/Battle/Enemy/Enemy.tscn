@@ -1,0 +1,91 @@
+[gd_scene load_steps=10 format=3 uid="uid://d1yvb465tt7ik"]
+
+[ext_resource type="Script" uid="uid://bkb5mjrrkux0b" path="res://Scenes/Battle/Enemy/Enemy.cs" id="1_5aqwu"]
+[ext_resource type="Texture2D" uid="uid://4eerix34hw16" path="res://Assets/Characters/shadow.png" id="1_cgxef"]
+[ext_resource type="Texture2D" uid="uid://cddkxetbmoyh3" path="res://Assets/Enemies/jerry.png" id="1_jodb1"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cgxef"]
+atlas = ExtResource("1_jodb1")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wi3hf"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cgxef")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="Animation" id="Animation_86mjl"]
+resource_name = "FadeIn"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 0.17),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_ngiaa"]
+resource_name = "FadeOut"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 0.17),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_2k0bg"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2k0bg"]
+_data = {
+&"FadeIn": SubResource("Animation_86mjl"),
+&"FadeOut": SubResource("Animation_ngiaa"),
+&"RESET": SubResource("Animation_2k0bg")
+}
+
+[node name="Enemy" type="Node2D"]
+script = ExtResource("1_5aqwu")
+
+[node name="Shadow" type="Sprite2D" parent="."]
+position = Vector2(0, 11)
+scale = Vector2(1.60938, 1.60938)
+texture = ExtResource("1_cgxef")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_wi3hf")
+autoplay = "default"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_2k0bg")
+}

@@ -1,0 +1,56 @@
+[gd_scene load_steps=10 format=3 uid="uid://bhlaeslv50jid"]
+
+[ext_resource type="Script" uid="uid://bxwqvj1ig43b2" path="res://Scenes/Battle/Battle.cs" id="1_07e4u"]
+[ext_resource type="Resource" uid="uid://bs8b37iwqpsr1" path="res://Resources/Enemies/Jeff.tres" id="3_dcr6b"]
+[ext_resource type="PackedScene" uid="uid://c1spltfe4tynv" path="res://Scenes/Battle/UI/PartyInfoPanel/PartyInfoPanel.tscn" id="3_rremj"]
+[ext_resource type="Script" uid="uid://bxy8ovbqm6hg6" path="res://Scenes/Battle/State/BattleStart.cs" id="4_g1sps"]
+[ext_resource type="Script" uid="uid://c6hmuq7bnmysi" path="res://Scripts/Components/StateMachine/StateMachine.cs" id="4_odh8s"]
+[ext_resource type="Script" uid="uid://qtbhuggay4jp" path="res://Scenes/Battle/State/BattleStandby.cs" id="5_dcr6b"]
+[ext_resource type="PackedScene" uid="uid://d1yvb465tt7ik" path="res://Scenes/Battle/Enemy/Enemy.tscn" id="5_rremj"]
+[ext_resource type="Script" uid="uid://dcifapt71jp00" path="res://Scripts/Components/StateMachine/StateNode.cs" id="7_tmq01"]
+[ext_resource type="PackedScene" uid="uid://cgfmftu70tvgf" path="res://Scenes/Battle/UI/BattleUI.tscn" id="9_tmq01"]
+
+[node name="Battle" type="Node2D"]
+script = ExtResource("1_07e4u")
+PartyInfoPanelScene = ExtResource("3_rremj")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(4, 4)
+
+[node name="EnemyNodes" type="Node2D" parent="."]
+
+[node name="Jeff" parent="EnemyNodes" instance=ExtResource("5_rremj")]
+Data = ExtResource("3_dcr6b")
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("CurrStateNode")]
+script = ExtResource("4_odh8s")
+CurrStateNode = NodePath("BattleStart")
+metadata/_custom_type_script = "uid://c6hmuq7bnmysi"
+
+[node name="BattleStart" type="Node" parent="StateMachine" node_paths=PackedStringArray("Battle", "BattleStandby")]
+script = ExtResource("4_g1sps")
+Battle = NodePath("../..")
+BattleStandby = NodePath("../BattleStandby")
+
+[node name="BattleStandby" type="Node" parent="StateMachine" node_paths=PackedStringArray("Battle")]
+script = ExtResource("5_dcr6b")
+Battle = NodePath("../..")
+metadata/_custom_type_script = "uid://dcifapt71jp00"
+
+[node name="BattleNPCTurn" type="Node" parent="StateMachine"]
+script = ExtResource("7_tmq01")
+metadata/_custom_type_script = "uid://dcifapt71jp00"
+
+[node name="BattlePlayerTurn" type="Node" parent="StateMachine"]
+script = ExtResource("7_tmq01")
+metadata/_custom_type_script = "uid://dcifapt71jp00"
+
+[node name="BattleEnd" type="Node" parent="StateMachine"]
+script = ExtResource("7_tmq01")
+metadata/_custom_type_script = "uid://dcifapt71jp00"
+
+[node name="BattleUI" parent="." instance=ExtResource("9_tmq01")]
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="Music" type="AudioStreamPlayer" parent="."]

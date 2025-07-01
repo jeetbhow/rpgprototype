@@ -19,6 +19,7 @@ public partial class Party : Node2D
     {
         eventBus = GetNode<EventBus>(EventBus.Path);
         eventBus.PartyMemberAdded += OnPartyMemberAdded;
+
         RemoveChild(Camera);
         PartyLeader.AddChild(Camera);
         UpdateParty();
@@ -31,12 +32,12 @@ public partial class Party : Node2D
             if (member == PartyLeader)
             {
                 member.IsPartyLeader = true;
-                InitCollisions(member, GameObject.CollisionLayer.PARTY_LEADER);
+                InitCollisions(member, CollisionObject.CollisionLayer.PARTY_LEADER);
             }
             else
             {
                 member.IsPartyLeader = false;
-                InitCollisions(member, GameObject.CollisionLayer.PARTY_MEMBER);
+                InitCollisions(member, CollisionObject.CollisionLayer.PARTY_MEMBER);
             }
             member.Visible = true;
         }
@@ -111,23 +112,23 @@ public partial class Party : Node2D
         PartyLeader.PlayAnimation(animName);
     }
 
-    private static void InitCollisions(PartyMember member, GameObject.CollisionLayer type)
+    private static void InitCollisions(PartyMember member, CollisionObject.CollisionLayer type)
     {
         switch (type)
         {
-            case GameObject.CollisionLayer.PARTY_LEADER:
-                member.SetCollisionLayerValue((int)GameObject.CollisionLayer.PARTY_LEADER, true);
-                member.SetCollisionLayerValue((int)GameObject.CollisionLayer.PARTY_MEMBER, false);
-                member.SetCollisionLayerValue((int)GameObject.CollisionLayer.OBJECT, false);
-                member.SetCollisionMaskValue((int)GameObject.CollisionLayer.OBJECT, true);
+            case CollisionObject.CollisionLayer.PARTY_LEADER:
+                member.SetCollisionLayerValue((int)CollisionObject.CollisionLayer.PARTY_LEADER, true);
+                member.SetCollisionLayerValue((int)CollisionObject.CollisionLayer.PARTY_MEMBER, false);
+                member.SetCollisionLayerValue((int)CollisionObject.CollisionLayer.OBJECT, false);
+                member.SetCollisionMaskValue((int)CollisionObject.CollisionLayer.OBJECT, true);
                 break;
 
-            case GameObject.CollisionLayer.PARTY_MEMBER:
-                member.SetCollisionLayerValue((int)GameObject.CollisionLayer.PARTY_MEMBER, true);
-                member.SetCollisionLayerValue((int)GameObject.CollisionLayer.PARTY_LEADER, false);
-                member.SetCollisionLayerValue((int)GameObject.CollisionLayer.OBJECT, false);
-                member.SetCollisionMaskValue((int)GameObject.CollisionLayer.OBJECT, true);
-                member.SetCollisionMaskValue((int)GameObject.CollisionLayer.PARTY_LEADER, false);
+            case CollisionObject.CollisionLayer.PARTY_MEMBER:
+                member.SetCollisionLayerValue((int)CollisionObject.CollisionLayer.PARTY_MEMBER, true);
+                member.SetCollisionLayerValue((int)CollisionObject.CollisionLayer.PARTY_LEADER, false);
+                member.SetCollisionLayerValue((int)CollisionObject.CollisionLayer.OBJECT, false);
+                member.SetCollisionMaskValue((int)CollisionObject.CollisionLayer.OBJECT, true);
+                member.SetCollisionMaskValue((int)CollisionObject.CollisionLayer.PARTY_LEADER, false);
                 break;
         }
         member.EnableCollisionShape();

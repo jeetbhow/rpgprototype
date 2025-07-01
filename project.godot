@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="RPGPrototype"
-run/main_scene="uid://bgm3s3pcdwadp"
+run/main_scene="uid://bhlaeslv50jid"
 config/features=PackedStringArray("4.4", "C#", "Mobile")
 config/icon="res://icon.svg"
 
@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 EventBus="*res://Scripts/Autoloads/EventBus.cs"
 SoundManager="*res://Scripts/Autoloads/SoundManager/SoundManager.tscn"
+Game="*res://Scripts/Autoloads/Game.cs"
 
 [display]
 

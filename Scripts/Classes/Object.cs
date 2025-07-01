@@ -1,4 +1,4 @@
-public class GameObject
+public class CollisionObject
 {
     public enum CollisionLayer
     {

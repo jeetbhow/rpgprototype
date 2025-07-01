@@ -26,7 +26,7 @@ public partial class ChoiceState : StateNode
         if (@event is not InputEventKey keyEvent || !keyEvent.Pressed)
             return;
 
-        ChoiceButton[] btns = Textbox.GetChoiceButtons();
+        ChoiceContent[] btns = Textbox.GetChoices();
         if (btns == null || btns.Length == 0)
             return;
 
@@ -72,7 +72,7 @@ public partial class ChoiceState : StateNode
         {
             var currChoice = choices[i];
 
-            var btn = (ChoiceButton)ChoiceButtonScene.Instantiate();
+            var btn = (ChoiceContent)ChoiceButtonScene.Instantiate();
             btn.Label.Text = currChoice.Text;
             btn.Choice = currChoice;
             if (i != 0) btn.HideArrow();
@@ -83,17 +83,17 @@ public partial class ChoiceState : StateNode
                 btn.SetColor(SkillManager.GetSkillColor(skillCheckData.Skill.Type));
             }
 
-            Textbox.AddChoiceBtn(btn);
+            Textbox.Choices.AddChoice(btn);
             Textbox.ShowChoices();
         }
     }
 
     public override async Task Exit()
     {
-        Textbox.ClearChoiceButtons();
+        Textbox.ClearChoices();
     }
         
-    private async void OnChoiceSelected(ChoiceButton btn)
+    private async void OnChoiceSelected(ChoiceContent btn)
     {
         _soundManager.PlaySfx(SoundManager.Sfx.Confirm);
 
