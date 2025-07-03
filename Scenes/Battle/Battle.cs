@@ -15,8 +15,8 @@ public partial class Battle : Node2D
 
     public Node2D EnemyNodes { get; private set; }
     public BattleUI UI { get; private set; }
-    public List<Fighter> Party { get; private set; } = [];
-    public List<Fighter> Enemies { get; private set; } = [];
+    public List<Ally> Party { get; private set; } = [];
+    public List<Enemy> Enemies { get; private set; } = [];
     public Queue<Fighter> TurnQueue { get; private set; } = new();
     public Fighter CurrFighter { get; set; }
 
@@ -87,8 +87,8 @@ public partial class Battle : Node2D
     public void DetermineTurnOrder()
     {
         Fighter[] allParticipants = new Fighter[Party.Count + Enemies.Count];
-        Party.CopyTo(allParticipants, 0);
-        Enemies.CopyTo(allParticipants, Party.Count);
+        Party.Cast<Fighter>().ToArray().CopyTo(allParticipants, 0);
+        Enemies.Cast<Fighter>().ToArray().CopyTo(allParticipants, Party.Count);
 
         foreach (var participant in allParticipants)
         {
@@ -133,6 +133,30 @@ public partial class Battle : Node2D
         battleEnemy?.TakeDamage(damage);
     }
 
+    public void DamageAlly(int index, int damage)
+    {
+        if (index < 0 || index >= Party.Count)
+        {
+            GD.PrintErr($"Invalid ally index: {index}");
+            return;
+        }
+
+        var ally = Party[index];
+        ally.HP -= damage;
+
+        // Update the UI panel for the ally
+        PartyInfoPanel panel = UI.PartyInfoHBox.GetChild<PartyInfoPanel>(index, false);
+        if (panel != null)
+        {
+            double finalVal = Mathf.Clamp(ally.HP, 0, ally.MaxHP);
+
+            Tween tween = GetTree().CreateTween();
+            tween.TweenProperty(panel, "HP", finalVal, 1.0f)
+                 .SetTrans(Tween.TransitionType.Sine)
+                 .SetEase(Tween.EaseType.Out);
+        }
+    }
+
     /// <summary>
     /// Updates the Action Points (AP) of the specified fighter by subtracting the given AP cost.
     /// </summary>
@@ -143,7 +167,7 @@ public partial class Battle : Node2D
         fighter.AP -= apCost;
         if (fighter is Ally || fighter is Player)
         {
-            PartyInfoPanel panel = UI.PartyInfoHBox.GetChild<PartyInfoPanel>(Party.IndexOf(fighter), false);
+            PartyInfoPanel panel = UI.PartyInfoHBox.GetChild<PartyInfoPanel>(Party.IndexOf((Ally)fighter), false);
             panel.AP = fighter.AP;
         }
     }

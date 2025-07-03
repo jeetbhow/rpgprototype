@@ -23,7 +23,7 @@ public partial class BattlePlayerAttackMenu : StateNode
         int numChoices = Battle.UI.CommandTextbox.Choices.GetChildCount();
         int prevApCost = GetAPCost(Battle.CurrFighter, Battle.Enemies[prevIndex]);
         int apCost = GetAPCost(Battle.CurrFighter, Battle.Enemies[_index]);
-        int pnlIndex = Battle.Party.IndexOf(Battle.CurrFighter);
+        int pnlIndex = Battle.Party.IndexOf((Ally)Battle.CurrFighter);
         PartyInfoPanel panel = Battle.UI.GetPartyInfoPanel(pnlIndex);
 
         switch (keyEvent)
@@ -63,7 +63,7 @@ public partial class BattlePlayerAttackMenu : StateNode
 
         SoundManager.Instance.PlaySfx(SoundManager.Sfx.Hurt, 8.0f);
 
-        Battle.DamageEnemy(Battle.Enemies.IndexOf(enemy), BaseDmg);
+        Battle.DamageEnemy(Battle.Enemies.IndexOf((Enemy)enemy), BaseDmg);
         Battle.UpdateAP(Battle.CurrFighter, GetAPCost(Battle.CurrFighter, enemy));
         await Task.Delay(500);
 
@@ -89,7 +89,7 @@ public partial class BattlePlayerAttackMenu : StateNode
                 
         Battle.UI.CommandTextbox.Choices.ShowArrow(_index);
 
-        int index = Battle.Party.IndexOf(Battle.CurrFighter);
+        int index = Battle.Party.IndexOf((Ally)Battle.CurrFighter);
         PartyInfoPanel panel = Battle.UI.GetPartyInfoPanel(index);
         panel.AnimationPlayer.Play("Blink");
     }

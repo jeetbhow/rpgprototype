@@ -23,6 +23,7 @@ zoom = Vector2(4, 4)
 [node name="EnemyNodes" type="Node2D" parent="."]
 
 [node name="Jeff" parent="EnemyNodes" instance=ExtResource("5_rremj")]
+scale = Vector2(1, 1.04311)
 Data = ExtResource("3_dcr6b")
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("CurrStateNode")]
@@ -36,8 +37,10 @@ Battle = NodePath("../..")
 BattleNPCTurn = NodePath("../BattleNPCTurn")
 BattlePlayerTurn = NodePath("../BattlePlayerTurn")
 
-[node name="BattleNPCTurn" type="Node" parent="StateMachine"]
+[node name="BattleNPCTurn" type="Node" parent="StateMachine" node_paths=PackedStringArray("Battle", "BattlePlayerTurn")]
 script = ExtResource("7_diuyf")
+Battle = NodePath("../..")
+BattlePlayerTurn = NodePath("../BattlePlayerTurn")
 metadata/_custom_type_script = "uid://dcifapt71jp00"
 
 [node name="BattlePlayerTurn" type="Node" parent="StateMachine" node_paths=PackedStringArray("Battle", "BattlePlayerAttackMenu", "BattleNPCTurn")]

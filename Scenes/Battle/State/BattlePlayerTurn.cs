@@ -4,7 +4,8 @@ using System.Threading.Tasks;
 
 public partial class BattlePlayerTurn : StateNode
 {
-    private int _index = 0;
+    private int _index;
+    private bool _isPlayerTurn = false;
 
     [Export] public Battle Battle { get; set; }
     [Export] public StateNode BattlePlayerAttackMenu { get; set; }
@@ -48,6 +49,7 @@ public partial class BattlePlayerTurn : StateNode
                         GD.Print("Run chosen");
                         break;
                     case "End Turn":
+                        _isPlayerTurn = false;
                         Battle.CurrFighter = Battle.TurnQueue.Dequeue();
                         if (Battle.CurrFighter is not Player)
                             EmitSignal(SignalName.StateUpdate, BattleNPCTurn.Name);
@@ -68,6 +70,13 @@ public partial class BattlePlayerTurn : StateNode
     public override async Task Enter()
     {
         _index = 0;
+
+        if (!_isPlayerTurn)
+        {
+            await Battle.UI.Log.AppendLine($"{Battle.CurrFighter.Name} is ready to fight!");
+            _isPlayerTurn = true;
+        }
+
         Battle.UI.ShowPlayerCommands(_index);
     }
 }
