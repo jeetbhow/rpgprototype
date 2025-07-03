@@ -45,7 +45,7 @@ public partial class Battle : Node2D
             Party.Add(ally);
 
             PartyInfoPanel panel = PartyInfoPanelScene.Instantiate<PartyInfoPanel>();
-            UI.PartyInfoHBox.AddChild(panel);
+            UI.AddPartyInfoPanel(panel);
 
             panel.PartyMemberName = ally.Name;
             panel.HP = ally.HP;
@@ -145,7 +145,7 @@ public partial class Battle : Node2D
         ally.HP -= damage;
 
         // Update the UI panel for the ally
-        PartyInfoPanel panel = UI.PartyInfoHBox.GetChild<PartyInfoPanel>(index, false);
+        PartyInfoPanel panel = UI.GetPartyInfoPanel(index);
         if (panel != null)
         {
             double finalVal = Mathf.Clamp(ally.HP, 0, ally.MaxHP);
@@ -167,7 +167,7 @@ public partial class Battle : Node2D
         fighter.AP -= apCost;
         if (fighter is Ally || fighter is Player)
         {
-            PartyInfoPanel panel = UI.PartyInfoHBox.GetChild<PartyInfoPanel>(Party.IndexOf((Ally)fighter), false);
+            PartyInfoPanel panel = UI.GetPartyInfoPanel(Party.IndexOf((Ally)fighter));
             panel.AP = fighter.AP;
         }
     }

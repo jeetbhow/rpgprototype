@@ -14,7 +14,7 @@ public partial class Game : Node
     public override void _Ready()
     {
         // Initialize the party with some default members.
-        Player EriData = new()
+        Player eri = new()
         {
             Name = "Eri",
             Level = 1,
@@ -27,7 +27,7 @@ public partial class Game : Node
             Athletics = 5
         };
 
-        AddPartyMember(EriData);
+        AddPartyMember(eri);
 
         Instance = this;
     }
