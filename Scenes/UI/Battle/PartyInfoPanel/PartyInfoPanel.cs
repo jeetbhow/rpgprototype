@@ -4,12 +4,14 @@ using Godot;
 public partial class PartyInfoPanel : PanelContainer
 {
     private RichTextLabel _nameLabel;
-    private PartyInfoBar _hpBar;
-    private PartyInfoBar _apBar;
+    private PartyHPBar _hpBar;
+    private PartyAPBar _apBar;
 
     // backing fields for exported properties
     private string _name = "";
-    private double _hp, _maxHp, _ap, _maxAp;
+    private double _hp, _maxHp, _ap, _maxAp, _apUnderBarValue;
+
+    public AnimationPlayer AnimationPlayer { get; private set; }
 
     [Export]
     public string PartyMemberName
@@ -74,8 +76,10 @@ public partial class PartyInfoPanel : PanelContainer
     public override void _Ready()
     {
         _nameLabel = GetNode<RichTextLabel>("MarginContainer/VBoxContainer/Name");
-        _hpBar = GetNode<PartyInfoBar>("MarginContainer/VBoxContainer/HP");
-        _apBar = GetNode<PartyInfoBar>("MarginContainer/VBoxContainer/AP");
+        _hpBar = GetNode<PartyHPBar>("MarginContainer/VBoxContainer/PartyHPBar");
+        _apBar = GetNode<PartyAPBar>("MarginContainer/VBoxContainer/PartyAPBar");
+
+        AnimationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 
         // now apply whatever was set before Ready() ran:
         _nameLabel.Text = _name;

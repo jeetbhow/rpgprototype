@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://78fn51iu7a8k"]
+
+[ext_resource type="Theme" uid="uid://x6m3btvacua5" path="res://Resources/Styles/TextboxDefaultTheme.tres" id="1_ijbt3"]
+[ext_resource type="Script" uid="uid://b4ebu5butl1nf" path="res://Scenes/UI/Battle/PartyInfoPanel/PartyAPBar/PartyAPBar.cs" id="2_ijbt3"]
+[ext_resource type="StyleBox" uid="uid://pbihsi6xiv83" path="res://Resources/Styles/APBarBg.tres" id="3_ijbt3"]
+[ext_resource type="StyleBox" uid="uid://b1tkg50ji28d7" path="res://Resources/Styles/APBarFill.tres" id="4_llvx4"]
+
+[node name="PartyAPBar" type="HBoxContainer"]
+z_index = 1
+offset_right = 134.0
+offset_bottom = 20.0
+theme = ExtResource("1_ijbt3")
+script = ExtResource("2_ijbt3")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+clip_contents = false
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_vertical = 4
+text = "AP
+"
+fit_content = true
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+custom_minimum_size = Vector2(100, 18)
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_styles/background = ExtResource("3_ijbt3")
+theme_override_styles/fill = ExtResource("4_llvx4")
+value = 50.0
+show_percentage = false

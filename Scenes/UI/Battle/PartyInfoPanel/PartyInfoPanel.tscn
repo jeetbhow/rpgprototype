@@ -1,13 +1,23 @@
-[gd_scene load_steps=9 format=3 uid="uid://c1spltfe4tynv"]
+[gd_scene load_steps=9 format=3 uid="uid://dw7vckg81r5s3"]
 
 [ext_resource type="Theme" uid="uid://x6m3btvacua5" path="res://Resources/Styles/TextboxDefaultTheme.tres" id="1_0hoph"]
 [ext_resource type="StyleBox" uid="uid://68msogk2h6y6" path="res://Resources/Styles/UIPanel.tres" id="1_qardb"]
-[ext_resource type="Script" uid="uid://uaug2ibvbjca" path="res://Scenes/UI/Battle/PartyInfoPanel/PartyInfoPanel.cs" id="3_r7c1e"]
-[ext_resource type="PackedScene" uid="uid://dda28f5te2f4y" path="res://Scenes/UI/Battle/PartyInfoPanel/PartyInfoBar.tscn" id="4_1nb3n"]
-[ext_resource type="StyleBox" uid="uid://n57md1ke4av6" path="res://Resources/Styles/HPBarFill.tres" id="5_ddak8"]
-[ext_resource type="StyleBox" uid="uid://dg2wmvgh5xkej" path="res://Resources/Styles/HPBarBg.tres" id="6_ddak8"]
-[ext_resource type="StyleBox" uid="uid://b1tkg50ji28d7" path="res://Resources/Styles/APBarFill.tres" id="6_nswwl"]
-[ext_resource type="StyleBox" uid="uid://pbihsi6xiv83" path="res://Resources/Styles/APBarBg.tres" id="8_mceo4"]
+[ext_resource type="Script" uid="uid://ddk2e256kew5a" path="res://Scenes/UI/Battle/PartyInfoPanel/PartyInfoPanel.cs" id="3_n1nue"]
+[ext_resource type="PackedScene" uid="uid://dda28f5te2f4y" path="res://Scenes/UI/Battle/PartyInfoPanel/PartyHPBar/PartyHPBar.tscn" id="4_1nb3n"]
+[ext_resource type="PackedScene" uid="uid://78fn51iu7a8k" path="res://Scenes/UI/Battle/PartyInfoPanel/PartyAPBar/PartyAPBar.tscn" id="4_oj1ay"]
+
+[sub_resource type="Animation" id="Animation_mceo4"]
+resource_name = "Blink"
+loop_mode = 1
+
+[sub_resource type="Animation" id="Animation_8rjdf"]
+length = 0.001
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8rjdf"]
+_data = {
+&"Blink": SubResource("Animation_mceo4"),
+&"RESET": SubResource("Animation_8rjdf")
+}
 
 [node name="PartyInfoPanel" type="PanelContainer"]
 custom_minimum_size = Vector2(180, 0)
@@ -16,7 +26,7 @@ offset_bottom = 104.0
 size_flags_vertical = 0
 theme = ExtResource("1_0hoph")
 theme_override_styles/panel = ExtResource("1_qardb")
-script = ExtResource("3_r7c1e")
+script = ExtResource("3_n1nue")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2
@@ -37,14 +47,13 @@ text = "Name"
 fit_content = true
 scroll_active = false
 
-[node name="HP" parent="MarginContainer/VBoxContainer" instance=ExtResource("4_1nb3n")]
+[node name="PartyHPBar" parent="MarginContainer/VBoxContainer" instance=ExtResource("4_1nb3n")]
 layout_mode = 2
-Label = "HP:"
-BackgroundStyleBox = ExtResource("6_ddak8")
-FillStyleBox = ExtResource("5_ddak8")
 
-[node name="AP" parent="MarginContainer/VBoxContainer" instance=ExtResource("4_1nb3n")]
+[node name="PartyAPBar" parent="MarginContainer/VBoxContainer" instance=ExtResource("4_oj1ay")]
 layout_mode = 2
-Label = "AP:"
-BackgroundStyleBox = ExtResource("8_mceo4")
-FillStyleBox = ExtResource("6_nswwl")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_8rjdf")
+}

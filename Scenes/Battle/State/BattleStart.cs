@@ -19,16 +19,16 @@ public partial class BattleStart : StateNode
         );
 
         // Emit a signal to go to the state node corresponding to either the Player or NPC turn.
-        switch (Battle.CurrFighter.Type)
+        switch (Battle.CurrFighter)
         {
-            case Fighter.FighterType.Ally:
+            case Enemy:
                 EmitSignal(SignalName.StateUpdate, BattleNPCTurn.Name);
                 break;
-            case Fighter.FighterType.Enemy:
-                EmitSignal(SignalName.StateUpdate, BattleNPCTurn.Name);
-                break;
-            case Fighter.FighterType.Player:
+            case Player:
                 EmitSignal(SignalName.StateUpdate, BattlePlayerTurn.Name);
+                break;
+            case Ally:
+                EmitSignal(SignalName.StateUpdate, BattleNPCTurn.Name);
                 break;
         }
     }

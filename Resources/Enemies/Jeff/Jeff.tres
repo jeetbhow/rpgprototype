@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="Enemy" load_steps=3 format=3 uid="uid://bs8b37iwqpsr1"]
+
+[ext_resource type="Resource" uid="uid://chpxn2mgiv2v6" path="res://Resources/Enemies/Jeff/JeffAI.tres" id="1_bk74h"]
+[ext_resource type="Script" uid="uid://bfsq0i25vcarl" path="res://Scripts/Resources/Enemy.cs" id="2_2np04"]
+
+[resource]
+script = ExtResource("2_2np04")
+Introduction = "Jeff hobbles into the fray. Gross."
+AI = ExtResource("1_bk74h")
+Name = "Jeff"
+HP = 10
+AP = 4
+Strength = 1
+Endurance = 1
+Athletics = 1
+Initiative = 1
+metadata/_custom_type_script = "uid://bfsq0i25vcarl"

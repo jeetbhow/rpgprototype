@@ -33,4 +33,19 @@ public partial class BattleUI : CanvasLayer
         CommandTextbox.Choices.HideAllArrows();
         CommandTextbox.Choices.ShowArrow(initialIndex);
     }
+
+    /// <summary>
+    /// Get the PartyInfoPanel at the specified index.
+    /// </summary>
+    /// <param name="index">The index of the PartyInfoPanel.</param>
+    /// <returns>The <see cref="PartyInfoPanel"/> at the specified index.</returns>
+    public PartyInfoPanel GetPartyInfoPanel(int index)
+    {
+        if (index < 0 || index >= PartyInfoHBox.GetChildCount())
+        {
+            GD.PrintErr($"Invalid index {index} for PartyInfoHBox.");
+            return null;
+        }
+        return PartyInfoHBox.GetChild<PartyInfoPanel>(index);
+    }
 }

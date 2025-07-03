@@ -4,10 +4,11 @@ using System.Threading.Tasks;
 public partial class BattlePlayerAttackMenu : StateNode
 {
     private const int BaseDmg = 2;
-    
+
     private int _index = 0;
     private bool _isAttacking = false;
 
+    [Export] public PackedScene ChoiceContentScene { get; set; }
     [Export] public Battle Battle { get; set; }
     [Export] public StateNode BattlePlayerTurn { get; set; }
 
@@ -18,7 +19,13 @@ public partial class BattlePlayerAttackMenu : StateNode
             return;
         }
 
+        int prevIndex = _index;
         int numChoices = Battle.UI.CommandTextbox.Choices.GetChildCount();
+        int prevApCost = GetAPCost(Battle.CurrFighter, Battle.Enemies[prevIndex]);
+        int apCost = GetAPCost(Battle.CurrFighter, Battle.Enemies[_index]);
+        int pnlIndex = Battle.Party.IndexOf(Battle.CurrFighter);
+        PartyInfoPanel panel = Battle.UI.GetPartyInfoPanel(pnlIndex);
+
         switch (keyEvent)
         {
             case InputEventKey k when k.IsActionPressed("MoveDown"):
@@ -28,9 +35,11 @@ public partial class BattlePlayerAttackMenu : StateNode
                 _index = (_index - 1 + numChoices) % numChoices;
                 break;
             case InputEventKey k when k.IsActionPressed("Accept"):
-                if (!_isAttacking)
+                if (!_isAttacking && Battle.CurrFighter.AP >= apCost)
                 {
+                    Battle.UnhighlightEnemy(_index);
                     await Attack(Battle.Enemies[_index]);
+                    EmitSignal(SignalName.StateUpdate, BattlePlayerTurn.Name);
                 }
                 break;
             case InputEventKey k when k.IsActionPressed("Cancel"):
@@ -39,9 +48,9 @@ public partial class BattlePlayerAttackMenu : StateNode
                 break;
         }
 
-        if (Battle.CurrFighter.Type == Fighter.FighterType.Player)
+        if (prevIndex != _index && Battle.CurrFighter is not Player)
         {
-        
+
         }
     }
 
@@ -49,7 +58,6 @@ public partial class BattlePlayerAttackMenu : StateNode
     {
         _isAttacking = true;
 
-        Battle.UnhighlightEnemy(_index);
         await Battle.UI.Log.AppendLine($"{Battle.CurrFighter.Name} attacks {enemy.Name}.");
         await Task.Delay(500);
 
@@ -60,7 +68,6 @@ public partial class BattlePlayerAttackMenu : StateNode
         await Task.Delay(500);
 
         await Battle.UI.Log.AppendLine($"{enemy.Name} takes {BaseDmg} damage.");
-        EmitSignal(SignalName.StateUpdate, BattlePlayerTurn.Name);
     }
 
     public override async Task Enter()
@@ -70,14 +77,21 @@ public partial class BattlePlayerAttackMenu : StateNode
 
         Battle.HighlightEnemy(_index);
         Battle.UI.CommandTextbox.Choices.Clear();
+
         foreach (var enemy in Battle.Enemies)
         {
-            // Compute the AP cost to attack the enemy and append it after the enemy's name.
             int apCost = GetAPCost(Battle.CurrFighter, enemy);
-            Battle.UI.CommandTextbox.Choices.AddChoice(enemy.Name + $" [color={Game.APColor.ToHtml()}](AP: {apCost})[/color]");
+            ChoiceContent choice = (ChoiceContent)ChoiceContentScene.Instantiate();
+            choice.Label.Text = enemy.Name + $" [color={Game.APColor.ToHtml()}](AP: {apCost})[/color]";
+            choice.Enabled = Battle.CurrFighter.AP >= apCost;
+            Battle.UI.CommandTextbox.Choices.AddChoice(choice);
         }
-
+                
         Battle.UI.CommandTextbox.Choices.ShowArrow(_index);
+
+        int index = Battle.Party.IndexOf(Battle.CurrFighter);
+        PartyInfoPanel panel = Battle.UI.GetPartyInfoPanel(index);
+        panel.AnimationPlayer.Play("Blink");
     }
     
     

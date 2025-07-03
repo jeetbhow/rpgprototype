@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://bkb5mjrrkux0b" path="res://Scenes/Battle/Enemy/BattleEnemy.cs" id="1_5aqwu"]
 [ext_resource type="Texture2D" uid="uid://4eerix34hw16" path="res://Assets/Characters/shadow.png" id="1_cgxef"]
 [ext_resource type="Texture2D" uid="uid://cddkxetbmoyh3" path="res://Assets/Enemies/jerry.png" id="1_jodb1"]
+[ext_resource type="StyleBox" uid="uid://n57md1ke4av6" path="res://Resources/Styles/HPBarFill.tres" id="4_rgfcb"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cgxef"]
 atlas = ExtResource("1_jodb1")
@@ -18,6 +19,9 @@ animations = [{
 "name": &"default",
 "speed": 5.0
 }]
+
+[sub_resource type="Animation" id="Animation_rgfcb"]
+resource_name = "Default"
 
 [sub_resource type="Animation" id="Animation_86mjl"]
 resource_name = "FadeIn"
@@ -51,6 +55,22 @@ tracks/0/keys = {
 "values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
 }
 
+[sub_resource type="Animation" id="Animation_nomyg"]
+resource_name = "Highlight"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1.7411, 1.1487),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 0.541176, 1), Color(1, 1, 1, 1)]
+}
+
 [sub_resource type="Animation" id="Animation_2k0bg"]
 length = 0.001
 tracks/0/type = "value"
@@ -78,25 +98,6 @@ tracks/1/keys = {
 "values": [Color(1, 1, 1, 1)]
 }
 
-[sub_resource type="Animation" id="Animation_nomyg"]
-resource_name = "Highlight"
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5, 1),
-"transitions": PackedFloat32Array(1, 1.7411, 1.1487),
-"update": 0,
-"values": [Color(1, 1, 1, 1), Color(1, 1, 0.541176, 1), Color(1, 1, 1, 1)]
-}
-
-[sub_resource type="Animation" id="Animation_rgfcb"]
-resource_name = "Default"
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_2k0bg"]
 _data = {
 &"Default": SubResource("Animation_rgfcb"),
@@ -108,9 +109,6 @@ _data = {
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nomyg"]
 bg_color = Color(0.977619, 0, 0.188237, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rgfcb"]
-bg_color = Color(0.386152, 0.77811, 0.0870001, 1)
 
 [node name="BattleEnemy" type="Node2D"]
 script = ExtResource("1_5aqwu")
@@ -135,6 +133,6 @@ offset_top = -19.0
 offset_right = 25.1
 offset_bottom = -15.0
 theme_override_styles/background = SubResource("StyleBoxFlat_nomyg")
-theme_override_styles/fill = SubResource("StyleBoxFlat_rgfcb")
+theme_override_styles/fill = ExtResource("4_rgfcb")
 value = 100.0
 show_percentage = false

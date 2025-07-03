@@ -1,14 +1,8 @@
 using Godot;
 
-public partial class Ally : Resource
+public partial class Ally : Fighter
 {
-    [Export] public string Name { get; set; }
-    [Export] public int Level { get; set; }
-    [Export] public int HP { get; set; }
     [Export] public int MaxHP { get; set; }
-    [Export] public int AP { get; set; }
     [Export] public int MaxAP { get; set; }
-    [Export] public int Strength { get; set; }
-    [Export] public int Endurance { get; set; }
-    [Export] public int Athletics { get; set; }
+    [Export] public int Level { get; set; }
 }

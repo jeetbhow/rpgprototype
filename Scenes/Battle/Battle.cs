@@ -42,23 +42,7 @@ public partial class Battle : Node2D
     {
         foreach (Ally ally in Game.Instance.Party)
         {
-
-            var newFighter = new Fighter(
-                ally.Name,
-                Fighter.FighterType.Ally,
-                ally.HP,
-                ally.AP,
-                ally.Strength,
-                ally.Endurance,
-                ally.Athletics
-            );
-
-            if (ally is Player player)
-            {
-                newFighter.Type = Fighter.FighterType.Player;
-            }
-
-            Party.Add(newFighter);
+            Party.Add(ally);
 
             PartyInfoPanel panel = PartyInfoPanelScene.Instantiate<PartyInfoPanel>();
             UI.PartyInfoHBox.AddChild(panel);
@@ -84,20 +68,11 @@ public partial class Battle : Node2D
             if (enemy is BattleEnemy e)
             {
                 GD.Print($"Adding enemy: {e.Data.Name}");
-                Enemies.Add(new Fighter(
-                     e.Data.Name,
-                     Fighter.FighterType.Enemy,
-                     e.Data.HP,
-                     e.Data.AP,
-                     e.Data.Strength,
-                     e.Data.Endurance,
-                     e.Data.Athletics
-                 ));
+                Enemies.Add(e.Data);
 
                 await e.FadeIn();
 
-                string introduction = e.Data.Introduction;
-                await UI.Log.AppendLine(introduction);
+                await UI.Log.AppendLine(e.Data.Introduction);
             }
         }
     }
@@ -161,15 +136,13 @@ public partial class Battle : Node2D
     /// <summary>
     /// Updates the Action Points (AP) of the specified fighter by subtracting the given AP cost.
     /// </summary>
-    /// <param name="fighter"></param>
-    /// <param name="apCost"></param>
+    /// <param name="fighter">The fighter that's being updated.</param>
+    /// <param name="apCost">The amount of AP to subtract.</param>
     public void UpdateAP(Fighter fighter, int apCost)
     {
         fighter.AP -= apCost;
-        if (fighter.Type == Fighter.FighterType.Ally ||
-            fighter.Type == Fighter.FighterType.Player)
+        if (fighter is Ally || fighter is Player)
         {
-            GD.Print("Updating AP for ally: " + fighter.Name);
             PartyInfoPanel panel = UI.PartyInfoHBox.GetChild<PartyInfoPanel>(Party.IndexOf(fighter), false);
             panel.AP = fighter.AP;
         }

@@ -8,6 +8,7 @@ public partial class BattlePlayerTurn : StateNode
 
     [Export] public Battle Battle { get; set; }
     [Export] public StateNode BattlePlayerAttackMenu { get; set; }
+    [Export] public StateNode BattleNPCTurn { get; set; }
 
     public override void _Input(InputEvent @event)
     {
@@ -46,10 +47,17 @@ public partial class BattlePlayerTurn : StateNode
                     case "Run":
                         GD.Print("Run chosen");
                         break;
+                    case "End Turn":
+                        Battle.CurrFighter = Battle.TurnQueue.Dequeue();
+                        if (Battle.CurrFighter is not Player)
+                            EmitSignal(SignalName.StateUpdate, BattleNPCTurn.Name);
+                        else
+                            throw new InvalidOperationException("Player can't be in the turn queue after their turn ends.");
+                        break;
                 }
                 break;
         }
-        
+
         if (prevIndex != _index)
         {
             Battle.UI.CommandTextbox.Choices.HideArrow(prevIndex);

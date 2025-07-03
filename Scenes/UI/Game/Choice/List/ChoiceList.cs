@@ -15,7 +15,7 @@ public partial class ChoiceList : VBoxContainer
         AddChild(choice);
         choice.Label.Text = text;
     }
-
+    
     public void HideAllArrows()
     {
         foreach (Node child in GetChildren())
@@ -47,6 +47,17 @@ public partial class ChoiceList : VBoxContainer
             return;
         }
         choice.ShowArrow();
+    }
+
+    public ChoiceContent GetChoice(int index)
+    {
+        ChoiceContent choice = GetChild<ChoiceContent>(index, false);
+        if (choice == null)
+        {
+            GD.PrintErr("Choice at index " + index + " is null.");
+            return null;
+        }
+        return choice;
     }
 
     public ChoiceContent[] GetChoices()

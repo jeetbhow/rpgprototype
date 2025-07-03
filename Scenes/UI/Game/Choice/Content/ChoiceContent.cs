@@ -2,10 +2,23 @@ using Godot;
 
 public partial class ChoiceContent : HBoxContainer
 {
+    private bool _enabled = true;
+
     [Export] public TextureRect Arrow { get; set; }
     [Export] public RichTextLabel Label { get; set; }
     
     public Choice Choice { get; set; }
+    public bool Enabled
+    {
+        get => _enabled;
+        set
+        {
+            _enabled = value;
+            Color color = Label.SelfModulate;
+            color.A = _enabled ? 1.0f : 0.5f;
+            Label.SelfModulate = color;
+        }
+    }
 
     public void HideArrow()
     {
