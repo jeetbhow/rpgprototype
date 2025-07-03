@@ -32,7 +32,7 @@ public partial class DialogueHitbox : Area2D
 
     private void OnBodyEntered(Node body)
     {
-        if (body is PartyMember)
+        if (body is OverworldCharacter)
         {
             playerNearby = true;
         }
@@ -40,7 +40,7 @@ public partial class DialogueHitbox : Area2D
 
     private void OnBodyExited(Node body)
     {
-        if (body is PartyMember)
+        if (body is OverworldCharacter)
         {
             playerNearby = false;
         }

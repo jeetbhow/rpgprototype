@@ -1,0 +1,37 @@
+[gd_scene load_steps=4 format=3 uid="uid://dda28f5te2f4y"]
+
+[ext_resource type="Theme" uid="uid://x6m3btvacua5" path="res://Resources/Styles/TextboxDefaultTheme.tres" id="1_dsbgt"]
+[ext_resource type="Script" uid="uid://bhf7tnyf4bsaa" path="res://Scenes/UI/Battle/PartyInfoPanel/PartyInfoBar.cs" id="1_gllla"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k2cj6"]
+bg_color = Color(1, 1, 1, 1)
+
+[node name="PartyInfoBar" type="HBoxContainer"]
+offset_right = 134.0
+offset_bottom = 20.0
+theme = ExtResource("1_dsbgt")
+script = ExtResource("1_gllla")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+clip_contents = false
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_vertical = 4
+text = "??:"
+fit_content = true
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+custom_minimum_size = Vector2(100, 18)
+layout_mode = 2
+size_flags_horizontal = 0
+show_percentage = false
+
+[node name="UnderBar" type="ProgressBar" parent="ProgressBar"]
+z_index = -1
+custom_minimum_size = Vector2(100, 18)
+layout_mode = 0
+offset_right = 4.0
+offset_bottom = 20.0
+theme_override_styles/background = SubResource("StyleBoxFlat_k2cj6")
+show_percentage = false

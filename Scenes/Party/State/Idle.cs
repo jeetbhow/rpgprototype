@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 public partial class Idle : StateNode
 {
     [Export]
-    public Party Party;
+    public OverworldParty Party;
 
     public override void _PhysicsProcess(double delta)
     {

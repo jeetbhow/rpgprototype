@@ -27,9 +27,20 @@ public partial class ChoiceList : VBoxContainer
         }
     }
 
+    public void HideArrow(int index)
+    {
+        ChoiceContent choice = GetChild<ChoiceContent>(index, false);
+        if (choice == null)
+        {
+            GD.PrintErr("Choice at index " + index + " is null.");
+            return;
+        }
+        choice.HideArrow();
+    }
+
     public void ShowArrow(int index)
     {
-        ChoiceContent choice = GetChild<ChoiceContent>(index, true);
+        ChoiceContent choice = GetChild<ChoiceContent>(index, false);
         if (choice == null)
         {
             GD.PrintErr("Choice at index " + index + " is null.");
@@ -45,7 +56,7 @@ public partial class ChoiceList : VBoxContainer
 
         for (int i = 0; i < size; i++)
         {
-            ChoiceContent btn = GetChild<ChoiceContent>(i, true);
+            ChoiceContent btn = GetChild<ChoiceContent>(i, false);
             _ = choiceButtons[i] = btn;
         }
         return choiceButtons;
@@ -57,6 +68,7 @@ public partial class ChoiceList : VBoxContainer
         {
             if (child is ChoiceContent choice)
             {
+                RemoveChild(choice);
                 choice.QueueFree();
             }
         }

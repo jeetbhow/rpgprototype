@@ -5,7 +5,7 @@ using System;
 public partial class CameraMarkers : Node2D
 {
     [Export]
-    public Party Party { get; set; }
+    public OverworldParty Party { get; set; }
 
     public override void _Ready()
     {

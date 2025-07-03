@@ -15,6 +15,6 @@ public partial class StateNode : Node
         SetPhysicsProcess(false);
     }
 
-    public virtual Task Enter() => Task.CompletedTask;
-    public virtual Task Exit() => Task.CompletedTask;
+    public virtual async Task Enter() => await Task.CompletedTask;
+    public virtual async Task Exit() => await Task.CompletedTask;
 }

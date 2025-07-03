@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 public partial class Walk : StateNode
 {
     [Export]
-    public Party Party { get; set; }
+    public OverworldParty Party { get; set; }
     private Vector2 _dir;
 
     public override void _PhysicsProcess(double delta)

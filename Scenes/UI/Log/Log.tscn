@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://dne5mwmirps"]
+
+[ext_resource type="StyleBox" uid="uid://68msogk2h6y6" path="res://Resources/Styles/UIPanel.tres" id="1_3scw0"]
+[ext_resource type="Theme" uid="uid://x6m3btvacua5" path="res://Resources/Styles/TextboxDefaultTheme.tres" id="1_4vxe4"]
+[ext_resource type="Script" uid="uid://bipyj7uhakkgr" path="res://Scenes/UI/Log/Log.cs" id="3_3idgp"]
+[ext_resource type="AudioStream" uid="uid://cnqk4vr8l78gj" path="res://Assets/Audio/SFX/blip.wav" id="4_jt882"]
+
+[node name="Log" type="PanelContainer"]
+theme = ExtResource("1_4vxe4")
+theme_override_styles/panel = ExtResource("1_3scw0")
+script = ExtResource("3_3idgp")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 24
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/line_separation = 8
+bbcode_enabled = true
+scroll_active = false
+scroll_following = true
+
+[node name="SfxTimer" type="Timer" parent="."]
+wait_time = 0.1
+
+[node name="SfxPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_jt882")

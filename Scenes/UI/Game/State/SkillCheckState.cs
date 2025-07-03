@@ -22,13 +22,13 @@ public partial class SkillCheckState : StateNode
         bool result = SkillManager.PerformSkillCheck(UI.PlayerData, UI.CurrSkillCheck);
         if (result)
         {
-            await UI.Textbox.ProcessAndWriteText(".[pause=1000] .[pause=1000] .[pause=1000] You passed!");
+            await UI.Textbox.WriteText(".[pause=1000] .[pause=1000] .[pause=1000] You passed!");
             _soundManager.PlaySfx(SoundManager.Sfx.Success);
             UI.CurrNode.Next = UI.CurrSkillCheck.SuccessNext;
         }
         else
         {
-            await UI.Textbox.ProcessAndWriteText(".[pause=1000] .[pause=1000] .[pause=1000] You failed!");
+            await UI.Textbox.WriteText(".[pause=1000] .[pause=1000] .[pause=1000] You failed!");
             _soundManager.PlaySfx(SoundManager.Sfx.Fail);
             UI.CurrNode.Next = UI.CurrSkillCheck.FailNext;
         }

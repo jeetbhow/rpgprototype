@@ -1,0 +1,40 @@
+[gd_scene load_steps=4 format=3 uid="uid://cgfmftu70tvgf"]
+
+[ext_resource type="PackedScene" uid="uid://d0qsc28ydi047" path="res://Scenes/UI/Textbox/Textbox.tscn" id="1_x05vq"]
+[ext_resource type="Script" uid="uid://bjxt637oo30a6" path="res://Scenes/UI/Battle/BattleUI.cs" id="1_yakd7"]
+[ext_resource type="PackedScene" uid="uid://dne5mwmirps" path="res://Scenes/UI/Log/Log.tscn" id="3_aswum"]
+
+[node name="BattleUI" type="CanvasLayer"]
+script = ExtResource("1_yakd7")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="PartyInfo" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_constants/separation = 5
+
+[node name="BattleInfo" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+theme_override_constants/separation = 10
+
+[node name="CommandTextbox" parent="MarginContainer/BattleInfo" instance=ExtResource("1_x05vq")]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+
+[node name="Log" parent="MarginContainer/BattleInfo" instance=ExtResource("3_aswum")]
+custom_minimum_size = Vector2(600, 160)
+layout_mode = 2

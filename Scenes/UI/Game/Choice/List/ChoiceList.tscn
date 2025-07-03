@@ -5,8 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://btrajdgilaf0d" path="res://Scenes/UI/Game/Choice/Content/ChoiceContent.tscn" id="3_i10eh"]
 
 [node name="ChoiceList" type="VBoxContainer"]
-offset_right = 197.0
-offset_bottom = 92.0
+size_flags_horizontal = 3
 theme = ExtResource("1_rbkou")
 theme_override_constants/separation = 8
 script = ExtResource("2_ux6dc")

@@ -1,7 +1,6 @@
 using Godot;
 
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 public partial class UI : Control
@@ -62,7 +61,7 @@ public partial class UI : Control
     public async Task WriteText()
     {
         Reset();
-        await Textbox.ProcessAndWriteText(LoadCurrNode());
+        await Textbox.WriteText(LoadCurrNode());
     }
 
     public void Reset()

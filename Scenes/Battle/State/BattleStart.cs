@@ -1,45 +1,35 @@
-using System.Threading.Tasks;
 using Godot;
+using System.Threading.Tasks;
 
 public partial class BattleStart : StateNode
 {
     [Export] public Battle Battle { get; set; }
-    [Export] public StateNode BattleStandby { get; set; }
+    [Export] public StateNode BattleNPCTurn { get; set; }
+    [Export] public StateNode BattlePlayerTurn { get; set; }
 
     public override async Task Enter()
     {
-        Battle.Init();
-        await InitEnemies();
-        EmitSignal(SignalName.StateUpdate, BattleStandby.Name);
-    }
+        await Battle.Init();
 
-    public override Task Exit()
-    {
-        return Task.CompletedTask;
-    }
+        Battle.DetermineTurnOrder();
+        Battle.CurrFighter = Battle.TurnQueue.Dequeue();
 
-    public async Task InitEnemies()
-    {
-        foreach (var enemy in Battle.EnemyNodes.GetChildren())
+        await Battle.UI.Log.AppendLine(
+            $"{Battle.CurrFighter.Name} is ready to fight!"
+        );
+
+        // Emit a signal to go to the state node corresponding to either the Player or NPC turn.
+        switch (Battle.CurrFighter.Type)
         {
-            if (enemy is Enemy e)
-            {
-                GD.Print($"Adding enemy: {e.Data.Name}");
-                Battle.Enemies.Add(new BattleParticipant(
-                     e.Data.Name,
-                     BattleParticipant.BattleParticipantType.Enemy,
-                     e.Data.HP,
-                     e.Data.AP,
-                     e.Data.Strength,
-                     e.Data.Endurance,
-                     e.Data.Athletics
-                 ));
-
-                await e.FadeIn();
-
-                string introduction = e.Data.Introduction;
-                await Battle.UI.LogTextbox.ProcessAndWriteText(introduction);
-            }
+            case Fighter.FighterType.Ally:
+                EmitSignal(SignalName.StateUpdate, BattleNPCTurn.Name);
+                break;
+            case Fighter.FighterType.Enemy:
+                EmitSignal(SignalName.StateUpdate, BattleNPCTurn.Name);
+                break;
+            case Fighter.FighterType.Player:
+                EmitSignal(SignalName.StateUpdate, BattlePlayerTurn.Name);
+                break;
         }
     }
 }

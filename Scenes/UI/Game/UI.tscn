@@ -1,7 +1,7 @@
 [gd_scene load_steps=13 format=3 uid="uid://blbwejmtme5rj"]
 
 [ext_resource type="Script" uid="uid://bjafp7besup3l" path="res://Scenes/UI/UI.cs" id="1_4ayp3"]
-[ext_resource type="PackedScene" uid="uid://d0qsc28ydi047" path="res://Scenes/UI/Game/Textbox/Textbox.tscn" id="1_s86y4"]
+[ext_resource type="PackedScene" uid="uid://d0qsc28ydi047" path="res://Scenes/UI/Textbox/Textbox.tscn" id="1_s86y4"]
 [ext_resource type="PackedScene" uid="uid://blyv6jei4aa5x" path="res://Scenes/UI/Game/Portrait/Portrait.tscn" id="2_636u5"]
 [ext_resource type="PackedScene" uid="uid://dlsdfp742qnou" path="res://Scenes/UI/Game/Choice/Tooltip/ChoiceTooltip.tscn" id="3_akgwn"]
 [ext_resource type="Resource" uid="uid://btw1r02kwnms0" path="res://Resources/PlayerData.tres" id="3_xf7jj"]

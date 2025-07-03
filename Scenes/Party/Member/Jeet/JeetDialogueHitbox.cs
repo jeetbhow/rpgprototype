@@ -11,7 +11,7 @@ public partial class JeetDialogueHitbox : DialogueHitbox
 
     public void OnTextboxOptionSelected(string option)
     {
-        if (option == "Yes" && Parent is PartyMember)
+        if (option == "Yes" && Parent is OverworldCharacter)
         {
             signalHub.EmitSignal(EventBus.SignalName.PartyMemberAdded, Parent);
             Monitoring = false;
