@@ -17,7 +17,7 @@ public partial class Battle : Node2D
     public BattleUI UI { get; private set; }
     public List<Ally> Party { get; private set; } = [];
     public List<Enemy> Enemies { get; private set; } = [];
-    public Queue<Fighter> TurnQueue { get; private set; } = new();
+    public Queue<Fighter> TurnQueue { get; set; } = new();
     public Fighter CurrFighter { get; set; }
 
     /// <summary>

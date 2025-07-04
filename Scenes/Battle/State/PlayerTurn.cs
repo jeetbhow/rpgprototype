@@ -1,6 +1,8 @@
 using Godot;
 using System;
 using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.Linq;
 
 public partial class PlayerTurn : StateNode
 {
@@ -80,13 +82,18 @@ public partial class PlayerTurn : StateNode
     {
         _index = 0;
 
-        for (int i = 0; i < Battle.Enemies.Count; i++)
+        for (int i = Battle.Enemies.Count - 1; i >= 0; i--)
         {
             var enemy = Battle.Enemies[i];
             if (enemy.IsDead)
             {
-                Battle.GetEnemySprite(i).Die();
+                var sprite = Battle.GetEnemySprite(i);
+                sprite.Die();
                 await Task.Delay(2500); // Wait for death animation
+                sprite.QueueFree();
+                Battle.Enemies.RemoveAt(i);
+                Battle.TurnQueue = new Queue<Fighter>(Battle.TurnQueue.Where(f => f != enemy)); 
+
                 await Battle.UI.Log.AppendLine($"{enemy.Name} has fallen!");
             }
         }
