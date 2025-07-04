@@ -70,8 +70,6 @@ public partial class Battle : Node2D
                 GD.Print($"Adding enemy: {e.Data.Name}");
                 Enemies.Add(e.Data);
 
-                await e.FadeIn();
-
                 await UI.Log.AppendLine(e.Data.Introduction);
             }
         }

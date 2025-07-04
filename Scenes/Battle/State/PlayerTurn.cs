@@ -80,6 +80,14 @@ public partial class PlayerTurn : StateNode
     {
         _index = 0;
 
+        foreach (Enemy enemy in Battle.Enemies)
+        {
+            if (!enemy.IsAlive)
+            {
+                await Battle.UI.Log.AppendLine($"{enemy.Name} has fallen!");
+            }
+        }
+
         if (!_isPlayerTurn)
         {
             await Battle.UI.Log.AppendLine($"{Battle.CurrFighter.Name} is ready to fight!");

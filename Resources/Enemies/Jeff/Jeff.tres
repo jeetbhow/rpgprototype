@@ -8,6 +8,7 @@ script = ExtResource("2_2np04")
 Introduction = "Jeff hobbles into the fray. Gross."
 AI = ExtResource("1_bk74h")
 Name = "Jeff"
+Level = 0
 HP = 10
 MaxHP = 10
 AP = 4

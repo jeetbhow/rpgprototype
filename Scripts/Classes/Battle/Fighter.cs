@@ -12,6 +12,10 @@ public partial class Fighter : Resource
         Enemy
     }
 
+    public bool IsAlive {
+        get { return HP > 0; }
+    }
+
     [Export] public string Name { get; set; }
     [Export] public int Level { get; set; }
     [Export] public int HP { get; set; }
