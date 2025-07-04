@@ -31,6 +31,7 @@ public partial class NPCTurn : StateNode
                 }
 
                 await Battle.UI.Log.AppendLine(action.Message);
+                await Task.Delay(500);
 
                 if (dmg != -1)
                 {

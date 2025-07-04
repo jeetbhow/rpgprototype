@@ -59,15 +59,17 @@ public partial class BattlePlayerAttackMenu : StateNode
         _isAttacking = true;
 
         await Battle.UI.Log.AppendLine($"{Battle.CurrFighter.Name} attacks {enemy.Name}.");
+        EnemyBattleSprite enemySprite = Battle.GetEnemySprite(_index);
+        await enemySprite.ShowHP();
         await Task.Delay(500);
 
         SoundManager.Instance.PlaySfx(SoundManager.Sfx.Hurt, 8.0f);
 
         Battle.DamageEnemyHP(Battle.Enemies.IndexOf((Enemy)enemy), BaseDmg);
         Battle.UpdateAP(Battle.CurrFighter, GetAPCost(Battle.CurrFighter, enemy));
-        await Task.Delay(500);
 
         await Battle.UI.Log.AppendLine($"{enemy.Name} takes {BaseDmg} damage.");
+        await enemySprite.HideHP();
     }
 
     public override async Task Enter()

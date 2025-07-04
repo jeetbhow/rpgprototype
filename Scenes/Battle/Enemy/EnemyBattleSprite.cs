@@ -4,6 +4,8 @@ using System.Threading.Tasks;
 
 public partial class EnemyBattleSprite : Node2D
 {
+    private const int AnimDelay = 500;
+
     private AnimatedSprite2D _animatedSprite2D;
     private AnimationPlayer _animationPlayer;
     private Sprite2D _shadow;
@@ -36,6 +38,20 @@ public partial class EnemyBattleSprite : Node2D
     public void StopAnimation()
     {
         _animationPlayer.Stop();
+    }
+
+    public async Task ShowHP()
+    {
+        Healthbar.Visible = true;
+        _animationPlayer.Play("hp_appear");
+        await ToSignal(_animationPlayer, "animation_finished");
+    }
+
+    public async Task HideHP()
+    {
+        _animationPlayer.Play("hp_hide");
+        await ToSignal(_animationPlayer, "animation_finished");
+        Healthbar.Visible = false;
     }
 
     public void TakeDamage(int damage)

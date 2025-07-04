@@ -53,7 +53,7 @@ public partial class PlayerTurn : StateNode
                         break;
                     case "End Turn":
                         _isPlayerTurn = false;
-
+                        Battle.UI.CommandTextbox.Visible = false;
                         if (Battle.TurnQueue.Count > 0)
                         {
                             Battle.CurrFighter = Battle.TurnQueue.Dequeue();
@@ -92,7 +92,7 @@ public partial class PlayerTurn : StateNode
                 await Task.Delay(2500); // Wait for death animation
                 sprite.QueueFree();
                 Battle.Enemies.RemoveAt(i);
-                Battle.TurnQueue = new Queue<Fighter>(Battle.TurnQueue.Where(f => f != enemy)); 
+                Battle.TurnQueue = new Queue<Fighter>(Battle.TurnQueue.Where(f => f != enemy));
 
                 await Battle.UI.Log.AppendLine($"{enemy.Name} has fallen!");
             }
@@ -102,6 +102,7 @@ public partial class PlayerTurn : StateNode
         {
             await Battle.UI.Log.AppendLine($"{Battle.CurrFighter.Name} is ready to fight!");
             _isPlayerTurn = true;
+            Battle.UI.CommandTextbox.Visible = true;
         }
 
         Battle.UI.ShowPlayerCommands(_index);

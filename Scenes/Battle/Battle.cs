@@ -71,6 +71,7 @@ public partial class Battle : Node2D
                 Enemies.Add(e.Data);
 
                 await UI.Log.AppendLine(e.Data.Introduction);
+                await Task.Delay(500);
             }
         }
     }

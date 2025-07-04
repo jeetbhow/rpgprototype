@@ -29,3 +29,4 @@ wait_time = 0.1
 
 [node name="SfxPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_jt882")
+volume_db = -10.0
