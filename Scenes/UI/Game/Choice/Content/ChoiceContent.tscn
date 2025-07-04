@@ -17,7 +17,7 @@ Label = NodePath("Text")
 [node name="Arrow" type="TextureRect" parent="."]
 layout_mode = 2
 size_flags_horizontal = 4
-size_flags_vertical = 0
+size_flags_vertical = 4
 texture = ExtResource("2_ivjlu")
 stretch_mode = 3
 

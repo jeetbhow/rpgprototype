@@ -1,11 +1,13 @@
-[gd_scene load_steps=16 format=3 uid="uid://d1yvb465tt7ik"]
+[gd_scene load_steps=17 format=3 uid="uid://d1yvb465tt7ik"]
 
 [ext_resource type="Script" uid="uid://bkb5mjrrkux0b" path="res://Scenes/Battle/Enemy/EnemyBattleSprite.cs" id="1_5aqwu"]
 [ext_resource type="Texture2D" uid="uid://4eerix34hw16" path="res://Assets/Characters/shadow.png" id="1_cgxef"]
 [ext_resource type="Texture2D" uid="uid://cddkxetbmoyh3" path="res://Assets/Enemies/jerry.png" id="1_jodb1"]
 [ext_resource type="Resource" uid="uid://bs8b37iwqpsr1" path="res://Resources/Enemies/Jeff/Jeff.tres" id="2_acpbt"]
 [ext_resource type="StyleBox" uid="uid://n57md1ke4av6" path="res://Resources/Styles/HPBarFill.tres" id="4_rgfcb"]
+[ext_resource type="StyleBox" uid="uid://dg2wmvgh5xkej" path="res://Resources/Styles/HPBarBg.tres" id="5_sloyy"]
 [ext_resource type="Shader" uid="uid://b64ptem30f7km" path="res://Shaders/disintegrate.gdshader" id="5_w5rdf"]
+[ext_resource type="Theme" uid="uid://x6m3btvacua5" path="res://Resources/Styles/TextboxDefaultTheme.tres" id="6_evwod"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cgxef"]
 atlas = ExtResource("1_jodb1")
@@ -82,7 +84,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Healthbar:self_modulate")
+tracks/3/path = NodePath("Healthbar:modulate")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -109,11 +111,11 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Healthbar:self_modulate")
+tracks/1/path = NodePath("Healthbar:modulate")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.966667),
+"times": PackedFloat32Array(0, 1),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
@@ -126,9 +128,6 @@ _data = {
 &"RESET": SubResource("Animation_2k0bg"),
 &"destroy_extras": SubResource("Animation_wlrv3")
 }
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nomyg"]
-bg_color = Color(0.977619, 0, 0.188237, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_hx7ra"]
 shader = ExtResource("5_w5rdf")
@@ -158,16 +157,41 @@ autoplay = "default"
 libraries = {
 &"": SubResource("AnimationLibrary_2k0bg")
 }
+autoplay = "Default"
 
 [node name="Healthbar" type="ProgressBar" parent="."]
-offset_left = -23.0
-offset_top = -19.0
-offset_right = 25.1
+offset_left = -21.0
+offset_top = -21.0
+offset_right = 27.1
 offset_bottom = -15.0
-theme_override_styles/background = SubResource("StyleBoxFlat_nomyg")
+theme_override_styles/background = ExtResource("5_sloyy")
 theme_override_styles/fill = ExtResource("4_rgfcb")
 value = 100.0
 show_percentage = false
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Healthbar"]
+clip_contents = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 24.0
+offset_top = -5.0
+offset_right = 53.9
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.5, 0.5)
+theme = ExtResource("6_evwod")
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 1
+theme_override_font_sizes/normal_font_size = 16
+bbcode_enabled = true
+text = "5/10"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(4, 4)

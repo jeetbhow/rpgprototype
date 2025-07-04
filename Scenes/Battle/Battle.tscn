@@ -76,3 +76,4 @@ metadata/_custom_type_script = "uid://dcifapt71jp00"
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("14_q0gc0")
+autoplay = true

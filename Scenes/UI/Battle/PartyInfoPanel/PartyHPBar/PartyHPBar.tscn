@@ -23,10 +23,26 @@ text = "HP
 fit_content = true
 
 [node name="ProgressBar" type="ProgressBar" parent="."]
-custom_minimum_size = Vector2(100, 18)
+custom_minimum_size = Vector2(100, 24)
 layout_mode = 2
 size_flags_horizontal = 0
 theme_override_styles/background = ExtResource("3_cr2ce")
 theme_override_styles/fill = ExtResource("4_gmnei")
 value = 50.0
 show_percentage = false
+
+[node name="RichTextLabel" type="RichTextLabel" parent="ProgressBar"]
+layout_mode = 2
+offset_left = 17.0
+offset_top = -13.0
+offset_right = 109.0
+offset_bottom = 19.0
+grow_horizontal = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 4
+bbcode_enabled = true
+text = "5/10
+"
+fit_content = true
+horizontal_alignment = 2
+vertical_alignment = 1

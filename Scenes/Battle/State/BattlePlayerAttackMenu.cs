@@ -63,7 +63,7 @@ public partial class BattlePlayerAttackMenu : StateNode
 
         SoundManager.Instance.PlaySfx(SoundManager.Sfx.Hurt, 8.0f);
 
-        Battle.DamageEnemy(Battle.Enemies.IndexOf((Enemy)enemy), BaseDmg);
+        Battle.DamageEnemyHP(Battle.Enemies.IndexOf((Enemy)enemy), BaseDmg);
         Battle.UpdateAP(Battle.CurrFighter, GetAPCost(Battle.CurrFighter, enemy));
         await Task.Delay(500);
 

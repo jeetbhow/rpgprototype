@@ -1,3 +1,4 @@
+using System;
 using Godot;
 
 [GlobalClass]
@@ -5,6 +6,7 @@ public partial class PartyHPBar : HBoxContainer
 {
 
     private ProgressBar _bar;
+    private RichTextLabel _label;
 
     private double _value = 0.0;
     private double _maxValue = 0.0;
@@ -35,6 +37,7 @@ public partial class PartyHPBar : HBoxContainer
     public override void _Ready()
     {
         _bar = GetNode<ProgressBar>("ProgressBar");
+        _label = GetNode<RichTextLabel>("ProgressBar/RichTextLabel");
         UpdateBar();
     }
 
@@ -46,5 +49,6 @@ public partial class PartyHPBar : HBoxContainer
         // set max *before* value, every time
         _bar.MaxValue = _maxValue;
         _bar.Value = _value;
+        _label.Text = $"{Math.Round(_value)}/{_maxValue}";
     }
 }

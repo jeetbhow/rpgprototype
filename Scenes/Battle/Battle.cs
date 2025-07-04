@@ -138,14 +138,14 @@ public partial class Battle : Node2D
     /// </summary>
     /// <param name="index">The index of the enemy to damage.</param>
     /// <param name="damage">The amount of damage to deal.</param>
-    public void DamageEnemy(int index, int damage)
+    public void DamageEnemyHP(int index, int damage)
     {
         var sprite = EnemyNodes.GetChild<EnemyBattleSprite>(index, false);
         sprite?.TakeDamage(damage);
         Enemies[index].HP -= damage;
     }
 
-    public void DamageAlly(int index, int damage)
+    public void DamageAllyHP(int index, int damage)
     {
         if (index < 0 || index >= Party.Count)
         {
@@ -169,6 +169,30 @@ public partial class Battle : Node2D
         }
     }
 
+    public void DamageAllyAP(int index, int damage)
+    {
+        if (index < 0 || index >= Party.Count)
+        {
+            GD.PrintErr($"Invalid ally index: {index}");
+            return;
+        }
+
+        var ally = Party[index];
+        ally.AP -= damage;
+
+        // Update the UI panel for the ally
+        PartyInfoPanel panel = UI.GetPartyInfoPanel(index);
+        if (panel != null)
+        {
+            double finalVal = Mathf.Clamp(ally.AP, 0, ally.MaxAP);
+
+            Tween tween = GetTree().CreateTween();
+            tween.TweenProperty(panel, "AP", finalVal, 1.0f)
+                 .SetTrans(Tween.TransitionType.Sine)
+                 .SetEase(Tween.EaseType.Out);
+        }
+    }
+
     /// <summary>
     /// Updates the Action Points (AP) of the specified fighter by subtracting the given AP cost.
     /// </summary>
@@ -176,11 +200,21 @@ public partial class Battle : Node2D
     /// <param name="apCost">The amount of AP to subtract.</param>
     public void UpdateAP(Fighter fighter, int apCost)
     {
-        fighter.AP -= apCost;
         if (fighter is Ally || fighter is Player)
         {
-            PartyInfoPanel panel = UI.GetPartyInfoPanel(Party.IndexOf((Ally)fighter));
-            panel.AP = fighter.AP;
+            DamageAllyAP(Party.IndexOf(fighter as Ally), apCost);
+        }
+        else
+        {
+            fighter.AP -= apCost;
+        }
+    }
+
+    public void ResetAP()
+    {
+        foreach (Fighter fighter in TurnQueue)
+        {
+            UpdateAP(fighter, fighter.AP - fighter.MaxAP);
         }
     }
 }

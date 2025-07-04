@@ -51,6 +51,7 @@ scroll_following = true
 visible = false
 layout_mode = 2
 theme = null
+theme_override_constants/separation = 6
 
 [node name="Sfx" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_4p0l2")

@@ -38,7 +38,7 @@ public partial class NPCTurn : StateNode
                     if (targetIndex != -1)
                     {
                         SoundManager.Instance.PlaySfx(SoundManager.Sfx.Hurt);
-                        Battle.DamageAlly(targetIndex, dmg);
+                        Battle.DamageAllyHP(targetIndex, dmg);
                         await Battle.UI.Log.AppendLine($"{curr.Name} dealt {dmg} damage.");
                     }
                 }

@@ -23,10 +23,26 @@ text = "AP
 fit_content = true
 
 [node name="ProgressBar" type="ProgressBar" parent="."]
-custom_minimum_size = Vector2(100, 18)
+custom_minimum_size = Vector2(100, 24)
 layout_mode = 2
 size_flags_horizontal = 0
 theme_override_styles/background = ExtResource("3_ijbt3")
 theme_override_styles/fill = ExtResource("4_llvx4")
 value = 50.0
 show_percentage = false
+
+[node name="RichTextLabel" type="RichTextLabel" parent="ProgressBar"]
+clip_contents = false
+layout_mode = 2
+offset_left = 15.0
+offset_top = -14.0
+offset_right = 108.0
+offset_bottom = 18.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 4
+bbcode_enabled = true
+text = "5/10
+"
+fit_content = true
+horizontal_alignment = 2
+vertical_alignment = 1

@@ -10,16 +10,7 @@ public partial class TurnQueueEmpty : StateNode
     public override async Task Enter()
     {
         Battle.DetermineTurnOrder();
-
-        foreach (Fighter fighter in Battle.TurnQueue)
-        {
-            fighter.AP = fighter.MaxAP;
-            // If the fighter is an Ally, then reset their panel in the UI as well.
-            if (fighter is Ally)
-            {
-                Battle.UI.ResetAP();
-            }
-        }
+        Battle.ResetAP();
 
         Battle.CurrFighter = Battle.TurnQueue.Dequeue();
         switch (Battle.CurrFighter)
