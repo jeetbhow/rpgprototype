@@ -5,7 +5,6 @@ render_mode keep_data, disable_velocity;
 uniform sampler2D src_tex;
 uniform vec2  tex_size      = vec2(256.0);
 uniform float pixel_size    = 1.0;
-uniform vec2  origin        = vec2(0.0);
 
 /* ———  DISINTEGRATION TWEAKS  ——— */
 uniform float max_delay        = 0.25;            // 0 … this many seconds
@@ -31,9 +30,10 @@ void start() {
     COLOR    = col;
 
     /* 2 ─ initial position (upright in 2-D) ----------------------- */
+	vec2 half_px = tex_size * 0.5 - vec2(0.5);
 	vec3 local_pos = vec3(
-    origin.x + float(x) * pixel_size,
-    origin.y + float(y) * pixel_size,
+    (float(x) - half_px.x) * pixel_size,
+    (float(y) - half_px.y) * pixel_size,
     0.0);
 	TRANSFORM[3].xyz = (EMISSION_TRANSFORM * vec4(local_pos, 1.0)).xyz;
 

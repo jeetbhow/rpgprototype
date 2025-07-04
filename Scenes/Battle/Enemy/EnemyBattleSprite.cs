@@ -1,13 +1,11 @@
 using Godot;
 using System.Threading.Tasks;
 
-public partial class BattleEnemy : Node2D
+public partial class EnemyBattleSprite : Node2D
 {
-    private static readonly Color YellowTint = new(1.0f, 1.0f, 0.0f, 1.0f);
-    private static readonly Color NoTint = new(1.0f, 1.0f, 1.0f, 1.0f);
-
     private AnimatedSprite2D _animatedSprite2D;
     private AnimationPlayer _animationPlayer;
+    private Sprite2D _shadow;
 
     [Export] public Enemy Data { get; set; }
 
@@ -17,17 +15,10 @@ public partial class BattleEnemy : Node2D
     public override void _Ready()
     {
         _animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
-        if (_animationPlayer == null)
-        {
-            GD.PrintErr("AnimationPlayer not found in Enemy node.");
-        }
+        _animatedSprite2D = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
+        _shadow = GetNode<Sprite2D>("Shadow");
 
         DeathParticles = GetNode<GpuParticles2D>("DeathParticles");
-        if (DeathParticles == null)
-        {
-            GD.PrintErr("Particles not found in Enemy node.");
-        }
-
         Healthbar = GetNode<ProgressBar>("Healthbar");
         Healthbar.MaxValue = Data.HP;
         Healthbar.Value = Data.HP;
@@ -57,6 +48,7 @@ public partial class BattleEnemy : Node2D
     public void Die()
     {
         _animatedSprite2D.Visible = false;
+        _animationPlayer.Play("destroy_extras");
         DeathParticles.Restart();
         DeathParticles.Emitting = true;
     }

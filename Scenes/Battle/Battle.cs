@@ -65,7 +65,7 @@ public partial class Battle : Node2D
     {
         foreach (var enemy in EnemyNodes.GetChildren())
         {
-            if (enemy is BattleEnemy e)
+            if (enemy is EnemyBattleSprite e)
             {
                 GD.Print($"Adding enemy: {e.Data.Name}");
                 Enemies.Add(e.Data);
@@ -106,8 +106,8 @@ public partial class Battle : Node2D
     /// <param name="index">The index of the enemy to highlight.</param>
     public void HighlightEnemy(int index)
     {
-        var battleEnemy = EnemyNodes.GetChild<BattleEnemy>(index, false);
-        battleEnemy?.Highlight();
+        var sprite = EnemyNodes.GetChild<EnemyBattleSprite>(index, false);
+        sprite?.Highlight();
     }
 
     /// <summary>
@@ -116,19 +116,33 @@ public partial class Battle : Node2D
     /// <param name="index"></param>
     public void UnhighlightEnemy(int index)
     {
-        var battleEnemy = EnemyNodes.GetChild<BattleEnemy>(index, false);
-        battleEnemy?.StopAnimation();
+        var sprite = EnemyNodes.GetChild<EnemyBattleSprite>(index, false);
+        sprite?.StopAnimation();
     }
 
     /// <summary>
-    /// Damages the enemy at the specified index by the given amount.
+    /// Retrieves the EnemyBattleSprite at the specified index.
+    /// The index corresponds to the position of the child node in the EnemyNodes node.
+    /// </summary>
+    /// <param name="index">The position of the enemy in the EnemyNodes node.</param>
+    /// <returns>The EnemyBattleSprite at the specified index.</returns>
+    public EnemyBattleSprite GetEnemySprite(int index)
+    {
+        return EnemyNodes.GetChild<EnemyBattleSprite>(index, false);
+    }
+
+    /// <summary>
+    /// Damages the enemy at the specified index by the given amount. The index corresponds
+    /// to the position of the child node in the EnemyNodes node, which is also the 
+    /// position of the enemy in the Enemies list.
     /// </summary>
     /// <param name="index">The index of the enemy to damage.</param>
     /// <param name="damage">The amount of damage to deal.</param>
     public void DamageEnemy(int index, int damage)
     {
-        var battleEnemy = EnemyNodes.GetChild<BattleEnemy>(index, false);
-        battleEnemy?.TakeDamage(damage);
+        var sprite = EnemyNodes.GetChild<EnemyBattleSprite>(index, false);
+        sprite?.TakeDamage(damage);
+        Enemies[index].HP -= damage;
     }
 
     public void DamageAlly(int index, int damage)

@@ -80,10 +80,13 @@ public partial class PlayerTurn : StateNode
     {
         _index = 0;
 
-        foreach (Enemy enemy in Battle.Enemies)
+        for (int i = 0; i < Battle.Enemies.Count; i++)
         {
-            if (!enemy.IsAlive)
+            var enemy = Battle.Enemies[i];
+            if (enemy.IsDead)
             {
+                Battle.GetEnemySprite(i).Die();
+                await Task.Delay(2500); // Wait for death animation
                 await Battle.UI.Log.AppendLine($"{enemy.Name} has fallen!");
             }
         }
