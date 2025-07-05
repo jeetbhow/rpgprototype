@@ -1,6 +1,7 @@
 using Godot;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
+using System.Globalization;
 
 [GlobalClass]
 public partial class Log : PanelContainer
@@ -16,7 +17,6 @@ public partial class Log : PanelContainer
         TextLabel = GetNode<RichTextLabel>("MarginContainer/RichTextLabel");
         _sfxTimer = GetNode<Timer>("SfxTimer");
         _sfxPlayer = GetNode<AudioStreamPlayer>("SfxPlayer");
-
         _sfxTimer.Timeout += OnSfxTimeout;
     }
 
@@ -30,17 +30,22 @@ public partial class Log : PanelContainer
         // Wait a little before logging the next line.
         await Task.Delay(200);
 
-        text += "\n";
-        const string pattern = @"(\[\w+=\d+\])";
-
-        string[] parts = Regex.Split(text, pattern);
+        const string pattern = @"(\[[^\]]+\])";
+        string[] parts = Regex.Split(text + "\n", pattern);
+        
         foreach (var part in parts)
-        {            
-            await ProcessText(part);
+        {
+            if (part.StartsWith("[pause="))
+            {
+                var ms = float.Parse(part[8..^1], CultureInfo.InvariantCulture);
+                await ToSignal(GetTree().CreateTimer(ms / 1000f), Timer.SignalName.Timeout);
+                continue;
+            }
 
-            int start = _visibleChars;
-            int end = start + part.Length;
+            // --- visible text ---------------------------------------------------
+            int start = TextLabel.GetTotalCharacterCount();   // counts *visible* chars
             TextLabel.AppendText(part);
+            int end   = TextLabel.GetTotalCharacterCount();
 
             await Typewriter(start, end);
 
@@ -53,33 +58,12 @@ public partial class Log : PanelContainer
         _sfxTimer.Start();
 
         int curr = start;
-        while (curr < end)
+        while (TextLabel.VisibleCharacters < end)
         {
             TextLabel.VisibleCharacters = ++curr;
             await ToSignal(GetTree().CreateTimer(0.02f), Timer.SignalName.Timeout);
         }
 
         _sfxTimer.Stop();
-    }
-
-    private async Task ProcessText(string text)
-    {
-        if (text.StartsWith('[') && text.EndsWith(']'))
-        {
-            string inner = text[1..^1];
-            string[] tokens = inner.Split('=');
-            string command = tokens[0];
-            string value = tokens[1];
-
-            switch (command)
-            {
-                case "pause":
-                    await ToSignal(
-                        GetTree().CreateTimer(float.Parse(value) / 1000),
-                        Timer.SignalName.Timeout
-                    );
-                    break;
-            }
-        }
     }
 }

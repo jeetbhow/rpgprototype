@@ -16,6 +16,7 @@ public partial class Fighter : Resource
         get { return HP <= 0; }
     }
 
+    [Export] public Texture2D Portrait { get; set; }
     [Export] public string Name { get; set; }
     [Export] public int Level { get; set; }
     [Export] public int HP { get; set; }
@@ -25,5 +26,5 @@ public partial class Fighter : Resource
     [Export] public int Strength { get; set; }
     [Export] public int Endurance { get; set; }
     [Export] public int Athletics { get; set; }
-    [Export] public int Initiative { get; set; }
+    [Export] public int Initiative { get; set; } = 0;   // Default value, set by the game logic.
 }

@@ -19,7 +19,7 @@ config/icon="res://icon.svg"
 
 EventBus="*res://Scripts/Singletons/EventBus.cs"
 SoundManager="*res://Scripts/Singletons/SoundManager/SoundManager.tscn"
-Game="*res://Scripts/Singletons/Game.cs"
+Game="*res://Scripts/Singletons/Game.tscn"
 
 [display]
 

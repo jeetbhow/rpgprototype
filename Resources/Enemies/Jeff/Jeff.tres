@@ -1,12 +1,14 @@
-[gd_resource type="Resource" script_class="Enemy" load_steps=3 format=3 uid="uid://bs8b37iwqpsr1"]
+[gd_resource type="Resource" script_class="Enemy" load_steps=4 format=3 uid="uid://bs8b37iwqpsr1"]
 
 [ext_resource type="Resource" uid="uid://chpxn2mgiv2v6" path="res://Resources/Enemies/Jeff/JeffAI.tres" id="1_bk74h"]
+[ext_resource type="Texture2D" uid="uid://cddkxetbmoyh3" path="res://Assets/Enemies/jerry.png" id="2_1u7we"]
 [ext_resource type="Script" uid="uid://bfsq0i25vcarl" path="res://Scripts/Resources/Enemy.cs" id="2_2np04"]
 
 [resource]
 script = ExtResource("2_2np04")
 Introduction = "Jeff hobbles into the fray. Gross."
 AI = ExtResource("1_bk74h")
+Portrait = ExtResource("2_1u7we")
 Name = "Jeff"
 Level = 1
 HP = 10

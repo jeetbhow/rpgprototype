@@ -5,30 +5,29 @@ public partial class Game : Node
 {
     private const int _D6Max = 6;
     private const int _D6Min = 1;
+
+    private Player _player;
+
     public static readonly Color APColor = new("5d76dc");
+    public static readonly Color BodySkillColor = new("#D54C4E");
 
     public static Game Instance { get; private set; }
+
+    [Export]
+    public Player Player
+    {
+        get => _player;
+        set
+        {
+            _player = value;
+            Party.Add(_player);
+        }
+    }
 
     public List<Ally> Party { get; set; } = [];
 
     public override void _Ready()
     {
-        // Initialize the party with some default members.
-        Player eri = new()
-        {
-            Name = "Eri",
-            Level = 1,
-            HP = 10,
-            MaxHP = 10,
-            AP = 5,
-            MaxAP = 5,
-            Strength = 5,
-            Endurance = 5,
-            Athletics = 5
-        };
-
-        AddPartyMember(eri);
-
         Instance = this;
     }
 

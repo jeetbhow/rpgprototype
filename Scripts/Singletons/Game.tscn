@@ -1,0 +1,28 @@
+[gd_scene load_steps=6 format=3 uid="uid://dsnk4qjipydnu"]
+
+[ext_resource type="Script" uid="uid://du5vf8rtpcdxv" path="res://Scripts/Singletons/Game.cs" id="1_h4u33"]
+[ext_resource type="Texture2D" uid="uid://3xurbpcp6po7" path="res://Assets/Characters/eri.png" id="2_88unm"]
+[ext_resource type="Script" uid="uid://v023qn4fhkid" path="res://Scripts/Resources/Player.cs" id="3_fi0pm"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i3gqq"]
+atlas = ExtResource("2_88unm")
+region = Rect2(1, 0, 30, 23)
+
+[sub_resource type="Resource" id="Resource_owwpa"]
+script = ExtResource("3_fi0pm")
+Portrait = SubResource("AtlasTexture_i3gqq")
+Name = "Eri"
+Level = 1
+HP = 10
+MaxHP = 10
+AP = 5
+MaxAP = 5
+Strength = 5
+Endurance = 5
+Athletics = 5
+Initiative = 1
+metadata/_custom_type_script = "uid://v023qn4fhkid"
+
+[node name="Game" type="Node"]
+script = ExtResource("1_h4u33")
+Player = SubResource("Resource_owwpa")

@@ -2,6 +2,7 @@ using Godot;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using System;
 
 
 public partial class Battle : Node2D
@@ -42,8 +43,6 @@ public partial class Battle : Node2D
     {
         foreach (Ally ally in Game.Instance.Party)
         {
-            Party.Add(ally);
-
             PartyInfoPanel panel = PartyInfoPanelScene.Instantiate<PartyInfoPanel>();
             UI.AddPartyInfoPanel(panel);
 
@@ -52,6 +51,9 @@ public partial class Battle : Node2D
             panel.MaxHP = ally.MaxHP;
             panel.AP = ally.AP;
             panel.MaxAP = ally.MaxAP;
+
+            UI.AddTurnQueuePanel(ally, ally.Portrait);
+            Party.Add(ally);
         }
     }
 
@@ -70,8 +72,9 @@ public partial class Battle : Node2D
                 GD.Print($"Adding enemy: {e.Data.Name}");
                 Enemies.Add(e.Data);
 
+                UI.AddTurnQueuePanel(e.Data, e.Data.Portrait);
+
                 await UI.Log.AppendLine(e.Data.Introduction);
-                await Task.Delay(500);
             }
         }
     }
@@ -83,19 +86,28 @@ public partial class Battle : Node2D
     /// The turn order is stored in the TurnQueue, which is a queue of Fighters sorted
     /// in descending order of their initiative.
     /// </summary>
-    public void DetermineTurnOrder()
+    public async Task DetermineTurnOrder()
     {
         Fighter[] allParticipants = new Fighter[Party.Count + Enemies.Count];
         Party.Cast<Fighter>().ToArray().CopyTo(allParticipants, 0);
         Enemies.Cast<Fighter>().ToArray().CopyTo(allParticipants, Party.Count);
 
-        foreach (var participant in allParticipants)
+        foreach (Fighter fighter in allParticipants)
         {
             RandomNumberGenerator rng = new();
             int d1 = rng.RandiRange(_D6Min, _D6Max);
             int d2 = rng.RandiRange(_D6Min, _D6Max);
 
-            participant.Initiative = d1 + d2 + participant.Athletics;
+            fighter.Initiative = d1 + d2 + fighter.Athletics;
+
+            int index = UI.FindTurnQueuePanel(fighter);
+            TurnQueuePanel tqPanel = UI.GetTurnQueuePanel(index);
+            tqPanel.Dice1 = d1;
+            tqPanel.Dice2 = d2;
+            tqPanel.AthleticsBonus = fighter.Athletics;
+            tqPanel.ShowInfo();
+
+            await UI.Log.AppendLine($"{fighter.Name} rolled {fighter.Initiative} [color={Game.BodySkillColor.ToHtml()}](+{fighter.Athletics} Athletics)[/color] on initiative.");
         }
 
         TurnQueue = new Queue<Fighter>(allParticipants.OrderByDescending(p => p.Initiative));

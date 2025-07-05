@@ -11,7 +11,7 @@ public partial class BattleStart : StateNode
     {
         await Battle.Init();
 
-        Battle.DetermineTurnOrder();
+        await Battle.DetermineTurnOrder();
         Battle.CurrFighter = Battle.TurnQueue.Dequeue();
 
         // Emit a signal to go to the state node corresponding to either the Player or NPC turn.

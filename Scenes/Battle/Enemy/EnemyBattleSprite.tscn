@@ -147,7 +147,7 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id="Animation_sloyy"]
 resource_name = "hp_appear"
-length = 0.5
+length = 0.3
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -155,7 +155,7 @@ tracks/0/path = NodePath("Healthbar:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5),
+"times": PackedFloat32Array(0, 0.3),
 "transitions": PackedFloat32Array(1, 0.05),
 "update": 0,
 "values": [Vector2(-10.515, -1), Vector2(-21, -21)]
@@ -167,7 +167,7 @@ tracks/1/path = NodePath("Healthbar:scale")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.5),
+"times": PackedFloat32Array(0, 0.3),
 "transitions": PackedFloat32Array(1, 0.05),
 "update": 0,
 "values": [Vector2(0.46, 0.46), Vector2(1, 1)]
@@ -179,7 +179,7 @@ tracks/2/path = NodePath("Healthbar:modulate")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.5),
+"times": PackedFloat32Array(0, 0.3),
 "transitions": PackedFloat32Array(1, 0.05),
 "update": 0,
 "values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
@@ -251,11 +251,13 @@ script = ExtResource("1_5aqwu")
 Data = ExtResource("2_acpbt")
 
 [node name="Shadow" type="Sprite2D" parent="."]
+z_index = 1
 position = Vector2(0, 11)
 scale = Vector2(1.60938, 1.60938)
 texture = ExtResource("1_cgxef")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+z_index = 1
 sprite_frames = SubResource("SpriteFrames_wi3hf")
 autoplay = "default"
 

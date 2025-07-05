@@ -12,7 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://cgfmftu70tvgf" path="res://Scenes/UI/Battle/BattleUI.tscn" id="9_tmq01"]
 [ext_resource type="PackedScene" uid="uid://btrajdgilaf0d" path="res://Scenes/UI/Game/Choice/Content/ChoiceContent.tscn" id="10_ukbm8"]
 [ext_resource type="Script" uid="uid://dtvkcfgapvb2a" path="res://Scenes/Battle/State/TurnQueueEmpty.cs" id="11_gibtw"]
-[ext_resource type="AudioStream" uid="uid://ceapr7mcvv0oa" path="res://Assets/Audio/random_encounter_01_v1.mp3" id="13_gibtw"]
+[ext_resource type="AudioStream" uid="uid://b1aa048t34jds" path="res://Assets/Audio/From the Start Cover.wav" id="13_gibtw"]
 
 [node name="Battle" type="Node2D"]
 script = ExtResource("1_07e4u")

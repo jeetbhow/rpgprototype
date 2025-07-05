@@ -8,17 +8,21 @@ public partial class BattleUI : CanvasLayer
     private const string PartyInfoPath = "MarginContainer/PartyInfo";
     private const string CommandTextboxPath = "MarginContainer/BattleInfo/CommandTextbox";
     private const string LogPath = "MarginContainer/BattleInfo/Log";
+    private const string TurnQueuePath = "MarginContainer/TurnQueue";
 
     private HBoxContainer PartyInfoHBox;
-
     public Textbox CommandTextbox { get; private set; }
     public Log Log { get; private set; }
+    public VBoxContainer TurnQueueVBox { get; set; }
+
+    [Export] public PackedScene TurnQueuePanelScene { get; set; }
 
     public void Init()
     {
         PartyInfoHBox = GetNode<HBoxContainer>(PartyInfoPath);
         CommandTextbox = GetNode<Textbox>(CommandTextboxPath);
         Log = GetNode<Log>(LogPath);
+        TurnQueueVBox = GetNode<VBoxContainer>(TurnQueuePath);
 
         CommandTextbox.Choices.Visible = true;
 
@@ -39,6 +43,43 @@ public partial class BattleUI : CanvasLayer
     public void AddPartyInfoPanel(PartyInfoPanel panel)
     {
         PartyInfoHBox.AddChild(panel);
+    }
+
+    public void AddTurnQueuePanel(Fighter fighter, Texture2D portrait)
+    {
+        var panel = TurnQueuePanelScene.Instantiate<TurnQueuePanel>();
+        panel.Fighter = fighter;
+        panel.Portrait = portrait;
+        TurnQueueVBox.AddChild(panel);
+    }
+
+    public TurnQueuePanel GetTurnQueuePanel(int index)
+    {
+        if (index < 0 || index >= TurnQueueVBox.GetChildCount())
+        {
+            GD.PrintErr($"Invalid index {index} for TurnQueueVBox.");
+            return null;
+        }
+        return TurnQueueVBox.GetChild<TurnQueuePanel>(index);
+    }
+
+    public TurnQueuePanel[] GetAllTurnQueuePanels()
+    {
+        return [.. TurnQueueVBox.GetChildren().Cast<TurnQueuePanel>()];
+    }
+
+    public int FindTurnQueuePanel(Fighter fighter)
+    {
+        for (int i = 0; i < TurnQueueVBox.GetChildCount(); i++)
+        {
+            TurnQueuePanel panel = TurnQueueVBox.GetChild<TurnQueuePanel>(i);
+            if (panel.Fighter == fighter)
+            {
+                return i;
+            }
+        }
+        GD.PrintErr($"No TurnQueuePanel found for Fighter: {fighter.Name}");
+        return -1;
     }
 
     /// <summary>
