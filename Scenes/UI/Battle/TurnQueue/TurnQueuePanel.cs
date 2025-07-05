@@ -1,10 +1,10 @@
 using Godot;
-using System;
 using System.Threading.Tasks;
 
 [GlobalClass]
 public partial class TurnQueuePanel : HBoxContainer
 {
+    private float _originalHeight;
     private TextureRect _textureRect;
     private Texture2D _texture;
 
@@ -74,6 +74,7 @@ public partial class TurnQueuePanel : HBoxContainer
 
     public override void _Ready()
     {
+        _originalHeight = Size.Y;
         _textureRect = GetNode<TextureRect>("PanelContainer/TextureRect");
         _textureRect.Texture = _texture;
 
@@ -90,16 +91,33 @@ public partial class TurnQueuePanel : HBoxContainer
         _dice2.Play($"{_dice2Val}");
     }
 
-    public void ShowInfo()
+    public async Task ShowInfo()
     {
+        _animationPlayer.Play("show_info");
         _diceContainer.Visible = true;
         _athleticsBonusLabel.Visible = true;
-        _animationPlayer.Play("show_info");
+        await ToSignal(_animationPlayer, AnimationPlayer.SignalName.AnimationFinished);
     }
 
-    public void HideInfo()
+    public async Task HideInfo()
     {
+        _animationPlayer.Play("hide_info");
+        await ToSignal(_animationPlayer, AnimationPlayer.SignalName.AnimationFinished);
         _diceContainer.Visible = false;
         _athleticsBonusLabel.Visible = false;
+    }
+
+    public async Task RemoveSmoothly()
+    {
+        var tween = CreateTween();
+        tween.Parallel().TweenProperty(this, "modulate:a", 0f, 0.20f);
+        await ToSignal(tween, Tween.SignalName.Finished);
+    }
+
+    public async Task AppearSmoothly()
+    {
+        var tween = CreateTween();
+        tween.Parallel().TweenProperty(this, "modulate:a", 1f, 0.20f);
+        await ToSignal(tween, Tween.SignalName.Finished);
     }
 }

@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Threading.Tasks;
 using Godot;
 
 public partial class BattleUI : CanvasLayer
@@ -45,12 +46,31 @@ public partial class BattleUI : CanvasLayer
         PartyInfoHBox.AddChild(panel);
     }
 
+    public async Task SwapTurnQueuePanels(TurnQueuePanel p1, TurnQueuePanel p2, int a, int b)
+    {
+        await p1.RemoveSmoothly();
+        await p2.RemoveSmoothly();
+        TurnQueueVBox.MoveChild(p1, b);
+        TurnQueueVBox.MoveChild(p2, a);
+        await p1.AppearSmoothly();
+        await p2.AppearSmoothly();
+    }
+
     public void AddTurnQueuePanel(Fighter fighter, Texture2D portrait)
     {
         var panel = TurnQueuePanelScene.Instantiate<TurnQueuePanel>();
         panel.Fighter = fighter;
         panel.Portrait = portrait;
         TurnQueueVBox.AddChild(panel);
+    }
+
+    public async Task RemoveTurnQueuePanel(Fighter fighter)
+    {
+        int index = FindTurnQueuePanel(fighter);
+        TurnQueuePanel panel = GetTurnQueuePanel(index);
+        await panel.RemoveSmoothly();
+        TurnQueueVBox.RemoveChild(panel);
+        panel.QueueFree();
     }
 
     public TurnQueuePanel GetTurnQueuePanel(int index)
@@ -61,11 +81,6 @@ public partial class BattleUI : CanvasLayer
             return null;
         }
         return TurnQueueVBox.GetChild<TurnQueuePanel>(index);
-    }
-
-    public TurnQueuePanel[] GetAllTurnQueuePanels()
-    {
-        return [.. TurnQueueVBox.GetChildren().Cast<TurnQueuePanel>()];
     }
 
     public int FindTurnQueuePanel(Fighter fighter)

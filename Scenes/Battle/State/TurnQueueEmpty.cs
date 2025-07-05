@@ -9,7 +9,7 @@ public partial class TurnQueueEmpty : StateNode
 
     public override async Task Enter()
     {
-        Battle.DetermineTurnOrder();
+        await Battle.DetermineTurnOrder();
         Battle.ResetAP();
 
         Battle.CurrFighter = Battle.TurnQueue.Dequeue();

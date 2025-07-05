@@ -52,7 +52,6 @@ public partial class Battle : Node2D
             panel.AP = ally.AP;
             panel.MaxAP = ally.MaxAP;
 
-            UI.AddTurnQueuePanel(ally, ally.Portrait);
             Party.Add(ally);
         }
     }
@@ -72,8 +71,6 @@ public partial class Battle : Node2D
                 GD.Print($"Adding enemy: {e.Data.Name}");
                 Enemies.Add(e.Data);
 
-                UI.AddTurnQueuePanel(e.Data, e.Data.Portrait);
-
                 await UI.Log.AppendLine(e.Data.Introduction);
             }
         }
@@ -92,22 +89,40 @@ public partial class Battle : Node2D
         Party.Cast<Fighter>().ToArray().CopyTo(allParticipants, 0);
         Enemies.Cast<Fighter>().ToArray().CopyTo(allParticipants, Party.Count);
 
+        List<TurnQueuePanel> tqPanels = [];
+
         foreach (Fighter fighter in allParticipants)
         {
+            UI.AddTurnQueuePanel(fighter, fighter.Portrait);
             RandomNumberGenerator rng = new();
             int d1 = rng.RandiRange(_D6Min, _D6Max);
             int d2 = rng.RandiRange(_D6Min, _D6Max);
 
-            fighter.Initiative = d1 + d2 + fighter.Athletics;
+            fighter.Initiative = d1 + d2 + fighter.Athletics; 
 
             int index = UI.FindTurnQueuePanel(fighter);
             TurnQueuePanel tqPanel = UI.GetTurnQueuePanel(index);
             tqPanel.Dice1 = d1;
             tqPanel.Dice2 = d2;
             tqPanel.AthleticsBonus = fighter.Athletics;
-            tqPanel.ShowInfo();
+            await tqPanel.ShowInfo();
 
             await UI.Log.AppendLine($"{fighter.Name} rolled {fighter.Initiative} [color={Game.BodySkillColor.ToHtml()}](+{fighter.Athletics} Athletics)[/color] on initiative.");
+            tqPanels.Add(tqPanel);
+        }
+
+        for (int i = 0; i < tqPanels.Count; i++)
+        {
+            // Selection sort the TurnQueuePanels based on the initiative of their corresponding fighters.
+            for (int j = i + 1; j < tqPanels.Count; j++)
+            {
+                if (tqPanels[j].Fighter.Initiative > tqPanels[i].Fighter.Initiative)
+                {
+                    await tqPanels[i].HideInfo();
+                    await tqPanels[j].HideInfo();
+                    await UI.SwapTurnQueuePanels(tqPanels[i], tqPanels[j], i, j);
+                }
+            }
         }
 
         TurnQueue = new Queue<Fighter>(allParticipants.OrderByDescending(p => p.Initiative));

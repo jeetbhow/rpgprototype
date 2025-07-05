@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bhlaeslv50jid"]
+[gd_scene load_steps=15 format=3 uid="uid://bhlaeslv50jid"]
 
 [ext_resource type="Script" uid="uid://bxwqvj1ig43b2" path="res://Scenes/Battle/Battle.cs" id="1_07e4u"]
 [ext_resource type="PackedScene" uid="uid://dw7vckg81r5s3" path="res://Scenes/UI/Battle/PartyInfoPanel/PartyInfoPanel.tscn" id="2_cmwrv"]
@@ -13,6 +13,8 @@
 [ext_resource type="PackedScene" uid="uid://btrajdgilaf0d" path="res://Scenes/UI/Game/Choice/Content/ChoiceContent.tscn" id="10_ukbm8"]
 [ext_resource type="Script" uid="uid://dtvkcfgapvb2a" path="res://Scenes/Battle/State/TurnQueueEmpty.cs" id="11_gibtw"]
 [ext_resource type="AudioStream" uid="uid://b1aa048t34jds" path="res://Assets/Audio/From the Start Cover.wav" id="13_gibtw"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_gibtw"]
 
 [node name="Battle" type="Node2D"]
 script = ExtResource("1_07e4u")
@@ -77,3 +79,12 @@ metadata/_custom_type_script = "uid://dcifapt71jp00"
 [node name="Music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("13_gibtw")
 autoplay = true
+
+[node name="TextureRect" type="TextureRect" parent="."]
+modulate = Color(0, 0, 0, 1)
+z_index = -1
+offset_left = -388.0
+offset_top = -171.0
+offset_right = 408.0
+offset_bottom = 176.0
+texture = SubResource("CanvasTexture_gibtw")

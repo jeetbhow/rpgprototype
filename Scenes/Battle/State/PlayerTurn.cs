@@ -14,7 +14,7 @@ public partial class PlayerTurn : StateNode
     [Export] public StateNode BattleNPCTurn { get; set; }
     [Export] public StateNode TurnQueueEmpty { get; set; }
 
-    public override void _Input(InputEvent @event)
+    public override async void _Input(InputEvent @event)
     {
         if (@event is not InputEventKey keyEvent || !keyEvent.IsPressed())
         {
@@ -54,6 +54,7 @@ public partial class PlayerTurn : StateNode
                     case "End Turn":
                         _isPlayerTurn = false;
                         Battle.UI.CommandTextbox.Visible = false;
+                        await Battle.UI.RemoveTurnQueuePanel(Battle.CurrFighter);
                         if (Battle.TurnQueue.Count > 0)
                         {
                             Battle.CurrFighter = Battle.TurnQueue.Dequeue();
