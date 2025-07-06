@@ -5,8 +5,7 @@ using System.Threading.Tasks;
 public partial class BattleStart : StateNode
 {
     [Export] public Battle Battle { get; set; }
-    [Export] public StateNode BattleNPCTurn { get; set; }
-    [Export] public StateNode BattlePlayerTurn { get; set; }
+    [Export] public StateNode TurnStart { get; set; }
 
     public override async Task Enter()
     {
@@ -20,20 +19,6 @@ public partial class BattleStart : StateNode
             GD.PrintErr($"Battle start failed: {e}");
         }
 
-        Battle.CurrFighter = Battle.TurnQueue.Dequeue();
-
-        // Emit a signal to go to the state node corresponding to either the Player or NPC turn.
-        switch (Battle.CurrFighter)
-        {
-            case Enemy:
-                EmitSignal(SignalName.StateUpdate, BattleNPCTurn.Name);
-                break;
-            case Player:
-                EmitSignal(SignalName.StateUpdate, BattlePlayerTurn.Name);
-                break;
-            case Ally:
-                EmitSignal(SignalName.StateUpdate, BattleNPCTurn.Name);
-                break;
-        }
+        EmitSignal(SignalName.StateUpdate, TurnStart.Name);
     }
 }

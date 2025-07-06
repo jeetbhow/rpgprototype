@@ -1,12 +1,22 @@
-[gd_scene load_steps=5 format=3 uid="uid://cgfmftu70tvgf"]
+[gd_scene load_steps=8 format=3 uid="uid://cgfmftu70tvgf"]
 
 [ext_resource type="PackedScene" uid="uid://d0qsc28ydi047" path="res://Scenes/UI/Textbox/Textbox.tscn" id="1_x05vq"]
 [ext_resource type="Script" uid="uid://bjxt637oo30a6" path="res://Scenes/UI/Battle/BattleUI.cs" id="1_yakd7"]
-[ext_resource type="PackedScene" uid="uid://qnx6km8di2s8" path="res://Scenes/UI/Battle/TurnQueue/DiceRollInfo.tscn" id="2_xnj7u"]
+[ext_resource type="PackedScene" uid="uid://bp32y8bvhaf1s" path="res://Scenes/UI/Battle/TurnQueuePanel/TurnQueuePanel.tscn" id="2_tw16v"]
+[ext_resource type="PackedScene" uid="uid://qnx6km8di2s8" path="res://Scenes/UI/Battle/DiceRollInfo/DiceRollInfo.tscn" id="2_xnj7u"]
 [ext_resource type="PackedScene" uid="uid://dne5mwmirps" path="res://Scenes/UI/Log/Log.tscn" id="3_aswum"]
+
+[sub_resource type="Animation" id="Animation_xnj7u"]
+resource_name = "turn_queue_slide"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_tw16v"]
+_data = {
+&"turn_queue_slide": SubResource("Animation_xnj7u")
+}
 
 [node name="BattleUI" type="CanvasLayer"]
 script = ExtResource("1_yakd7")
+TurnQueuePanelScene = ExtResource("2_tw16v")
 DiceRollInfoScene = ExtResource("2_xnj7u")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
@@ -33,7 +43,8 @@ size_flags_horizontal = 4
 size_flags_vertical = 8
 theme_override_constants/separation = 10
 
-[node name="CommandTextbox" parent="MarginContainer/BattleInfo" instance=ExtResource("1_x05vq")]
+[node name="Commands" parent="MarginContainer/BattleInfo" instance=ExtResource("1_x05vq")]
+visible = false
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 
@@ -45,3 +56,14 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 8
 theme_override_constants/separation = 8
+
+[node name="TurnQueue" type="VBoxContainer" parent="MarginContainer"]
+custom_minimum_size = Vector2(80, 450)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_tw16v")
+}

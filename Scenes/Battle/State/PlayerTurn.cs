@@ -1,5 +1,4 @@
 using Godot;
-using System;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,8 +10,7 @@ public partial class PlayerTurn : StateNode
 
     [Export] public Battle Battle { get; set; }
     [Export] public StateNode BattlePlayerAttackMenu { get; set; }
-    [Export] public StateNode BattleNPCTurn { get; set; }
-    [Export] public StateNode TurnQueueEmpty { get; set; }
+    [Export] public StateNode TurnEnd { get; set; }
 
     public override async void _Input(InputEvent @event)
     {
@@ -53,19 +51,7 @@ public partial class PlayerTurn : StateNode
                         break;
                     case "End Turn":
                         _isPlayerTurn = false;
-                        Battle.UI.Commands.Visible = false;
-                        if (Battle.TurnQueue.Count > 0)
-                        {
-                            Battle.CurrFighter = Battle.TurnQueue.Dequeue();
-                            if (Battle.CurrFighter is not Player)
-                                EmitSignal(SignalName.StateUpdate, BattleNPCTurn.Name);
-                            else
-                                throw new InvalidOperationException("Player can't be in the turn queue after their turn ends.");
-                        }
-                        else
-                        {
-                            EmitSignal(SignalName.StateUpdate, TurnQueueEmpty.Name);
-                        }
+                        EmitSignal(SignalName.StateUpdate, TurnEnd.Name);
                         break;
                 }
                 break;
@@ -81,7 +67,6 @@ public partial class PlayerTurn : StateNode
     public override async Task Enter()
     {
         _index = 0;
-
         for (int i = Battle.Enemies.Count - 1; i >= 0; i--)
         {
             var enemy = Battle.Enemies[i];
@@ -97,7 +82,7 @@ public partial class PlayerTurn : StateNode
                 await Battle.UI.Log.AppendLine($"{enemy.Name} has fallen!");
             }
         }
-
+        
         if (!_isPlayerTurn)
         {
             await Battle.UI.Log.AppendLine($"{Battle.CurrFighter.Name} is ready to fight!");

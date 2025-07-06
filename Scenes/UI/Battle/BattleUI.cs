@@ -1,5 +1,4 @@
 using System.Linq;
-using System.Threading.Tasks;
 using Godot;
 
 public partial class BattleUI : CanvasLayer
@@ -7,16 +6,18 @@ public partial class BattleUI : CanvasLayer
     private string[] CommandNames = ["Attack", "Defend", "Talk", "Item", "Run", "End Turn"];
 
     private const string PartyInfoPath = "MarginContainer/PartyInfo";
-    private const string CommandTextboxPath = "MarginContainer/BattleInfo/CommandTextbox";
+    private const string CommandTextboxPath = "MarginContainer/BattleInfo/Commands";
     private const string LogPath = "MarginContainer/BattleInfo/Log";
     private const string DiceRollsPath = "MarginContainer/DiceRolls";
 
     private HBoxContainer PartyInfoHBox;
+
     public Textbox Commands { get; private set; }
     public Log Log { get; private set; }
     public VBoxContainer DiceRolls { get; set; }
+    public VBoxContainer TurnQueue { get; set; }
 
-    [Export] public Battle Battle { get; set; }
+    [Export] public PackedScene TurnQueuePanelScene { get; set; }
     [Export] public PackedScene DiceRollInfoScene { get; set; }
 
     public void Init()
@@ -25,9 +26,30 @@ public partial class BattleUI : CanvasLayer
         Commands = GetNode<Textbox>(CommandTextboxPath);
         Log = GetNode<Log>(LogPath);
         DiceRolls = GetNode<VBoxContainer>(DiceRollsPath);
+        TurnQueue = GetNode<VBoxContainer>("MarginContainer/TurnQueue");
+
         Commands.Choices.Visible = true;
 
         ShowPlayerCommands(0);
+    }
+
+    public void AddTQPanel(Fighter f)
+    {
+        var p = TurnQueuePanelScene.Instantiate<TurnQueuePanel>();
+        p.Fighter = f;
+        TurnQueue.AddChild(p); 
+    }
+
+    public TurnQueuePanel TQPeek()
+    {
+        return TurnQueue.GetChild<TurnQueuePanel>(0);
+    }
+
+    public void TQPopFront()
+    {
+        var front = TurnQueue.GetChild<TurnQueuePanel>(0);
+        TurnQueue.RemoveChild(front);
+        front.QueueFree();
     }
 
     public void ShowPlayerCommands(int initialIndex)

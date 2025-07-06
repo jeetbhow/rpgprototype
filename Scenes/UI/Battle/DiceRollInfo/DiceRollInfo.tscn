@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=3 uid="uid://qnx6km8di2s8"]
 
 [ext_resource type="Theme" uid="uid://x6m3btvacua5" path="res://Resources/Styles/TextboxDefaultTheme.tres" id="1_1xgqi"]
-[ext_resource type="Script" uid="uid://dk6r365s2y1kn" path="res://Scenes/UI/Battle/TurnQueue/DiceRollInfo.cs" id="2_pdyk5"]
+[ext_resource type="Script" uid="uid://dk6r365s2y1kn" path="res://Scenes/UI/Battle/DiceRollInfo/DiceRollInfo.cs" id="2_pdyk5"]
 [ext_resource type="PackedScene" uid="uid://cipqk0exm12ho" path="res://Scenes/Battle/Dice/Dice.tscn" id="3_0wrqq"]
 [ext_resource type="Texture2D" uid="uid://3xurbpcp6po7" path="res://Assets/Characters/eri.png" id="4_pdyk5"]
 
@@ -20,22 +20,6 @@ tracks/0/keys = {
 "values": [Color(1, 1, 1, 1)]
 }
 
-[sub_resource type="Animation" id="Animation_pdyk5"]
-resource_name = "fade_out"
-length = 0.5
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(0.2, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
-}
-
 [sub_resource type="Animation" id="Animation_0wrqq"]
 resource_name = "fade_in"
 length = 0.5
@@ -50,6 +34,22 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(0.2, 0.2),
 "update": 0,
 "values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_pdyk5"]
+resource_name = "fade_out"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(0.2, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_5lust"]

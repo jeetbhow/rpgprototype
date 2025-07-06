@@ -9,7 +9,7 @@ public partial class Battle : Node2D
     private const int _D6Min = 1;
     private const int _D6Max = 6;
 
-    [Signal] public delegate void ActionBarFullEventHandler(int id);
+    [Signal] public delegate void TurnEndEventHandler(Fighter f);
 
     [Export] public PackedScene PartyInfoPanelScene { get; set; }
 
@@ -40,18 +40,18 @@ public partial class Battle : Node2D
     /// </summary>
     public void InitParty()
     {
-        foreach (Ally ally in Game.Instance.Party)
+        foreach (Ally a in Game.Instance.Party)
         {
             PartyInfoPanel panel = PartyInfoPanelScene.Instantiate<PartyInfoPanel>();
             UI.AddPartyInfoPanel(panel);
 
-            panel.PartyMemberName = ally.Name;
-            panel.HP = ally.HP;
-            panel.MaxHP = ally.MaxHP;
-            panel.AP = ally.AP;
-            panel.MaxAP = ally.MaxAP;
+            panel.PartyMemberName = a.Name;
+            panel.HP = a.HP;
+            panel.MaxHP = a.MaxHP;
+            panel.AP = a.AP;
+            panel.MaxAP = a.MaxAP;
 
-            Party.Add(ally);
+            Party.Add(a);
         }
     }
 
@@ -63,14 +63,10 @@ public partial class Battle : Node2D
     /// </summary>
     public async Task InitEnemies()
     {
-        foreach (var enemy in EnemyNodes.GetChildren())
+        foreach (var e in EnemyNodes.GetChildren().Cast<EnemyBattleSprite>())
         {
-            if (enemy is EnemyBattleSprite e)
-            {
-                Enemies.Add(e.Data);
-
-                await UI.Log.AppendLine(e.Data.Introduction);
-            }
+            Enemies.Add(e.Data);
+            await UI.Log.AppendLine(e.Data.Introduction);
         }
     }
 
@@ -89,20 +85,25 @@ public partial class Battle : Node2D
 
         List<DiceRollInfo> tqPanels = [];
 
-        foreach (Fighter fighter in allParticipants)
+        foreach (Fighter f in allParticipants)
         {
             RandomNumberGenerator rng = new();
             int d1 = rng.RandiRange(_D6Min, _D6Max);
             int d2 = rng.RandiRange(_D6Min, _D6Max);
 
-            fighter.Initiative = d1 + d2 + fighter.Athletics;
-            UI.CreateDiceRollInfo(fighter, d1, d2, SkillType.Athletics, fighter.Athletics);
+            f.Initiative = d1 + d2 + f.Athletics;
+            UI.CreateDiceRollInfo(f, d1, d2, SkillType.Athletics, f.Athletics);
 
-            await UI.Log.AppendLine($"{fighter.Name} rolled {fighter.Initiative} [color={Game.BodySkillColor.ToHtml()}](+{fighter.Athletics} Athletics)[/color] on initiative.");
+            await UI.Log.AppendLine($"{f.Name} rolled {f.Initiative} [color={Game.BodySkillColor.ToHtml()}](+{f.Athletics} Athletics)[/color] on initiative.");
         }
 
         await Wait(500);
         TurnQueue = new Queue<Fighter>(allParticipants.OrderByDescending(p => p.Initiative));
+
+        foreach (Fighter f in TurnQueue)
+        {
+            UI.AddTQPanel(f);
+        }
     }
 
     /// <summary>

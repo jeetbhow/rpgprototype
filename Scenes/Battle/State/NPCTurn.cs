@@ -1,12 +1,10 @@
 using Godot;
-using System;
 using System.Threading.Tasks;
 
 public partial class NPCTurn : StateNode
 {
     [Export] public Battle Battle { get; set; }
-    [Export] public StateNode BattlePlayerTurn { get; set; }
-    [Export] public StateNode TurnQueueEmpty { get; set; }
+    [Export] public StateNode TurnEnd { get; set; }
 
     public override async Task Enter()
     {
@@ -48,27 +46,6 @@ public partial class NPCTurn : StateNode
             }
         }
 
-        if (Battle.TurnQueue.Count > 0)
-        {
-            Battle.CurrFighter = Battle.TurnQueue.Dequeue();
-            switch (Battle.CurrFighter)
-            {
-                case Player:
-                    EmitSignal(SignalName.StateUpdate, BattlePlayerTurn.Name);
-                    break;
-                case Ally:
-                    EmitSignal(SignalName.StateUpdate, Name);
-                    break;
-                case Enemy:
-                    EmitSignal(SignalName.StateUpdate, Name);
-                    break;
-                default:
-                    throw new InvalidOperationException("Unknown fighter type in turn queue.");
-            }
-        }
-        else
-        {
-            EmitSignal(SignalName.StateUpdate, TurnQueueEmpty.Name);
-        }
+        EmitSignal(SignalName.StateUpdate, TurnEnd.Name);
     }
 }
