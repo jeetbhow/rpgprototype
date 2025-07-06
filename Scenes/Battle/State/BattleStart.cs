@@ -1,4 +1,5 @@
 using Godot;
+using System;
 using System.Threading.Tasks;
 
 public partial class BattleStart : StateNode
@@ -9,9 +10,16 @@ public partial class BattleStart : StateNode
 
     public override async Task Enter()
     {
-        await Battle.Init();
+        try
+        {
+            await Battle.Init();
+            await Battle.DetermineTurnOrder();
+        }
+        catch (Exception e)
+        {
+            GD.PrintErr($"Battle start failed: {e}");
+        }
 
-        await Battle.DetermineTurnOrder();
         Battle.CurrFighter = Battle.TurnQueue.Dequeue();
 
         // Emit a signal to go to the state node corresponding to either the Player or NPC turn.

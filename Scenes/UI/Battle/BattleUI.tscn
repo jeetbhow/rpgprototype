@@ -2,12 +2,12 @@
 
 [ext_resource type="PackedScene" uid="uid://d0qsc28ydi047" path="res://Scenes/UI/Textbox/Textbox.tscn" id="1_x05vq"]
 [ext_resource type="Script" uid="uid://bjxt637oo30a6" path="res://Scenes/UI/Battle/BattleUI.cs" id="1_yakd7"]
+[ext_resource type="PackedScene" uid="uid://qnx6km8di2s8" path="res://Scenes/UI/Battle/TurnQueue/DiceRollInfo.tscn" id="2_xnj7u"]
 [ext_resource type="PackedScene" uid="uid://dne5mwmirps" path="res://Scenes/UI/Log/Log.tscn" id="3_aswum"]
-[ext_resource type="PackedScene" uid="uid://qnx6km8di2s8" path="res://Scenes/UI/Battle/TurnQueue/TurnQueuePanel.tscn" id="4_xnj7u"]
 
 [node name="BattleUI" type="CanvasLayer"]
 script = ExtResource("1_yakd7")
-TurnQueuePanelScene = ExtResource("4_xnj7u")
+DiceRollInfoScene = ExtResource("2_xnj7u")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 anchors_preset = 15
@@ -41,7 +41,7 @@ layout_mode = 2
 custom_minimum_size = Vector2(600, 160)
 layout_mode = 2
 
-[node name="TurnQueue" type="VBoxContainer" parent="MarginContainer"]
+[node name="DiceRolls" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 8
 theme_override_constants/separation = 8

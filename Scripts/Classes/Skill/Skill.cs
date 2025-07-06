@@ -3,7 +3,9 @@ using Godot;
 
 public enum SkillType
 {
-    Strength = 0,
+    None,
+    Strength,
+    Athletics
 }
 
 [GlobalClass]

@@ -48,8 +48,6 @@ public partial class NPCTurn : StateNode
             }
         }
 
-        await Battle.UI.RemoveTurnQueuePanel(curr);
-
         if (Battle.TurnQueue.Count > 0)
         {
             Battle.CurrFighter = Battle.TurnQueue.Dequeue();

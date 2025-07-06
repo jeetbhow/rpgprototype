@@ -20,7 +20,7 @@ public partial class BattlePlayerAttackMenu : StateNode
         }
 
         int prevIndex = _index;
-        int numChoices = Battle.UI.CommandTextbox.Choices.GetChildCount();
+        int numChoices = Battle.UI.Commands.Choices.GetChildCount();
         int prevApCost = GetAPCost(Battle.CurrFighter, Battle.Enemies[prevIndex]);
         int apCost = GetAPCost(Battle.CurrFighter, Battle.Enemies[_index]);
         int pnlIndex = Battle.Party.IndexOf((Ally)Battle.CurrFighter);
@@ -78,7 +78,7 @@ public partial class BattlePlayerAttackMenu : StateNode
         _isAttacking = false;
 
         Battle.HighlightEnemy(_index);
-        Battle.UI.CommandTextbox.Choices.Clear();
+        Battle.UI.Commands.Choices.Clear();
 
         foreach (var enemy in Battle.Enemies)
         {
@@ -86,10 +86,10 @@ public partial class BattlePlayerAttackMenu : StateNode
             ChoiceContent choice = (ChoiceContent)ChoiceContentScene.Instantiate();
             choice.Label.Text = enemy.Name + $" [color={Game.APColor.ToHtml()}](AP: {apCost})[/color]";
             choice.Enabled = Battle.CurrFighter.AP >= apCost;
-            Battle.UI.CommandTextbox.Choices.AddChoice(choice);
+            Battle.UI.Commands.Choices.AddChoice(choice);
         }
                 
-        Battle.UI.CommandTextbox.Choices.ShowArrow(_index);
+        Battle.UI.Commands.Choices.ShowArrow(_index);
 
         int index = Battle.Party.IndexOf((Ally)Battle.CurrFighter);
         PartyInfoPanel panel = Battle.UI.GetPartyInfoPanel(index);

@@ -22,7 +22,7 @@ public partial class PlayerTurn : StateNode
         }
 
         int prevIndex = _index;
-        int numCmds = Battle.UI.CommandTextbox.GetChoices().Length;
+        int numCmds = Battle.UI.Commands.GetChoices().Length;
 
         switch (keyEvent)
         {
@@ -33,7 +33,7 @@ public partial class PlayerTurn : StateNode
                 _index = (_index - 1 + numCmds) % numCmds;
                 break;
             case InputEventKey k when k.IsActionPressed("Accept"):
-                ChoiceContent choice = Battle.UI.CommandTextbox.GetChoices()[_index];
+                ChoiceContent choice = Battle.UI.Commands.GetChoices()[_index];
                 switch (choice.Label.Text)
                 {
                     case "Attack":
@@ -53,8 +53,7 @@ public partial class PlayerTurn : StateNode
                         break;
                     case "End Turn":
                         _isPlayerTurn = false;
-                        Battle.UI.CommandTextbox.Visible = false;
-                        await Battle.UI.RemoveTurnQueuePanel(Battle.CurrFighter);
+                        Battle.UI.Commands.Visible = false;
                         if (Battle.TurnQueue.Count > 0)
                         {
                             Battle.CurrFighter = Battle.TurnQueue.Dequeue();
@@ -74,8 +73,8 @@ public partial class PlayerTurn : StateNode
 
         if (prevIndex != _index)
         {
-            Battle.UI.CommandTextbox.Choices.HideArrow(prevIndex);
-            Battle.UI.CommandTextbox.Choices.ShowArrow(_index);
+            Battle.UI.Commands.Choices.HideArrow(prevIndex);
+            Battle.UI.Commands.Choices.ShowArrow(_index);
         }
     }
 
@@ -103,7 +102,7 @@ public partial class PlayerTurn : StateNode
         {
             await Battle.UI.Log.AppendLine($"{Battle.CurrFighter.Name} is ready to fight!");
             _isPlayerTurn = true;
-            Battle.UI.CommandTextbox.Visible = true;
+            Battle.UI.Commands.Visible = true;
         }
 
         Battle.UI.ShowPlayerCommands(_index);
