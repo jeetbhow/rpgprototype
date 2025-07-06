@@ -9,7 +9,7 @@ public partial class TurnEnd : StateNode
 
     public override async Task Enter()
     {
-        Battle.UI.TQPopFront();
+        Battle.UI.AdvanceTurnQueue();
         Battle.UI.Commands.Hide();
         Battle.TurnQueue.Dequeue();
         if (Battle.TurnQueue.Count > 0)

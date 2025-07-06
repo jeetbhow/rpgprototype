@@ -33,12 +33,53 @@ public partial class BattleUI : CanvasLayer
 
         ShowPlayerCommands(0);
     }
+    
+    /// <summary>
+    /// Slides every panel in <see cref="TurnQueue"/> up one slot and (optionally)
+    /// fades the departing panel, then frees it when the tween finishes.
+    /// </summary>
+    /// <param name="duration">Seconds the slide should take.</param>
+    public async void AdvanceTurnQueue(float duration = 0.25f)
+    {
+        if (TurnQueue.GetChildCount() == 0)
+            return;
+
+        var departing = TurnQueue.GetChild<Control>(0);
+        var shiftY = departing.Size.Y + TurnQueue.GetThemeConstant("vseparation");
+        var tween = GetTree().CreateTween();
+
+        tween.TweenProperty(
+            departing, "modulate:a", 0.0f, duration * 0.8f)
+            .SetTrans(Tween.TransitionType.Cubic)
+            .SetEase(Tween.EaseType.In);
+
+        foreach (Control child in TurnQueue.GetChildren().Cast<Control>().Skip(1))
+        {
+            var start = child.GlobalPosition;
+            var end   = start - new Vector2(0, shiftY);
+
+            child.GlobalPosition = start;
+
+            tween.TweenProperty(
+                child, "global_position", end, duration)
+                .SetTrans(Tween.TransitionType.Cubic)
+                .SetEase(Tween.EaseType.Out);
+        }
+
+        tween.TweenCallback(Callable.From(() =>
+        {
+            TurnQueue.RemoveChild(departing);
+            departing.QueueFree();
+        }));
+
+        await ToSignal(tween, "finished");
+    }
 
     public void AddTQPanel(Fighter f)
     {
         var p = TurnQueuePanelScene.Instantiate<TurnQueuePanel>();
         p.Fighter = f;
-        TurnQueue.AddChild(p); 
+        TurnQueue.AddChild(p);
     }
 
     public void SetTurnQueue(Queue<Fighter> q)
@@ -59,13 +100,6 @@ public partial class BattleUI : CanvasLayer
     public TurnQueuePanel TQPeek()
     {
         return TurnQueue.GetChild<TurnQueuePanel>(0);
-    }
-
-    public void TQPopFront()
-    {
-        var front = TurnQueue.GetChild<TurnQueuePanel>(0);
-        TurnQueue.RemoveChild(front);
-        front.QueueFree();
     }
 
     public void ShowPlayerCommands(int initialIndex)

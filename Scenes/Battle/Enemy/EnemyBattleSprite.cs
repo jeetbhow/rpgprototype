@@ -73,9 +73,7 @@ public partial class EnemyBattleSprite : Node2D
         // force at least one idle frame so you can actually SEE the particles start
         await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
 
-        double deathTime = DeathParticles.Lifetime;
-
-        var timer = GetTree().CreateTimer(deathTime);
+        var timer = GetTree().CreateTimer(2.5);
         await ToSignal(timer, SceneTreeTimer.SignalName.Timeout);
     }
 }

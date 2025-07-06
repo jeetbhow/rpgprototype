@@ -76,19 +76,17 @@ public partial class BattlePlayerAttackMenu : StateNode
         
         if (enemy.HP <= 0)
         {
-            // Get the enemy battle sprite. 
             EnemyBattleSprite sprite = Battle.GetEnemySprite(_index);
-            // 1) Play & await the VFX
+
             await sprite.Die();
             sprite.QueueFree();
 
-            // 2) Remove from your lists/queue/UI
             Battle.Enemies.RemoveAt(_index);
             GD.Print(Battle.TurnQueue.Peek().Name);
             Battle.TurnQueue = new Queue<Fighter>(Battle.TurnQueue.Where(fighter => fighter != enemy));
             Battle.UI.SetTurnQueue(Battle.TurnQueue);
+            Battle.UI.TQPeek().Glow();
 
-            // 3) Log it right away
             await Battle.UI.Log.AppendLine($"{enemy.Name} has fallen!");
         }
     }
