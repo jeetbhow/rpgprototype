@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using Godot;
 
@@ -38,6 +39,20 @@ public partial class BattleUI : CanvasLayer
         var p = TurnQueuePanelScene.Instantiate<TurnQueuePanel>();
         p.Fighter = f;
         TurnQueue.AddChild(p); 
+    }
+
+    public void SetTurnQueue(Queue<Fighter> q)
+    {
+        foreach (var pnl in TurnQueue.GetChildren().Cast<TurnQueuePanel>())
+        {
+            TurnQueue.RemoveChild(pnl);
+            pnl.QueueFree();
+        }
+
+        foreach (var f in q)
+        {
+            AddTQPanel(f);
+        }
     }
 
     public TurnQueuePanel TQPeek()

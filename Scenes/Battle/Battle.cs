@@ -94,7 +94,7 @@ public partial class Battle : Node2D
             f.Initiative = d1 + d2 + f.Athletics;
             UI.CreateDiceRollInfo(f, d1, d2, SkillType.Athletics, f.Athletics);
 
-            await UI.Log.AppendLine($"{f.Name} rolled {f.Initiative} [color={Game.BodySkillColor.ToHtml()}](+{f.Athletics} Athletics)[/color] on initiative.");
+            await UI.Log.AppendLine($"{f.Name} rolled {f.Initiative} [color={Game.BodySkillColor.ToHtml()}](+{f.Athletics})[/color] on initiative.");
         }
 
         await Wait(500);

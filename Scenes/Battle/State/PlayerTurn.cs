@@ -67,21 +67,6 @@ public partial class PlayerTurn : StateNode
     public override async Task Enter()
     {
         _index = 0;
-        for (int i = Battle.Enemies.Count - 1; i >= 0; i--)
-        {
-            var enemy = Battle.Enemies[i];
-            if (enemy.IsDead)
-            {
-                var sprite = Battle.GetEnemySprite(i);
-                sprite.Die();
-                await Task.Delay(2500); // Wait for death animation
-                sprite.QueueFree();
-                Battle.Enemies.RemoveAt(i);
-                Battle.TurnQueue = new Queue<Fighter>(Battle.TurnQueue.Where(f => f != enemy));
-
-                await Battle.UI.Log.AppendLine($"{enemy.Name} has fallen!");
-            }
-        }
         
         if (!_isPlayerTurn)
         {

@@ -62,11 +62,25 @@ public partial class EnemyBattleSprite : Node2D
         _hpLabel.Text = $"{Math.Round(toValue)}/{Data.MaxHP}";
     }
 
-    public void Die()
+    public async Task Die()
     {
+        // hide the sprite-frame, play any “destroy_extras” animation…
         _animatedSprite2D.Visible = false;
         _animationPlayer.Play("destroy_extras");
+
+        // restart & emit the GPU particles
         DeathParticles.Restart();
         DeathParticles.Emitting = true;
+
+        // force at least one idle frame so you can actually SEE the particles start
+        await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
+
+        // grab the configured lifetime of the particle system
+        // GPUParticles2D has a `Lifetime` property in seconds
+        double deathTime = DeathParticles.Lifetime;
+
+        // now wait that exact amount without blocking Godot’s main loop
+        var timer = GetTree().CreateTimer(deathTime);
+        await ToSignal(timer, SceneTreeTimer.SignalName.Timeout);
     }
 }

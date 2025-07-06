@@ -1,4 +1,6 @@
 using Godot;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 public partial class BattlePlayerAttackMenu : StateNode
@@ -38,7 +40,7 @@ public partial class BattlePlayerAttackMenu : StateNode
             case InputEventKey k when k.IsActionPressed("Accept"):
                 if (!_isAttacking && Battle.CurrFighter.AP >= apCost)
                 {
-                    await Attack(Battle.Enemies[_index]);
+                    await Attack();
                     EmitSignal(SignalName.StateUpdate, BattlePlayerTurn.Name);
                 }
                 break;
@@ -54,9 +56,11 @@ public partial class BattlePlayerAttackMenu : StateNode
         }
     }
 
-    public async Task Attack(Fighter enemy)
+    public async Task Attack()
     {
         _isAttacking = true;
+
+        Enemy enemy = Battle.Enemies[_index];
 
         await Battle.UI.Log.AppendLine($"{Battle.CurrFighter.Name} attacks {enemy.Name}.");
         await Battle.Wait(500);
@@ -69,6 +73,23 @@ public partial class BattlePlayerAttackMenu : StateNode
         await Battle.UI.Log.AppendLine($"{enemy.Name} takes {BaseDmg} damage.");
         await Battle.Wait(500);
         _target.HideHP();
+        
+        if (enemy.HP <= 0)
+        {
+            // Get the enemy battle sprite. 
+            EnemyBattleSprite sprite = Battle.GetEnemySprite(_index);
+            // 1) Play & await the VFX
+            await sprite.Die();
+            sprite.QueueFree();
+
+            // 2) Remove from your lists/queue/UI
+            Battle.Enemies.RemoveAt(_index);
+            Battle.TurnQueue = new Queue<Fighter>(Battle.TurnQueue.Where(f => f != enemy));
+            Battle.UI.SetTurnQueue(Battle.TurnQueue);
+
+            // 3) Log it right away
+            await Battle.UI.Log.AppendLine($"{enemy.Name} has fallen!");
+        }
     }
 
     public override async Task Enter()
