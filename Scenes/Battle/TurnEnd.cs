@@ -11,6 +11,7 @@ public partial class TurnEnd : StateNode
     {
         Battle.UI.TQPopFront();
         Battle.UI.Commands.Hide();
+        Battle.TurnQueue.Dequeue();
         if (Battle.TurnQueue.Count > 0)
         {
             EmitSignal(SignalName.StateUpdate, TurnStart.Name);

@@ -51,6 +51,7 @@ public partial class BattleUI : CanvasLayer
 
         foreach (var f in q)
         {
+            GD.Print(f.Name);
             AddTQPanel(f);
         }
     }

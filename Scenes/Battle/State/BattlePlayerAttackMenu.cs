@@ -84,7 +84,8 @@ public partial class BattlePlayerAttackMenu : StateNode
 
             // 2) Remove from your lists/queue/UI
             Battle.Enemies.RemoveAt(_index);
-            Battle.TurnQueue = new Queue<Fighter>(Battle.TurnQueue.Where(f => f != enemy));
+            GD.Print(Battle.TurnQueue.Peek().Name);
+            Battle.TurnQueue = new Queue<Fighter>(Battle.TurnQueue.Where(fighter => fighter != enemy));
             Battle.UI.SetTurnQueue(Battle.TurnQueue);
 
             // 3) Log it right away

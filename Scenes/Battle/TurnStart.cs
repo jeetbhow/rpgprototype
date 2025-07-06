@@ -11,7 +11,7 @@ public partial class TurnStart : StateNode
 
     public override async Task Enter()
     {
-        Battle.CurrFighter = Battle.TurnQueue.Dequeue();
+        Battle.CurrFighter = Battle.TurnQueue.Peek();
         TurnQueuePanel p = Battle.UI.TQPeek();
         p.Glow();
 
