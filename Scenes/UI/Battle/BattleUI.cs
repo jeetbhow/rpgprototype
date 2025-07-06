@@ -75,7 +75,6 @@ public partial class BattleUI : CanvasLayer
 
     public void CreateDiceRollInfo(Fighter fighter, int d1, int d2, SkillType skillType, int bonus)
     {
-        GD.Print("Signal Handler Entered");
         DiceRollInfo diceRollInfo = (DiceRollInfo)DiceRollInfoScene.Instantiate();
         DiceRolls.AddChild(diceRollInfo);
 

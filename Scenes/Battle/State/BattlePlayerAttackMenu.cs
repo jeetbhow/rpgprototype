@@ -7,6 +7,7 @@ public partial class BattlePlayerAttackMenu : StateNode
 
     private int _index = 0;
     private bool _isAttacking = false;
+    private EnemyBattleSprite _target = null;
 
     [Export] public PackedScene ChoiceContentScene { get; set; }
     [Export] public Battle Battle { get; set; }
@@ -37,13 +38,12 @@ public partial class BattlePlayerAttackMenu : StateNode
             case InputEventKey k when k.IsActionPressed("Accept"):
                 if (!_isAttacking && Battle.CurrFighter.AP >= apCost)
                 {
-                    Battle.UnhighlightEnemy(_index);
                     await Attack(Battle.Enemies[_index]);
                     EmitSignal(SignalName.StateUpdate, BattlePlayerTurn.Name);
                 }
                 break;
             case InputEventKey k when k.IsActionPressed("Cancel"):
-                Battle.UnhighlightEnemy(_index);
+                _target.HideHP();
                 EmitSignal(SignalName.StateUpdate, BattlePlayerTurn.Name);
                 break;
         }
@@ -59,9 +59,7 @@ public partial class BattlePlayerAttackMenu : StateNode
         _isAttacking = true;
 
         await Battle.UI.Log.AppendLine($"{Battle.CurrFighter.Name} attacks {enemy.Name}.");
-        EnemyBattleSprite enemySprite = Battle.GetEnemySprite(_index);
-        await enemySprite.ShowHP();
-        await Task.Delay(500);
+        await Battle.Wait(500);
 
         SoundManager.Instance.PlaySfx(SoundManager.Sfx.Hurt, 8.0f);
 
@@ -69,7 +67,8 @@ public partial class BattlePlayerAttackMenu : StateNode
         Battle.UpdateAP(Battle.CurrFighter, GetAPCost(Battle.CurrFighter, enemy));
 
         await Battle.UI.Log.AppendLine($"{enemy.Name} takes {BaseDmg} damage.");
-        await enemySprite.HideHP();
+        await Battle.Wait(500);
+        _target.HideHP();
     }
 
     public override async Task Enter()
@@ -77,7 +76,6 @@ public partial class BattlePlayerAttackMenu : StateNode
         _index = 0;
         _isAttacking = false;
 
-        Battle.HighlightEnemy(_index);
         Battle.UI.Commands.Choices.Clear();
 
         foreach (var enemy in Battle.Enemies)
@@ -88,12 +86,11 @@ public partial class BattlePlayerAttackMenu : StateNode
             choice.Enabled = Battle.CurrFighter.AP >= apCost;
             Battle.UI.Commands.Choices.AddChoice(choice);
         }
-                
+
         Battle.UI.Commands.Choices.ShowArrow(_index);
 
-        int index = Battle.Party.IndexOf((Ally)Battle.CurrFighter);
-        PartyInfoPanel panel = Battle.UI.GetPartyInfoPanel(index);
-        panel.AnimationPlayer.Play("Blink");
+        _target = Battle.GetEnemySprite(_index);
+        _target.ShowHP();
     }
     
     

@@ -17,6 +17,6 @@ AP = 4
 MaxAP = 4
 Strength = 1
 Endurance = 1
-Athletics = 6
+Athletics = 1
 Initiative = 1
 metadata/_custom_type_script = "uid://bfsq0i25vcarl"

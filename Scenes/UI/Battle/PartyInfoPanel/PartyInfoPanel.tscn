@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://dw7vckg81r5s3"]
+[gd_scene load_steps=8 format=3 uid="uid://dw7vckg81r5s3"]
 
 [ext_resource type="Theme" uid="uid://x6m3btvacua5" path="res://Resources/Styles/TextboxDefaultTheme.tres" id="1_0hoph"]
 [ext_resource type="StyleBox" uid="uid://68msogk2h6y6" path="res://Resources/Styles/UIPanel.tres" id="1_qardb"]
@@ -6,16 +6,11 @@
 [ext_resource type="PackedScene" uid="uid://dda28f5te2f4y" path="res://Scenes/UI/Battle/PartyInfoPanel/PartyHPBar/PartyHPBar.tscn" id="4_1nb3n"]
 [ext_resource type="PackedScene" uid="uid://78fn51iu7a8k" path="res://Scenes/UI/Battle/PartyInfoPanel/PartyAPBar/PartyAPBar.tscn" id="4_oj1ay"]
 
-[sub_resource type="Animation" id="Animation_mceo4"]
-resource_name = "Blink"
-loop_mode = 1
-
 [sub_resource type="Animation" id="Animation_8rjdf"]
 length = 0.001
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_8rjdf"]
 _data = {
-&"Blink": SubResource("Animation_mceo4"),
 &"RESET": SubResource("Animation_8rjdf")
 }
 

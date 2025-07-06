@@ -9,7 +9,6 @@ public partial class Battle : Node2D
     private const int _D6Min = 1;
     private const int _D6Max = 6;
 
-    [Signal] public delegate void DiceRollPerformedEventHandler(Fighter fighter, int d1, int d2, SkillType skillType, int bonus);
     [Signal] public delegate void ActionBarFullEventHandler(int id);
 
     [Export] public PackedScene PartyInfoPanelScene { get; set; }
@@ -68,7 +67,6 @@ public partial class Battle : Node2D
         {
             if (enemy is EnemyBattleSprite e)
             {
-                GD.Print($"Adding enemy: {e.Data.Name}");
                 Enemies.Add(e.Data);
 
                 await UI.Log.AppendLine(e.Data.Introduction);
@@ -105,26 +103,6 @@ public partial class Battle : Node2D
 
         await Wait(500);
         TurnQueue = new Queue<Fighter>(allParticipants.OrderByDescending(p => p.Initiative));
-    }
-
-    /// <summary>
-    /// Highlights the enemy at the specified index in the battle.
-    /// </summary>
-    /// <param name="index">The index of the enemy to highlight.</param>
-    public void HighlightEnemy(int index)
-    {
-        var sprite = EnemyNodes.GetChild<EnemyBattleSprite>(index, false);
-        sprite?.Highlight();
-    }
-
-    /// <summary>
-    /// Stops the animation of the enemy at the specified index.
-    /// </summary>
-    /// <param name="index"></param>
-    public void UnhighlightEnemy(int index)
-    {
-        var sprite = EnemyNodes.GetChild<EnemyBattleSprite>(index, false);
-        sprite?.StopAnimation();
     }
 
     /// <summary>

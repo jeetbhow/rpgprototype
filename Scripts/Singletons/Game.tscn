@@ -19,8 +19,8 @@ AP = 5
 MaxAP = 5
 Strength = 5
 Endurance = 5
-Athletics = 1
-Initiative = 1
+Athletics = 5
+Initiative = 0
 metadata/_custom_type_script = "uid://v023qn4fhkid"
 
 [node name="Game" type="Node"]

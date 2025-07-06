@@ -4,12 +4,11 @@ using System.Threading.Tasks;
 
 public partial class EnemyBattleSprite : Node2D
 {
-    private const int AnimDelay = 500;
-
     private AnimatedSprite2D _animatedSprite2D;
     private AnimationPlayer _animationPlayer;
     private Sprite2D _shadow;
     private RichTextLabel _hpLabel;
+    private Timer _hpTimer;
 
     [Export] public Enemy Data { get; set; }
 
@@ -23,6 +22,9 @@ public partial class EnemyBattleSprite : Node2D
         _shadow = GetNode<Sprite2D>("Shadow");
         _hpLabel = GetNode<RichTextLabel>("Healthbar/RichTextLabel");
 
+        _hpTimer = GetNode<Timer>("HPTimer");
+        _hpTimer.Timeout += OnHPTimerTimeout;
+
         DeathParticles = GetNode<GpuParticles2D>("DeathParticles");
         Healthbar = GetNode<ProgressBar>("Healthbar");
         Healthbar.MaxValue = Data.HP;
@@ -30,27 +32,20 @@ public partial class EnemyBattleSprite : Node2D
         _hpLabel.Text = $"{Data.HP}/{Data.MaxHP}";
     }
 
-    public void Highlight()
-    {
-        _animationPlayer.Play("Highlight");
-    }
-
-    public void StopAnimation()
-    {
-        _animationPlayer.Stop();
-    }
-
-    public async Task ShowHP()
+    public void ShowHP()
     {
         Healthbar.Visible = true;
         _animationPlayer.Play("hp_appear");
-        await ToSignal(_animationPlayer, "animation_finished");
     }
 
-    public async Task HideHP()
+    public void HideHP()
     {
         _animationPlayer.Play("hp_hide");
-        await ToSignal(_animationPlayer, "animation_finished");
+        _hpTimer.Start();
+    }
+
+    public void OnHPTimerTimeout()
+    {
         Healthbar.Visible = false;
     }
 
