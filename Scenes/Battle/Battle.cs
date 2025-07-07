@@ -71,8 +71,8 @@ public partial class Battle : Node2D
             EnemyNodes.AddChild(sprite);
             sprite.Data = e;
 
-            sprite.ChatBallloon.PlayMessage(e.IntroBalloon);
             await UI.Log.AppendLine(e.IntroLog);
+            await sprite.Introduction();
         }
     }
 

@@ -4,11 +4,15 @@ using System.Threading.Tasks;
 
 public partial class EnemyBattleSprite : Node2D
 {
+    private readonly Random _rng = new();
+
     private AnimatedSprite2D _animatedSprite2D;
     private AnimationPlayer _animationPlayer;
     private Sprite2D _shadow;
     private RichTextLabel _hpLabel;
     private Timer _hpTimer;
+
+    private int _prev;           // Index of the previous attack dialogue entry.
 
     [Export] public Enemy Data { get; set; }
 
@@ -67,6 +71,24 @@ public partial class EnemyBattleSprite : Node2D
         _hpLabel.Text = $"{Math.Round(toValue)}/{Data.MaxHP}";
     }
 
+    public async Task Monologue()
+    {
+        int index = _rng.Next(Data.AttackBalloonText.Length);
+        if (index == _prev)
+        {
+            // This should prevent repeated dialogue from popping up during fights.
+            index = (index + 1) % Data.AttackBalloonText.Length;
+        }
+
+        await ChatBallloon.PlayMessage(Data.AttackBalloonText[index], 700);
+        _prev = index;
+    }
+
+    public async Task Introduction()
+    {
+        await ChatBallloon.PlayMessage(Data.IntroBalloon, 700);
+    }
+
     public async Task Die()
     {
         _animatedSprite2D.Visible = false;
@@ -77,7 +99,7 @@ public partial class EnemyBattleSprite : Node2D
 
         // force at least one idle frame so you can actually SEE the particles start
         await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
-        await ChatBallloon.PlayMessage(Data.DeathMsgBalloon, false);
+        await ChatBallloon.PlayMessage(Data.DeathMsgBalloon, 700, false);
 
         var timer = GetTree().CreateTimer(0.2);
         await ToSignal(timer, SceneTreeTimer.SignalName.Timeout);

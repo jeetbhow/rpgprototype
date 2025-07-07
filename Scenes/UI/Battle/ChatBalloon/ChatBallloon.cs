@@ -26,7 +26,7 @@ public partial class ChatBallloon : PanelContainer
     /// Play the chat balloon's message. This function assumes that you've already
     /// set the Text property of this ChatBalloon beforehand.
     /// </summary>
-    public async Task PlayMessage(string text, bool reset = true)
+    public async Task PlayMessage(string text, int delay, bool reset = true)
     {
         Visible = true;
 
@@ -51,7 +51,8 @@ public partial class ChatBallloon : PanelContainer
             _textLabel.VisibleCharacters = end;
         }
 
-        await Game.Instance.Wait(500);
+        await Game.Instance.Wait(delay);
+
         if (reset)
         {
             _textLabel.Text = "";

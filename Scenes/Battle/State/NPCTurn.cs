@@ -17,12 +17,11 @@ public partial class NPCTurn : StateNode
         if (curr is Enemy enemy)
         {
             FighterAI ai = enemy.AI;
+
             List<EnemyBattleSprite> sprites = [.. Battle.EnemyNodes.GetChildren().Cast<EnemyBattleSprite>()];
             EnemyBattleSprite sprite = sprites.Find(sprite => sprite.Data == enemy);
-
-            Random rng = new();
-            int index = rng.Next(enemy.AttackBalloonText.Length);
-            await sprite.ChatBallloon.PlayMessage(enemy.AttackBalloonText[index]);
+            await sprite.Monologue();
+    
             while (ai.CanAct(curr))
             {
                 AIAction action = ai.PickAction();
@@ -45,7 +44,7 @@ public partial class NPCTurn : StateNode
                     int targetIndex = ai.PickTarget(Battle.Party);
                     if (targetIndex != -1)
                     {
-                        SoundManager.Instance.PlaySfx(SoundManager.Sfx.Hurt, 10);
+                        SoundManager.Instance.PlaySfx(SoundManager.Sfx.Hurt, 8.0f);
                         Battle.DamageAllyHP(targetIndex, dmg);
                         await Battle.UI.Log.AppendLine($"{curr.Name} dealt {dmg} damage.");
                     }
