@@ -242,10 +242,10 @@ process_material = SubResource("ShaderMaterial_hx7ra")
 
 [node name="Healthbar" type="ProgressBar" parent="."]
 visible = false
-offset_left = -21.0
-offset_top = -21.0
-offset_right = 27.1
-offset_bottom = -15.0
+offset_left = -10.515
+offset_top = -1.0
+offset_right = 37.585
+offset_bottom = 5.0
 theme_override_styles/background = ExtResource("5_sloyy")
 theme_override_styles/fill = ExtResource("4_rgfcb")
 value = 100.0

@@ -42,8 +42,7 @@ public partial class ChatBallloon : PanelContainer
                 continue;
             }
 
-            // --- visible text ---------------------------------------------------
-            int start = _textLabel.GetTotalCharacterCount();   // counts *visible* chars
+            int start = _textLabel.GetTotalCharacterCount(); 
             _textLabel.AppendText(part);
             int end = _textLabel.GetTotalCharacterCount();
 
