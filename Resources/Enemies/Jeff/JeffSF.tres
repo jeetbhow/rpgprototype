@@ -1,0 +1,18 @@
+[gd_resource type="SpriteFrames" load_steps=3 format=3 uid="uid://dqitn7jtgv3ri"]
+
+[ext_resource type="Texture2D" uid="uid://cddkxetbmoyh3" path="res://Assets/Enemies/jerry.png" id="1_01h5p"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cgxef"]
+atlas = ExtResource("1_01h5p")
+region = Rect2(0, 0, 32, 32)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cgxef")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]

@@ -1,17 +1,18 @@
-[gd_scene load_steps=17 format=3 uid="uid://bhlaeslv50jid"]
+[gd_scene load_steps=18 format=3 uid="uid://bhlaeslv50jid"]
 
 [ext_resource type="Script" uid="uid://bxwqvj1ig43b2" path="res://Scenes/Battle/Battle.cs" id="1_07e4u"]
+[ext_resource type="Resource" uid="uid://bs8b37iwqpsr1" path="res://Resources/Enemies/Jeff/Jeff.tres" id="2_8f5sm"]
 [ext_resource type="PackedScene" uid="uid://dw7vckg81r5s3" path="res://Scenes/UI/Battle/PartyInfoPanel/PartyInfoPanel.tscn" id="2_cmwrv"]
 [ext_resource type="Script" uid="uid://bxy8ovbqm6hg6" path="res://Scenes/Battle/State/BattleStart.cs" id="4_g1sps"]
 [ext_resource type="Script" uid="uid://c6hmuq7bnmysi" path="res://Scripts/Components/StateMachine/StateMachine.cs" id="4_odh8s"]
 [ext_resource type="PackedScene" uid="uid://d1yvb465tt7ik" path="res://Scenes/Battle/Enemy/EnemyBattleSprite.tscn" id="5_rremj"]
-[ext_resource type="Script" uid="uid://d02xxv3gs66k6" path="res://Scenes/Battle/TurnStart.cs" id="6_dby5i"]
+[ext_resource type="Script" uid="uid://d02xxv3gs66k6" path="res://Scenes/Battle/State/TurnStart.cs" id="6_dby5i"]
 [ext_resource type="Script" uid="uid://mfqfr2pinyas" path="res://Scenes/Battle/State/NPCTurn.cs" id="7_diuyf"]
 [ext_resource type="Script" uid="uid://dcifapt71jp00" path="res://Scripts/Components/StateMachine/StateNode.cs" id="7_tmq01"]
 [ext_resource type="Script" uid="uid://cximkhuqra6pe" path="res://Scenes/Battle/State/PlayerTurn.cs" id="8_tmq01"]
 [ext_resource type="Script" uid="uid://dvhfitddx4u8k" path="res://Scenes/Battle/State/BattlePlayerAttackMenu.cs" id="9_cmwrv"]
 [ext_resource type="PackedScene" uid="uid://cgfmftu70tvgf" path="res://Scenes/UI/Battle/BattleUI.tscn" id="9_tmq01"]
-[ext_resource type="Script" uid="uid://cv1fltfldbohi" path="res://Scenes/Battle/TurnEnd.cs" id="10_q0gc0"]
+[ext_resource type="Script" uid="uid://cv1fltfldbohi" path="res://Scenes/Battle/State/TurnEnd.cs" id="10_q0gc0"]
 [ext_resource type="PackedScene" uid="uid://btrajdgilaf0d" path="res://Scenes/UI/Game/Choice/Content/ChoiceContent.tscn" id="10_ukbm8"]
 [ext_resource type="Script" uid="uid://dtvkcfgapvb2a" path="res://Scenes/Battle/State/TurnQueueEmpty.cs" id="11_gibtw"]
 [ext_resource type="AudioStream" uid="uid://ceapr7mcvv0oa" path="res://Assets/Audio/random_encounter_01_v1.mp3" id="13_gibtw"]
@@ -20,15 +21,14 @@
 
 [node name="Battle" type="Node2D"]
 script = ExtResource("1_07e4u")
+Enemies = [ExtResource("2_8f5sm")]
 PartyInfoPanelScene = ExtResource("2_cmwrv")
+EnemyBattleSpriteScene = ExtResource("5_rremj")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(4, 4)
+zoom = Vector2(3, 3)
 
 [node name="EnemyNodes" type="Node2D" parent="."]
-
-[node name="Jeff" parent="EnemyNodes" instance=ExtResource("5_rremj")]
-scale = Vector2(1, 1.04311)
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("CurrStateNode")]
 script = ExtResource("4_odh8s")

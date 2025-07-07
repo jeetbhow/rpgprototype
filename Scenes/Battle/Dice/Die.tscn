@@ -1,29 +1,29 @@
 [gd_scene load_steps=9 format=3 uid="uid://cipqk0exm12ho"]
 
-[ext_resource type="Texture2D" uid="uid://du7jyp04i3c87" path="res://Assets/Misc/dice.png" id="1_r52g7"]
+[ext_resource type="Texture2D" uid="uid://du7jyp04i3c87" path="res://Assets/Misc/dice.png" id="1_jxtp4"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8mt4x"]
-atlas = ExtResource("1_r52g7")
+atlas = ExtResource("1_jxtp4")
 region = Rect2(0, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_epvpb"]
-atlas = ExtResource("1_r52g7")
+atlas = ExtResource("1_jxtp4")
 region = Rect2(32, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_l0yd7"]
-atlas = ExtResource("1_r52g7")
+atlas = ExtResource("1_jxtp4")
 region = Rect2(64, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hruqv"]
-atlas = ExtResource("1_r52g7")
+atlas = ExtResource("1_jxtp4")
 region = Rect2(96, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8v5rj"]
-atlas = ExtResource("1_r52g7")
+atlas = ExtResource("1_jxtp4")
 region = Rect2(128, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_s6jtr"]
-atlas = ExtResource("1_r52g7")
+atlas = ExtResource("1_jxtp4")
 region = Rect2(160, 0, 32, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_l0yd7"]
@@ -77,6 +77,6 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Dice" type="AnimatedSprite2D"]
+[node name="Die" type="AnimatedSprite2D"]
 sprite_frames = SubResource("SpriteFrames_l0yd7")
 animation = &"1"

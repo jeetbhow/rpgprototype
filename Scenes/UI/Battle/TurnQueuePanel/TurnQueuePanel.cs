@@ -25,9 +25,4 @@ public partial class TurnQueuePanel : PanelContainer
         _portrait.Texture = _fighter.Portrait;
         _animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
     }
-
-    public void Glow()
-    {
-        _animationPlayer.Play("glow");
-    }
 }

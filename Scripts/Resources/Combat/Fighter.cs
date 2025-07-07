@@ -3,15 +3,6 @@ using Godot;
 [GlobalClass]
 public partial class Fighter : Resource
 {
-    // Base class for all participants in a battle, such as enemies and players.
-    // This class can be extended to add specific functionality for different types of participants.
-    public enum FighterType
-    {
-        Player,
-        Ally,
-        Enemy
-    }
-
     public bool IsDead {
         get { return HP <= 0; }
     }

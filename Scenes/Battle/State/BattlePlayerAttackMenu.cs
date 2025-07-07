@@ -67,7 +67,8 @@ public partial class BattlePlayerAttackMenu : StateNode
 
         SoundManager.Instance.PlaySfx(SoundManager.Sfx.Hurt, 8.0f);
 
-        Battle.DamageEnemyHP(Battle.Enemies.IndexOf((Enemy)enemy), BaseDmg);
+        enemy.HP -= BaseDmg;
+        Battle.EnemyNodes.GetChild<EnemyBattleSprite>(_index).TakeDamage(BaseDmg);
         Battle.UpdateAP(Battle.CurrFighter, GetAPCost(Battle.CurrFighter, enemy));
 
         await Battle.UI.Log.AppendLine($"{enemy.Name} takes {BaseDmg} damage.");
@@ -77,17 +78,14 @@ public partial class BattlePlayerAttackMenu : StateNode
         if (enemy.HP <= 0)
         {
             EnemyBattleSprite sprite = Battle.GetEnemySprite(_index);
-
             await sprite.Die();
             sprite.QueueFree();
 
             Battle.Enemies.RemoveAt(_index);
-            GD.Print(Battle.TurnQueue.Peek().Name);
             Battle.TurnQueue = new Queue<Fighter>(Battle.TurnQueue.Where(fighter => fighter != enemy));
             Battle.UI.SetTurnQueue(Battle.TurnQueue);
-            Battle.UI.TQPeek().Glow();
 
-            await Battle.UI.Log.AppendLine($"{enemy.Name} has fallen!");
+            await Battle.UI.Log.AppendLine(enemy.DeathMsgLog);
         }
     }
 

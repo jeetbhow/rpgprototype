@@ -1,4 +1,7 @@
 using Godot;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 public partial class NPCTurn : StateNode
@@ -14,6 +17,12 @@ public partial class NPCTurn : StateNode
         if (curr is Enemy enemy)
         {
             FighterAI ai = enemy.AI;
+            List<EnemyBattleSprite> sprites = [.. Battle.EnemyNodes.GetChildren().Cast<EnemyBattleSprite>()];
+            EnemyBattleSprite sprite = sprites.Find(sprite => sprite.Data == enemy);
+
+            Random rng = new();
+            int index = rng.Next(enemy.AttackBalloonText.Length);
+            await sprite.ChatBallloon.PlayMessage(enemy.AttackBalloonText[index]);
             while (ai.CanAct(curr))
             {
                 AIAction action = ai.PickAction();

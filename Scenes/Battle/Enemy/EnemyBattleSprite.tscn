@@ -8,21 +8,20 @@
 [ext_resource type="StyleBox" uid="uid://dg2wmvgh5xkej" path="res://Resources/Styles/HPBarBg.tres" id="5_sloyy"]
 [ext_resource type="Shader" uid="uid://b64ptem30f7km" path="res://Shaders/disintegrate.gdshader" id="5_w5rdf"]
 [ext_resource type="Theme" uid="uid://x6m3btvacua5" path="res://Resources/Styles/TextboxDefaultTheme.tres" id="6_evwod"]
+[ext_resource type="PackedScene" uid="uid://beqsl0i7k4bc0" path="res://Scenes/UI/Battle/ChatBalloon/ChatBallloon.tscn" id="9_0o85k"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_cgxef"]
-atlas = ExtResource("1_jodb1")
-region = Rect2(0, 0, 32, 32)
+[sub_resource type="SpriteFrames" id="SpriteFrames_0o85k"]
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_wi3hf"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_cgxef")
-}],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hx7ra"]
+shader = ExtResource("5_w5rdf")
+shader_parameter/src_tex = ExtResource("1_jodb1")
+shader_parameter/tex_size = Vector2(32, 32)
+shader_parameter/pixel_size = 1.0
+shader_parameter/max_delay = 1.5
+shader_parameter/rise_speed_min = 20.0
+shader_parameter/rise_speed_max = 60.0
+shader_parameter/side_speed_range = 13.0
+shader_parameter/fade_time = 0.8
 
 [sub_resource type="Animation" id="Animation_rgfcb"]
 resource_name = "Default"
@@ -218,17 +217,6 @@ _data = {
 &"hp_hide": SubResource("Animation_0o85k")
 }
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_hx7ra"]
-shader = ExtResource("5_w5rdf")
-shader_parameter/src_tex = ExtResource("1_jodb1")
-shader_parameter/tex_size = Vector2(32, 32)
-shader_parameter/pixel_size = 1.0
-shader_parameter/max_delay = 1.5
-shader_parameter/rise_speed_min = 20.0
-shader_parameter/rise_speed_max = 60.0
-shader_parameter/side_speed_range = 13.0
-shader_parameter/fade_time = 0.8
-
 [node name="EnemyBattleSprite" type="Node2D"]
 script = ExtResource("1_5aqwu")
 Data = ExtResource("2_acpbt")
@@ -241,14 +229,16 @@ texture = ExtResource("1_cgxef")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 z_index = 1
-sprite_frames = SubResource("SpriteFrames_wi3hf")
+sprite_frames = SubResource("SpriteFrames_0o85k")
 autoplay = "default"
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_2k0bg")
-}
-autoplay = "Default"
+[node name="DeathParticles" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 1024
+lifetime = 1.5
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ShaderMaterial_hx7ra")
 
 [node name="Healthbar" type="ProgressBar" parent="."]
 visible = false
@@ -285,16 +275,18 @@ scroll_active = false
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(4, 4)
+[node name="ChatBalloon" parent="." instance=ExtResource("9_0o85k")]
+visible = false
+offset_left = -99.0
+offset_top = -42.0
+offset_right = 96.0
+offset_bottom = 68.0
 
-[node name="DeathParticles" type="GPUParticles2D" parent="."]
-emitting = false
-amount = 1024
-lifetime = 1.5
-one_shot = true
-explosiveness = 1.0
-process_material = SubResource("ShaderMaterial_hx7ra")
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_2k0bg")
+}
+autoplay = "Default"
 
 [node name="HPTimer" type="Timer" parent="."]
 wait_time = 0.1

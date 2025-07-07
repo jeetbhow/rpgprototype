@@ -12,19 +12,24 @@ public partial class EnemyBattleSprite : Node2D
 
     [Export] public Enemy Data { get; set; }
 
+    public ChatBallloon ChatBallloon { get; private set; }
     public ProgressBar Healthbar { get; set; }
     public GpuParticles2D DeathParticles { get; private set; }
 
     public override void _Ready()
     {
         _animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
+
         _animatedSprite2D = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
+        _animatedSprite2D.SpriteFrames = Data.SpriteFrames;
+
         _shadow = GetNode<Sprite2D>("Shadow");
         _hpLabel = GetNode<RichTextLabel>("Healthbar/RichTextLabel");
 
         _hpTimer = GetNode<Timer>("HPTimer");
         _hpTimer.Timeout += OnHPTimerTimeout;
 
+        ChatBallloon = GetNode<ChatBallloon>("ChatBalloon");
         DeathParticles = GetNode<GpuParticles2D>("DeathParticles");
         Healthbar = GetNode<ProgressBar>("Healthbar");
         Healthbar.MaxValue = Data.HP;
@@ -72,8 +77,9 @@ public partial class EnemyBattleSprite : Node2D
 
         // force at least one idle frame so you can actually SEE the particles start
         await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
+        await ChatBallloon.PlayMessage(Data.DeathMsgBalloon, false);
 
-        var timer = GetTree().CreateTimer(2.5);
+        var timer = GetTree().CreateTimer(0.2);
         await ToSignal(timer, SceneTreeTimer.SignalName.Timeout);
     }
 }

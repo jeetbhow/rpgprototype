@@ -39,31 +39,36 @@ public partial class BattleUI : CanvasLayer
     /// fades the departing panel, then frees it when the tween finishes.
     /// </summary>
     /// <param name="duration">Seconds the slide should take.</param>
-    public async void AdvanceTurnQueue(float duration = 0.25f)
+    public async void AdvanceTurnQueue(float duration = 0.25f, float offscreenPad = 32f)
     {
         if (TurnQueue.GetChildCount() == 0)
             return;
 
         var departing = TurnQueue.GetChild<Control>(0);
+
+        // How far the remaining panels need to shift vertically
         var shiftY = departing.Size.Y + TurnQueue.GetThemeConstant("vseparation");
+
         var tween = GetTree().CreateTween();
 
-        tween.TweenProperty(
-            departing, "modulate:a", 0.0f, duration * 0.8f)
-            .SetTrans(Tween.TransitionType.Cubic)
-            .SetEase(Tween.EaseType.In);
+        var start = departing.GlobalPosition;
+        var end   = new Vector2(
+            -departing.Size.X - offscreenPad,   // x: safely past the left edge
+            start.Y                              // y: unchanged
+        );
+
+        tween.TweenProperty(departing, "global_position", end, duration * 0.8f)
+             .SetTrans(Tween.TransitionType.Cubic)
+             .SetEase(Tween.EaseType.In);
 
         foreach (Control child in TurnQueue.GetChildren().Cast<Control>().Skip(1))
         {
-            var start = child.GlobalPosition;
-            var end   = start - new Vector2(0, shiftY);
+            var cStart = child.GlobalPosition;
+            var cEnd   = cStart - new Vector2(0, shiftY);
 
-            child.GlobalPosition = start;
-
-            tween.TweenProperty(
-                child, "global_position", end, duration)
-                .SetTrans(Tween.TransitionType.Cubic)
-                .SetEase(Tween.EaseType.Out);
+            tween.TweenProperty(child, "global_position", cEnd, duration)
+                 .SetTrans(Tween.TransitionType.Cubic)
+                 .SetEase(Tween.EaseType.Out);
         }
 
         tween.TweenCallback(Callable.From(() =>
@@ -74,6 +79,7 @@ public partial class BattleUI : CanvasLayer
 
         await ToSignal(tween, "finished");
     }
+
 
     public void AddTQPanel(Fighter f)
     {

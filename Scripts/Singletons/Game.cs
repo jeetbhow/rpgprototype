@@ -1,5 +1,6 @@
 using Godot;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 public partial class Game : Node
 {
@@ -39,5 +40,10 @@ public partial class Game : Node
     public void RemovePartyMember(Ally member)
     {
         Party.Remove(member);
+    }
+
+    public async Task Wait(int ms)
+    {
+        await ToSignal(GetTree().CreateTimer(ms / 1000.0), Timer.SignalName.Timeout);
     }
 }

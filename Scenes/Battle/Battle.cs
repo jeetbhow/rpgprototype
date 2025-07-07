@@ -1,4 +1,5 @@
 using Godot;
+using Godot.Collections;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.Generic;
@@ -11,12 +12,13 @@ public partial class Battle : Node2D
 
     [Signal] public delegate void TurnEndEventHandler(Fighter f);
 
+    [Export] public Array<Enemy> Enemies { get; private set; }
     [Export] public PackedScene PartyInfoPanelScene { get; set; }
+    [Export] public PackedScene EnemyBattleSpriteScene { get; set; }
 
     public Node2D EnemyNodes { get; private set; }
     public BattleUI UI { get; private set; }
     public List<Ally> Party { get; private set; } = [];
-    public List<Enemy> Enemies { get; private set; } = [];
     public Queue<Fighter> TurnQueue { get; set; } = new();
     public Fighter CurrFighter { get; set; }
 
@@ -63,10 +65,14 @@ public partial class Battle : Node2D
     /// </summary>
     public async Task InitEnemies()
     {
-        foreach (var e in EnemyNodes.GetChildren().Cast<EnemyBattleSprite>())
+        foreach (Enemy e in Enemies)
         {
-            Enemies.Add(e.Data);
-            await UI.Log.AppendLine(e.Data.Introduction);
+            var sprite = EnemyBattleSpriteScene.Instantiate<EnemyBattleSprite>();
+            EnemyNodes.AddChild(sprite);
+            sprite.Data = e;
+
+            sprite.ChatBallloon.PlayMessage(e.IntroBalloon);
+            await UI.Log.AppendLine(e.IntroLog);
         }
     }
 
@@ -115,20 +121,6 @@ public partial class Battle : Node2D
     public EnemyBattleSprite GetEnemySprite(int index)
     {
         return EnemyNodes.GetChild<EnemyBattleSprite>(index, false);
-    }
-
-    /// <summary>
-    /// Damages the enemy at the specified index by the given amount. The index corresponds
-    /// to the position of the child node in the EnemyNodes node, which is also the 
-    /// position of the enemy in the Enemies list.
-    /// </summary>
-    /// <param name="index">The index of the enemy to damage.</param>
-    /// <param name="damage">The amount of damage to deal.</param>
-    public void DamageEnemyHP(int index, int damage)
-    {
-        var sprite = EnemyNodes.GetChild<EnemyBattleSprite>(index, false);
-        sprite?.TakeDamage(damage);
-        Enemies[index].HP -= damage;
     }
 
     public void DamageAllyHP(int index, int damage)

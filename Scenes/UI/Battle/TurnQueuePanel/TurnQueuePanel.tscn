@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://bp32y8bvhaf1s"]
+[gd_scene load_steps=6 format=3 uid="uid://bp32y8bvhaf1s"]
 
 [ext_resource type="StyleBox" uid="uid://68msogk2h6y6" path="res://Resources/Styles/UIPanel.tres" id="1_himx8"]
 [ext_resource type="Script" uid="uid://dlvhy7rj77hvx" path="res://Scenes/UI/Battle/TurnQueuePanel/TurnQueuePanel.cs" id="2_cdlpx"]
@@ -19,30 +19,13 @@ tracks/0/keys = {
 "values": [Color(1, 1, 1, 1)]
 }
 
-[sub_resource type="Animation" id="Animation_b7fog"]
-resource_name = "glow"
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:theme_override_styles/panel:border_color")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5, 1),
-"transitions": PackedFloat32Array(0.2, 1, 0.933033),
-"update": 0,
-"values": [Color(1, 1, 1, 1), Color(1, 0.325507, 0.890388, 1), Color(1, 1, 1, 1)]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_evaoy"]
 _data = {
-&"RESET": SubResource("Animation_evaoy"),
-&"glow": SubResource("Animation_b7fog")
+&"RESET": SubResource("Animation_evaoy")
 }
 
 [node name="TurnQueuePanel" type="PanelContainer"]
-custom_minimum_size = Vector2(80, 80)
+custom_minimum_size = Vector2(120, 80)
 offset_right = 80.0
 offset_bottom = 80.0
 theme_override_styles/panel = ExtResource("1_himx8")

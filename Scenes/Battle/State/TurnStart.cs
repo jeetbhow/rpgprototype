@@ -1,6 +1,4 @@
 using Godot;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 public partial class TurnStart : StateNode
@@ -12,8 +10,6 @@ public partial class TurnStart : StateNode
     public override async Task Enter()
     {
         Battle.CurrFighter = Battle.TurnQueue.Peek();
-        TurnQueuePanel p = Battle.UI.TQPeek();
-        p.Glow();
 
         // Emit a signal to go to the state node corresponding to either the Player or NPC turn.
         switch (Battle.CurrFighter)
