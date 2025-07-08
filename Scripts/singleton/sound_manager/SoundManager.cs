@@ -34,6 +34,7 @@ public partial class SoundManager : Node
         Confirm,
         Poof,
         Hurt,
+        Slash,
     }
 
     private const string _sfxBasePath = "res://Assets/Audio/SFX/";
@@ -43,7 +44,8 @@ public partial class SoundManager : Node
         { Sfx.Success, GD.Load<AudioStream>(_sfxBasePath + "success.wav") },
         { Sfx.Fail, GD.Load<AudioStream>(_sfxBasePath + "fail.wav") },
         { Sfx.Poof, GD.Load<AudioStream>(_sfxBasePath + "poof.wav") },
-        { Sfx.Hurt, GD.Load<AudioStream>(_sfxBasePath + "hurt.wav") }
+        { Sfx.Hurt, GD.Load<AudioStream>(_sfxBasePath + "hurt.wav") },
+        { Sfx.Slash, GD.Load<AudioStream>(_sfxBasePath + "slash.wav") }
     };
 
     public void PlaySfx(Sfx sfxName, float volume = 0.0f)

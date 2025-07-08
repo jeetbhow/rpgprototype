@@ -5,11 +5,14 @@ using System.Threading.Tasks;
 
 public partial class BattlePlayerAttackMenu : StateNode
 {
-    private const int BaseDmg = 2;
+    private const int DefaultDmg = 2;
+    private const int DefaultApCost = 2;
+    private const int HitDelayMs = 500;
 
-    private int _index = 0;
-    private bool _isAttacking = false;
-    private EnemyBattleSprite _target = null;
+    private int _selectedEnemyIndex;
+    private bool _AttackInProgress;
+
+    private EnemyBattleSprite _hoveredEnemySprite;
 
     [Export] public PackedScene ChoiceContentScene { get; set; }
     [Export] public Battle Battle { get; set; }
@@ -17,71 +20,81 @@ public partial class BattlePlayerAttackMenu : StateNode
 
     public override async void _Input(InputEvent @event)
     {
-        if (@event is not InputEventKey keyEvent || !keyEvent.IsPressed() || _isAttacking)
+        if (@event is not InputEventKey keyEvent || !keyEvent.IsPressed() || _AttackInProgress)
         {
             return;
         }
 
-        int prevIndex = _index;
+        int prevIndex = _selectedEnemyIndex;
         int numChoices = Battle.UI.Commands.Choices.GetChildCount();
         int prevApCost = GetAPCost(Battle.CurrFighter, Battle.Enemies[prevIndex]);
-        int apCost = GetAPCost(Battle.CurrFighter, Battle.Enemies[_index]);
+        int apCost = GetAPCost(Battle.CurrFighter, Battle.Enemies[_selectedEnemyIndex]);
         int pnlIndex = Battle.Party.IndexOf((Ally)Battle.CurrFighter);
         PartyInfoPanel panel = Battle.UI.GetPartyInfoPanel(pnlIndex);
 
         switch (keyEvent)
         {
             case InputEventKey k when k.IsActionPressed("MoveDown"):
-                _index = (_index + 1) % numChoices;
+                MoveSelection(1);
                 break;
             case InputEventKey k when k.IsActionPressed("MoveUp"):
-                _index = (_index - 1 + numChoices) % numChoices;
+                MoveSelection(-1);
                 break;
             case InputEventKey k when k.IsActionPressed("Accept"):
-                if (!_isAttacking && Battle.CurrFighter.AP >= apCost)
+                if (!_AttackInProgress && Battle.CurrFighter.AP >= apCost)
                 {
                     await Attack();
                     EmitSignal(SignalName.StateUpdate, BattlePlayerTurn.Name);
                 }
                 break;
             case InputEventKey k when k.IsActionPressed("Cancel"):
-                _target.HideHP();
+                _hoveredEnemySprite.HideHP();
                 EmitSignal(SignalName.StateUpdate, BattlePlayerTurn.Name);
                 break;
         }
 
-        if (prevIndex != _index && Battle.CurrFighter is not Player)
+        if (prevIndex != _selectedEnemyIndex && Battle.CurrFighter is not Player)
         {
 
         }
     }
 
+    public void MoveSelection(int delta)
+    {
+        int count = Battle.Enemies.Count;
+        int prev = _selectedEnemyIndex;
+        _selectedEnemyIndex = (_selectedEnemyIndex + delta + count) % count;
+    }
+
     public async Task Attack()
     {
-        _isAttacking = true;
+        _AttackInProgress = true;
 
-        Enemy enemy = Battle.Enemies[_index];
+        Enemy enemy = Battle.Enemies[_selectedEnemyIndex];
+        EnemyBattleSprite sprite = Battle.GetEnemySprite(_selectedEnemyIndex);
 
         await Battle.UI.Log.AppendLine($"{Battle.CurrFighter.Name} attacks {enemy.Name}.");
         await Battle.Wait(500);
 
+        SoundManager.Instance.PlaySfx(SoundManager.Sfx.Slash);
+        await sprite.PlayEffect("slash");
         SoundManager.Instance.PlaySfx(SoundManager.Sfx.Hurt, 8.0f);
-
-        enemy.HP -= BaseDmg;
-        Battle.EnemyNodes.GetChild<EnemyBattleSprite>(_index).TakeDamage(BaseDmg);
+        sprite.Bleed();
+        sprite.Flinch();
+        Battle.UI.Log.AppendLine($"{enemy.Name} takes {DefaultDmg} damage.");
+        await sprite.TakeDamage(DefaultDmg);
         Battle.UpdateAP(Battle.CurrFighter, GetAPCost(Battle.CurrFighter, enemy));
+        _hoveredEnemySprite.HideHP();
+        sprite.StopAnimation();
 
-        await Battle.UI.Log.AppendLine($"{enemy.Name} takes {BaseDmg} damage.");
-        await Battle.Wait(500);
-        _target.HideHP();
-        
+        enemy.HP -= DefaultDmg;
+
         if (enemy.HP <= 0)
         {
-            EnemyBattleSprite sprite = Battle.GetEnemySprite(_index);
             await sprite.Die();
             sprite.QueueFree();
 
-            Battle.Enemies.RemoveAt(_index);
+            Battle.Enemies.RemoveAt(_selectedEnemyIndex);
             Battle.TurnQueue = new Queue<Fighter>(Battle.TurnQueue.Where(fighter => fighter != enemy));
             Battle.UI.SetTurnQueue(Battle.TurnQueue);
 
@@ -91,8 +104,8 @@ public partial class BattlePlayerAttackMenu : StateNode
 
     public override async Task Enter()
     {
-        _index = 0;
-        _isAttacking = false;
+        _selectedEnemyIndex = 0;
+        _AttackInProgress = false;
 
         Battle.UI.Commands.Choices.Clear();
 
@@ -105,10 +118,10 @@ public partial class BattlePlayerAttackMenu : StateNode
             Battle.UI.Commands.Choices.AddChoice(choice);
         }
 
-        Battle.UI.Commands.Choices.ShowArrow(_index);
+        Battle.UI.Commands.Choices.ShowArrow(_selectedEnemyIndex);
 
-        _target = Battle.GetEnemySprite(_index);
-        _target.ShowHP();
+        _hoveredEnemySprite = Battle.GetEnemySprite(_selectedEnemyIndex);
+        _hoveredEnemySprite.ShowHP();
     }
     
     

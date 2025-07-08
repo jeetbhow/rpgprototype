@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=4 uid="uid://bgm3s3pcdwadp"]
 
-[ext_resource type="Texture2D" uid="uid://rndhnyicig2x" path="res://Assets/forest.png" id="1_tkqpj"]
+[ext_resource type="Texture2D" uid="uid://rndhnyicig2x" path="res://assets/forest.png" id="1_tkqpj"]
 [ext_resource type="TileSet" uid="uid://ckjxhux1o6no5" path="res://Resources/Tilesets/GameTileset.tres" id="2_4av0q"]
 [ext_resource type="PackedScene" uid="uid://dc5kcw03my0bd" path="res://Scenes/Party/ExplorationParty.tscn" id="2_tkqpj"]
 [ext_resource type="Script" uid="uid://cw4fe2r8yjb30" path="res://Scripts/Components/CameraMarkers/CameraMarkers.cs" id="5_o1kgu"]

@@ -4,8 +4,8 @@ using System.Threading.Tasks;
 
 public partial class Game : Node
 {
-    private const int _D6Max = 6;
-    private const int _D6Min = 1;
+    public const int D6Max = 6;
+    public const int D6Min = 1;
 
     private Player _player;
 

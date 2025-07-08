@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cddkxetbmoyh3"
-path="res://.godot/imported/jerry.png-aa877841e05b6259579bae156ee59860.ctex"
+path="res://.godot/imported/jerry.png-9e19daec33370c2d5b6c03f7d5d05d31.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Enemies/jerry.png"
-dest_files=["res://.godot/imported/jerry.png-aa877841e05b6259579bae156ee59860.ctex"]
+source_file="res://assets/enemies/jerry.png"
+dest_files=["res://.godot/imported/jerry.png-9e19daec33370c2d5b6c03f7d5d05d31.ctex"]
 
 [params]
 

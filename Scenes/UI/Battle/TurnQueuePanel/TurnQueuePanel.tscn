@@ -2,7 +2,7 @@
 
 [ext_resource type="StyleBox" uid="uid://68msogk2h6y6" path="res://Resources/Styles/UIPanel.tres" id="1_himx8"]
 [ext_resource type="Script" uid="uid://dlvhy7rj77hvx" path="res://Scenes/UI/Battle/TurnQueuePanel/TurnQueuePanel.cs" id="2_cdlpx"]
-[ext_resource type="Texture2D" uid="uid://cddkxetbmoyh3" path="res://Assets/Enemies/jerry.png" id="3_b7fog"]
+[ext_resource type="Texture2D" uid="uid://cddkxetbmoyh3" path="res://assets/enemies/jerry.png" id="3_b7fog"]
 
 [sub_resource type="Animation" id="Animation_evaoy"]
 length = 0.001

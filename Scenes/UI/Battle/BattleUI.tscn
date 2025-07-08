@@ -1,10 +1,48 @@
-[gd_scene load_steps=8 format=3 uid="uid://cgfmftu70tvgf"]
+[gd_scene load_steps=10 format=3 uid="uid://cgfmftu70tvgf"]
 
 [ext_resource type="PackedScene" uid="uid://d0qsc28ydi047" path="res://Scenes/UI/Textbox/Textbox.tscn" id="1_x05vq"]
 [ext_resource type="Script" uid="uid://bjxt637oo30a6" path="res://Scenes/UI/Battle/BattleUI.cs" id="1_yakd7"]
 [ext_resource type="PackedScene" uid="uid://bp32y8bvhaf1s" path="res://Scenes/UI/Battle/TurnQueuePanel/TurnQueuePanel.tscn" id="2_tw16v"]
 [ext_resource type="PackedScene" uid="uid://qnx6km8di2s8" path="res://Scenes/UI/Battle/DiceRollInfo/DiceRollInfo.tscn" id="2_xnj7u"]
 [ext_resource type="PackedScene" uid="uid://dne5mwmirps" path="res://Scenes/UI/Log/Log.tscn" id="3_aswum"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tw16v"]
+resource_local_to_scene = true
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0, 0, 0, 0.952941)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+anti_aliasing = false
+anti_aliasing_size = 3.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lsd6r"]
+resource_local_to_scene = true
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0, 0, 0, 0.952941)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+anti_aliasing = false
+anti_aliasing_size = 3.0
 
 [sub_resource type="Animation" id="Animation_xnj7u"]
 resource_name = "turn_queue_slide"
@@ -47,10 +85,12 @@ theme_override_constants/separation = 10
 visible = false
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_tw16v")
 
 [node name="Log" parent="MarginContainer/BattleInfo" instance=ExtResource("3_aswum")]
 custom_minimum_size = Vector2(600, 160)
 layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_lsd6r")
 
 [node name="DiceRolls" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2

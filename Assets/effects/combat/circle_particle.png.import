@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://vrdl8o5ddgs1"
-path="res://.godot/imported/noise.png-46438c652d92efb5a1f23ca4d26169f2.ctex"
+uid="uid://caittdo4wux2q"
+path="res://.godot/imported/circle_particle.png-9b70b9d9144fb8b506ac3bdcc937ab90.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/noise/noise.png"
-dest_files=["res://.godot/imported/noise.png-46438c652d92efb5a1f23ca4d26169f2.ctex"]
+source_file="res://assets/effects/combat/circle_particle.png"
+dest_files=["res://.godot/imported/circle_particle.png-9b70b9d9144fb8b506ac3bdcc937ab90.ctex"]
 
 [params]
 

@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="PlayerData" load_steps=4 format=3 uid="uid://btw1r02kwnms0"]
 
 [ext_resource type="Script" uid="uid://cq7dqoi4kd4vd" path="res://Scripts/Classes/Skill/Skill.cs" id="1_7adbx"]
-[ext_resource type="Script" uid="uid://cpf73i7ng185h" path="res://Scripts/Singletons/PlayerData.cs" id="1_wcwta"]
+[ext_resource type="Script" uid="uid://cpf73i7ng185h" path="res://Scripts/singleton/PlayerData.cs" id="1_wcwta"]
 
 [sub_resource type="Resource" id="Resource_sfkk8"]
 script = ExtResource("1_7adbx")

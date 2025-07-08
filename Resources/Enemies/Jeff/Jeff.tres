@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="Enemy" load_steps=5 format=3 uid="uid://bs8b37iwqpsr1"]
 
 [ext_resource type="Resource" uid="uid://chpxn2mgiv2v6" path="res://Resources/Enemies/Jeff/JeffAI.tres" id="1_bk74h"]
-[ext_resource type="Texture2D" uid="uid://cddkxetbmoyh3" path="res://Assets/Enemies/jerry.png" id="2_1u7we"]
+[ext_resource type="Texture2D" uid="uid://cddkxetbmoyh3" path="res://assets/enemies/jerry.png" id="2_1u7we"]
 [ext_resource type="SpriteFrames" uid="uid://dqitn7jtgv3ri" path="res://Resources/Enemies/Jeff/JeffSF.tres" id="3_1u7we"]
 [ext_resource type="Script" uid="uid://bfsq0i25vcarl" path="res://Scripts/Resources/Combat/Enemy.cs" id="4_1u7we"]
 
@@ -12,7 +12,7 @@ IntroLog = "Jeff creeps up on you from behind. Gross."
 IntroBalloon = "Will you be my girlfriend?"
 DeathMsgLog = "Jeff will die alone."
 DeathMsgBalloon = "I guess nice slimes really do finish last."
-AttackBalloonText = PackedStringArray("You will regret rejecting me.", "You were ugly anyways.", "Slimes don\'t have noses.", "Why doesn\'t anyone like me?", "*wiggles nervously*")
+AttackBalloonText = PackedStringArray("You will regret rejecting me.", "You were ugly anyways", "Slimes don\'t have noses...", "Why doesn\'t anyone like me?", "*Wiggling intensifies*")
 AI = ExtResource("1_bk74h")
 Portrait = ExtResource("2_1u7we")
 Name = "Jeff"

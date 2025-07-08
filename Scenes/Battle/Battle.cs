@@ -4,11 +4,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 
-
 public partial class Battle : Node2D
 {
-    private const int _D6Min = 1;
-    private const int _D6Max = 6;
+    // Camera Shake Parameters.
+    private float _duration = 0.0f;
+    private float _shakeTime = 0.0f;
+    private float _initialShakeMagnitude = 0.0f;
+
+    private Camera2D _camera;
 
     [Signal] public delegate void TurnEndEventHandler(Fighter f);
 
@@ -22,6 +25,39 @@ public partial class Battle : Node2D
     public Queue<Fighter> TurnQueue { get; set; } = new();
     public Fighter CurrFighter { get; set; }
 
+    public void ShakeCamera(float duration, float magnitude)
+    {
+        _duration = duration;
+        _shakeTime = duration;
+        _initialShakeMagnitude = magnitude;
+    }
+
+    public override void _Process(double delta)
+    {
+        // Camera Shake
+        if (_shakeTime > 0.0f)
+        {
+            _shakeTime -= (float)delta;
+
+            // Ease the magnitude down from initial -> 0
+            float t = _shakeTime / _duration;
+            float magnitude = Mathf.Lerp(_initialShakeMagnitude, 0.0f, 1 -t);
+
+            // Pick a random direction.
+            float angle = GD.Randf() * Mathf.Tau;
+
+            // Create a direction vector moving in that direction via trigonometry
+            Vector2 offset = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * magnitude;
+            UI.Offset = offset;
+            _camera.Offset = offset / 2.0f;
+        }
+        else
+        {
+            UI.Offset = Vector2.Zero;
+            _camera.Offset = Vector2.Zero;
+        }
+    }
+
     /// <summary>
     /// Initializes the Battle scene by setting up the UI and loading the enemies.
     /// </summary>
@@ -30,6 +66,7 @@ public partial class Battle : Node2D
     {
         UI = GetNode<BattleUI>("BattleUI");
         EnemyNodes = GetNode<Node2D>("EnemyNodes");
+        _camera = GetNode<Camera2D>("Camera2D");
 
         UI.Init();
         InitParty();
@@ -94,8 +131,8 @@ public partial class Battle : Node2D
         foreach (Fighter f in allParticipants)
         {
             RandomNumberGenerator rng = new();
-            int d1 = rng.RandiRange(_D6Min, _D6Max);
-            int d2 = rng.RandiRange(_D6Min, _D6Max);
+            int d1 = rng.RandiRange(Game.D6Min, Game.D6Max);
+            int d2 = rng.RandiRange(Game.D6Min, Game.D6Max);
 
             f.Initiative = d1 + d2 + f.Athletics;
             UI.CreateDiceRollInfo(f, d1, d2, SkillType.Athletics, f.Athletics);

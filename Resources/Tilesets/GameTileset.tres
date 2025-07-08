@@ -1,6 +1,6 @@
 [gd_resource type="TileSet" load_steps=5 format=3 uid="uid://ckjxhux1o6no5"]
 
-[ext_resource type="Texture2D" uid="uid://rndhnyicig2x" path="res://Assets/forest.png" id="1_ebtdh"]
+[ext_resource type="Texture2D" uid="uid://rndhnyicig2x" path="res://assets/forest.png" id="1_ebtdh"]
 [ext_resource type="PackedScene" uid="uid://cp62ghq133fdc" path="res://Scenes/Objects/WateringCan.tscn" id="2_qr2rt"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tkqpj"]

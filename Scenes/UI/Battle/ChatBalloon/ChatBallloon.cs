@@ -71,7 +71,6 @@ public partial class ChatBallloon : PanelContainer
         {
             _textLabel.VisibleCharacters = ++curr;
             await ToSignal(_textAdvanceTimer, Timer.SignalName.Timeout);
-            //await ToSignal(GetTree().CreateTimer(0.02f), Timer.SignalName.Timeout);
         }
 
         _sfxTimer.Stop();
