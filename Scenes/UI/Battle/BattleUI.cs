@@ -21,7 +21,8 @@ public partial class BattleUI : CanvasLayer
     [Export] public PackedScene TurnQueuePanelScene { get; set; }
     [Export] public PackedScene DiceRollInfoScene { get; set; }
 
-    public void Init()
+
+    public override void _Ready()
     {
         PartyInfoHBox = GetNode<HBoxContainer>(PartyInfoPath);
         Commands = GetNode<Textbox>(CommandTextboxPath);

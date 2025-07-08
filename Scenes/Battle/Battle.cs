@@ -3,6 +3,7 @@ using Godot.Collections;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using System;
 
 public partial class Battle : Node2D
 {
@@ -13,11 +14,20 @@ public partial class Battle : Node2D
 
     private Camera2D _camera;
 
-    [Signal] public delegate void TurnEndEventHandler(Fighter f);
+    [Signal]
+    public delegate void BattleReadyEventHandler();
 
-    [Export] public Array<Enemy> Enemies { get; private set; }
-    [Export] public PackedScene PartyInfoPanelScene { get; set; }
-    [Export] public PackedScene EnemyBattleSpriteScene { get; set; }
+    [Signal]
+    public delegate void TurnEndEventHandler(Fighter f);
+
+    [Export]
+    public Array<Enemy> Enemies { get; private set; }
+
+    [Export]
+    public PackedScene PartyInfoPanelScene { get; set; }
+
+    [Export]
+    public PackedScene EnemyBattleSpriteScene { get; set; }
 
     public Node2D EnemyNodes { get; private set; }
     public BattleUI UI { get; private set; }
@@ -32,6 +42,30 @@ public partial class Battle : Node2D
         _initialShakeMagnitude = magnitude;
     }
 
+    public override void _Ready()
+    {
+        _ = AsyncReady();
+    }
+
+    public async Task AsyncReady()
+    {
+        UI = GetNode<BattleUI>("BattleUI");
+        EnemyNodes = GetNode<Node2D>("EnemyNodes");
+        _camera = GetNode<Camera2D>("Camera2D");
+
+        try
+        {
+            InitParty();
+            await InitEnemies();
+            await DetermineTurnOrder();     
+            EmitSignal(SignalName.BattleReady);
+        }
+        catch (Exception e)
+        {
+            GD.PrintErr($"Failed to initialize battle: {e}");
+        }
+    }
+
     public override void _Process(double delta)
     {
         // Camera Shake
@@ -41,7 +75,7 @@ public partial class Battle : Node2D
 
             // Ease the magnitude down from initial -> 0
             float t = _shakeTime / _duration;
-            float magnitude = Mathf.Lerp(_initialShakeMagnitude, 0.0f, 1 -t);
+            float magnitude = Mathf.Lerp(_initialShakeMagnitude, 0.0f, 1 - t);
 
             // Pick a random direction.
             float angle = GD.Randf() * Mathf.Tau;
@@ -64,13 +98,7 @@ public partial class Battle : Node2D
     /// <returns></returns>
     public async Task Init()
     {
-        UI = GetNode<BattleUI>("BattleUI");
-        EnemyNodes = GetNode<Node2D>("EnemyNodes");
-        _camera = GetNode<Camera2D>("Camera2D");
 
-        UI.Init();
-        InitParty();
-        await InitEnemies();
     }
 
     /// <summary>
