@@ -17,9 +17,9 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-EventBus="*res://Scripts/singleton/EventBus.cs"
-SoundManager="*res://Scripts/singleton/sound_manager/SoundManager.tscn"
-Game="*res://Scripts/singleton/Game.tscn"
+EventBus="*res://scripts/singleton/EventBus.cs"
+SoundManager="*res://scripts/singleton/sound_manager/SoundManager.tscn"
+Game="*res://scripts/singleton/Game.tscn"
 
 [display]
 
@@ -37,10 +37,10 @@ project/assembly_name="RPGPrototype"
 [file_customization]
 
 folder_colors={
-"res://Resources/": "yellow",
-"res://Scenes/": "red",
-"res://Scripts/": "purple",
-"res://assets/": "green"
+"res://assets/": "green",
+"res://resources/": "yellow",
+"res://scenes/": "red",
+"res://scripts/": "purple"
 }
 
 [input]

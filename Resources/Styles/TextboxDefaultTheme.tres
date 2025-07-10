@@ -1,6 +1,6 @@
 [gd_resource type="Theme" load_steps=2 format=3 uid="uid://x6m3btvacua5"]
 
-[ext_resource type="FontFile" uid="uid://dnjr3axfchcjb" path="res://Resources/Fonts/PixelOperator.ttf" id="1_ndyhq"]
+[ext_resource type="FontFile" uid="uid://dnjr3axfchcjb" path="res://resources/fonts/PixelOperator.ttf" id="1_ndyhq"]
 
 [resource]
 default_font = ExtResource("1_ndyhq")

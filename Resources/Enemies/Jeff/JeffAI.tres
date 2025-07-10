@@ -1,10 +1,10 @@
-[gd_resource type="Resource" script_class="FighterAI" load_steps=5 format=3 uid="uid://chpxn2mgiv2v6"]
+[gd_resource type="Resource" load_steps=5 format=3 uid="uid://chpxn2mgiv2v6"]
 
-[ext_resource type="Script" uid="uid://cwcixixia3jao" path="res://Scripts/resources/combat/FighterAI.cs" id="1_cf5n6"]
-[ext_resource type="Script" uid="uid://0tqpg4870nf5" path="res://Scripts/resources/combat/AIAction.cs" id="1_ykkaq"]
+[ext_resource type="Script" uid="uid://0tqpg4870nf5" path="res://scripts/resources/Combat/AIAction.cs" id="1_hamde"]
+[ext_resource type="Script" uid="uid://cwcixixia3jao" path="res://scripts/resources/Combat/FighterAI.cs" id="2_2m4cf"]
 
 [sub_resource type="Resource" id="Resource_y5kv0"]
-script = ExtResource("1_ykkaq")
+script = ExtResource("1_hamde")
 Name = "Thrash"
 Message = "Jeff wiggles around sporadically."
 HasDmg = true
@@ -14,7 +14,7 @@ APCost = 2
 metadata/_custom_type_script = "uid://0tqpg4870nf5"
 
 [sub_resource type="Resource" id="Resource_ykkaq"]
-script = ExtResource("1_ykkaq")
+script = ExtResource("1_hamde")
 Name = "Pick nose"
 Message = "Jeff picks his nose."
 HasDmg = false
@@ -24,6 +24,6 @@ APCost = 2
 metadata/_custom_type_script = "uid://0tqpg4870nf5"
 
 [resource]
-script = ExtResource("1_cf5n6")
+script = ExtResource("2_2m4cf")
 Actions = Array[Object]([SubResource("Resource_y5kv0"), SubResource("Resource_ykkaq")])
 metadata/_custom_type_script = "uid://cwcixixia3jao"

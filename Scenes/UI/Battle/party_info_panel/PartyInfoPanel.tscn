@@ -1,10 +1,10 @@
 [gd_scene load_steps=8 format=3 uid="uid://dw7vckg81r5s3"]
 
-[ext_resource type="Theme" uid="uid://x6m3btvacua5" path="res://Resources/Styles/TextboxDefaultTheme.tres" id="1_0hoph"]
-[ext_resource type="StyleBox" uid="uid://68msogk2h6y6" path="res://Resources/Styles/UIPanel.tres" id="1_qardb"]
-[ext_resource type="Script" uid="uid://ddk2e256kew5a" path="res://Scenes/UI/Battle/PartyInfoPanel/PartyInfoPanel.cs" id="3_n1nue"]
-[ext_resource type="PackedScene" uid="uid://dda28f5te2f4y" path="res://Scenes/UI/Battle/PartyInfoPanel/PartyHPBar/PartyHPBar.tscn" id="4_1nb3n"]
-[ext_resource type="PackedScene" uid="uid://78fn51iu7a8k" path="res://Scenes/UI/Battle/PartyInfoPanel/PartyAPBar/PartyAPBar.tscn" id="4_oj1ay"]
+[ext_resource type="Theme" uid="uid://x6m3btvacua5" path="res://resources/styles/TextboxDefaultTheme.tres" id="1_0hoph"]
+[ext_resource type="StyleBox" uid="uid://68msogk2h6y6" path="res://resources/styles/UIPanel.tres" id="1_qardb"]
+[ext_resource type="Script" uid="uid://ddk2e256kew5a" path="res://scenes/ui/battle/party_info_panel/PartyInfoPanel.cs" id="3_n1nue"]
+[ext_resource type="PackedScene" uid="uid://dda28f5te2f4y" path="res://scenes/ui/battle/party_info_panel/PartyHPBar/PartyHPBar.tscn" id="4_1nb3n"]
+[ext_resource type="PackedScene" uid="uid://78fn51iu7a8k" path="res://scenes/ui/battle/party_info_panel/PartyAPBar/PartyAPBar.tscn" id="4_oj1ay"]
 
 [sub_resource type="Animation" id="Animation_8rjdf"]
 length = 0.001

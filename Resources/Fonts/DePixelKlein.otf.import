@@ -3,12 +3,12 @@
 importer="font_data_dynamic"
 type="FontFile"
 uid="uid://d3kkkbpe8fmvl"
-path="res://.godot/imported/DePixelKlein.otf-990e31a4f1986ab8c422f20c0f404090.fontdata"
+path="res://.godot/imported/DePixelKlein.otf-36133cbacc47cc958c33c94da706ee0f.fontdata"
 
 [deps]
 
-source_file="res://Resources/Fonts/DePixelKlein.otf"
-dest_files=["res://.godot/imported/DePixelKlein.otf-990e31a4f1986ab8c422f20c0f404090.fontdata"]
+source_file="res://resources/fonts/DePixelKlein.otf"
+dest_files=["res://.godot/imported/DePixelKlein.otf-36133cbacc47cc958c33c94da706ee0f.fontdata"]
 
 [params]
 

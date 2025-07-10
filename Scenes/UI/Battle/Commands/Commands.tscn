@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://bl23ccfrohlut"]
 
-[ext_resource type="StyleBox" uid="uid://68msogk2h6y6" path="res://Resources/Styles/UIPanel.tres" id="1_neg0u"]
-[ext_resource type="Script" uid="uid://sayw7yqdkthg" path="res://Scenes/UI/Battle/Commands/Commands.cs" id="2_y63qm"]
-[ext_resource type="PackedScene" uid="uid://btrajdgilaf0d" path="res://Scenes/UI/Game/Choice/Content/ChoiceContent.tscn" id="3_y63qm"]
+[ext_resource type="StyleBox" uid="uid://68msogk2h6y6" path="res://resources/styles/UIPanel.tres" id="1_neg0u"]
+[ext_resource type="Script" uid="uid://sayw7yqdkthg" path="res://scenes/ui/battle/commands/Commands.cs" id="2_y63qm"]
+[ext_resource type="PackedScene" uid="uid://btrajdgilaf0d" path="res://scenes/ui/game/choice/content/ChoiceContent.tscn" id="3_y63qm"]
 
 [node name="Commands" type="PanelContainer"]
 custom_minimum_size = Vector2(600, 0)

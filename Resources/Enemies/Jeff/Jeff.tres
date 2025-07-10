@@ -1,9 +1,9 @@
 [gd_resource type="Resource" script_class="Enemy" load_steps=5 format=3 uid="uid://bs8b37iwqpsr1"]
 
-[ext_resource type="Resource" uid="uid://chpxn2mgiv2v6" path="res://Resources/Enemies/Jeff/JeffAI.tres" id="1_bk74h"]
+[ext_resource type="Resource" uid="uid://chpxn2mgiv2v6" path="res://resources/enemies/Jeff/JeffAI.tres" id="1_bk74h"]
 [ext_resource type="Texture2D" uid="uid://cddkxetbmoyh3" path="res://assets/enemies/jerry.png" id="2_1u7we"]
-[ext_resource type="SpriteFrames" uid="uid://dqitn7jtgv3ri" path="res://Resources/Enemies/Jeff/JeffSF.tres" id="3_1u7we"]
-[ext_resource type="Script" uid="uid://bfsq0i25vcarl" path="res://Scripts/resources/combat/Enemy.cs" id="4_1u7we"]
+[ext_resource type="SpriteFrames" uid="uid://dqitn7jtgv3ri" path="res://resources/enemies/Jeff/JeffSF.tres" id="3_1u7we"]
+[ext_resource type="Script" uid="uid://bfsq0i25vcarl" path="res://scripts/resources/Combat/Enemy.cs" id="4_1u7we"]
 
 [resource]
 script = ExtResource("4_1u7we")

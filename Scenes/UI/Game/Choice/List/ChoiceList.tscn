@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://coby18dlu3js4"]
 
-[ext_resource type="Theme" uid="uid://x6m3btvacua5" path="res://Resources/Styles/TextboxDefaultTheme.tres" id="1_rbkou"]
-[ext_resource type="Script" uid="uid://cm88ifx0fn4hy" path="res://Scenes/UI/Game/Choice/List/ChoiceList.cs" id="2_ux6dc"]
-[ext_resource type="PackedScene" uid="uid://btrajdgilaf0d" path="res://Scenes/UI/Game/Choice/Content/ChoiceContent.tscn" id="3_i10eh"]
+[ext_resource type="Theme" uid="uid://x6m3btvacua5" path="res://resources/styles/TextboxDefaultTheme.tres" id="1_rbkou"]
+[ext_resource type="Script" uid="uid://cm88ifx0fn4hy" path="res://scenes/ui/game/choice/list/ChoiceList.cs" id="2_ux6dc"]
+[ext_resource type="PackedScene" uid="uid://btrajdgilaf0d" path="res://scenes/ui/game/choice/content/ChoiceContent.tscn" id="3_i10eh"]
 
 [node name="ChoiceList" type="VBoxContainer"]
 size_flags_horizontal = 3

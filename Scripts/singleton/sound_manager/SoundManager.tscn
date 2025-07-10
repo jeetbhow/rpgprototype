@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://b33xbqvm7ep3i"]
 
-[ext_resource type="Script" uid="uid://dng8h5arcxtla" path="res://Scripts/singleton/sound_manager/SoundManager.cs" id="1_1x6u2"]
+[ext_resource type="Script" uid="uid://dng8h5arcxtla" path="res://scripts/singleton/sound_manager/SoundManager.cs" id="1_1x6u2"]
 
 [node name="SoundManager" type="Node" node_paths=PackedStringArray("BgmPlayer", "SfxPlayer")]
 script = ExtResource("1_1x6u2")
