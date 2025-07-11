@@ -25,15 +25,12 @@ public partial class AttackMenu : StateNode
     {
         if (@event is not InputEventKey keyEvent ||
          !keyEvent.IsPressed() ||
-         _AttackInProgress)
+         _AttackInProgress ||
+         Battle.CurrFighter is not Player player)
         {
             return;
         }
 
-        int prevIndex = _selectedEnemyIndex;
-        int numChoices = Battle.UI.Commands.Choices.GetChildCount();
-        int prevApCost = GetAPCost(Battle.CurrFighter, Battle.Enemies[prevIndex]);
-        int apCost = GetAPCost(Battle.CurrFighter, Battle.Enemies[_selectedEnemyIndex]);
         int pnlIndex = Battle.Party.IndexOf((Ally)Battle.CurrFighter);
         PartyInfoPanel panel = Battle.UI.GetPartyInfoPanel(pnlIndex);
 
@@ -46,9 +43,9 @@ public partial class AttackMenu : StateNode
                 MoveSelection(-1);
                 break;
             case InputEventKey k when k.IsActionPressed("Accept"):
-                if (!_AttackInProgress && Battle.CurrFighter.AP >= apCost)
+                if (!_AttackInProgress && player.AP >= player.Weapon.Ability.APCost)
                 {
-                    await Attack((Player)Battle.CurrFighter);
+                    await Attack(player);
                 }
                 break;
             case InputEventKey k when k.IsActionPressed("Cancel"):
@@ -71,12 +68,12 @@ public partial class AttackMenu : StateNode
 
         Enemy enemy = Battle.Enemies[_selectedEnemyIndex];
 
-        await Battle.UI.Log.AppendLine($"{Battle.CurrFighter.Name} attacks {enemy.Name}.");
+        await Battle.UI.Log.AppendLine($"{player.Name} attacks {enemy.Name}.");
         await Battle.Wait(500);
 
         SignalHub.Instance.EmitSignal(
             SignalHub.SignalName.AttackRequested,
-             Battle.CurrFighter,
+            player,
             enemy,
             player.Weapon.Ability
         );
@@ -99,34 +96,17 @@ public partial class AttackMenu : StateNode
 
         _selectedEnemyIndex = 0;
         _AttackInProgress = false;
+        int apCost = player.Weapon.Ability.APCost;
 
         Battle.UI.Commands.Choices.Clear();
-
         foreach (var enemy in Battle.Enemies)
         {
-            int apCost = GetAPCost(player, enemy);
             ChoiceContent choice = (ChoiceContent)ChoiceContentScene.Instantiate();
             choice.Label.Text = enemy.Name + $" [color={Game.APColor.ToHtml()}](AP: {apCost})[/color]";
             choice.Enabled = player.AP >= apCost;
             Battle.UI.Commands.Choices.AddChoice(choice);
         }
 
-        _hoveredEnemySprite = Battle.GetEnemySprite(_selectedEnemyIndex);
         SignalHub.Instance.EmitSignal(SignalHub.SignalName.EnemySelected, Battle.Enemies[_selectedEnemyIndex], _selectedEnemyIndex);
-    }
-
-
-    /// <summary>
-    /// Get the AP cost for an attack by an attacker against a defender.
-    /// </summary>
-    /// <param name="attacker">The fighter that's attacking.</param>
-    /// <param name="defender">The fighter that's defending.</param>
-    /// <returns>The amount of AP used for the attack.</returns>
-    public int GetAPCost(Fighter attacker, Fighter defender)
-    {
-        // For now, I'll use a fixed AP cost for attacks.
-        // In the future, this could depend on the attack type, weapon, enemy, etc
-        int baseCost = 1;
-        return baseCost;
     }
 }
