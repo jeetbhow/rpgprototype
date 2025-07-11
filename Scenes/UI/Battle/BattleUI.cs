@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Godot;
 
+using Combat;
+
 public partial class BattleUI : CanvasLayer
 {
     private string[] CommandNames = ["Attack", "Defend", "Talk", "Item", "Run", "End Turn"];
@@ -34,7 +36,7 @@ public partial class BattleUI : CanvasLayer
 
         ShowPlayerCommands(0);
     }
-    
+
     /// <summary>
     /// Slides every panel in <see cref="TurnQueue"/> up one slot and (optionally)
     /// fades the departing panel, then frees it when the tween finishes.
@@ -53,7 +55,7 @@ public partial class BattleUI : CanvasLayer
         var tween = GetTree().CreateTween();
 
         var start = departing.GlobalPosition;
-        var end   = new Vector2(
+        var end = new Vector2(
             -departing.Size.X - offscreenPad,   // x: safely past the left edge
             start.Y                              // y: unchanged
         );
@@ -65,7 +67,7 @@ public partial class BattleUI : CanvasLayer
         foreach (Control child in TurnQueue.GetChildren().Cast<Control>().Skip(1))
         {
             var cStart = child.GlobalPosition;
-            var cEnd   = cStart - new Vector2(0, shiftY);
+            var cEnd = cStart - new Vector2(0, shiftY);
 
             tween.TweenProperty(child, "global_position", cEnd, duration)
                  .SetTrans(Tween.TransitionType.Cubic)
@@ -148,7 +150,7 @@ public partial class BattleUI : CanvasLayer
     {
         foreach (PartyInfoPanel panel in PartyInfoHBox.GetChildren().Cast<PartyInfoPanel>())
         {
-            panel.AP = panel.MaxAP;
+            panel.PartyMember.AP = panel.PartyMember.MaxAP;
         }
     }
 

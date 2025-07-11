@@ -1,26 +1,31 @@
 using Godot;
-using System.Collections.Generic;
-using System.Linq;
+using System;
 using System.Threading.Tasks;
 
-public partial class BattlePlayerAttackMenu : StateNode
-{
-    private const int DefaultDmg = 2;
-    private const int DefaultApCost = 2;
-    private const int HitDelayMs = 500;
+namespace Combat;
 
+public partial class AttackMenu : StateNode
+{
+    [Export]
+    public PackedScene ChoiceContentScene { get; set; }
+
+    [Export]
+    public Battle Battle { get; set; }
+
+    [Export]
+    public StateNode BattlePlayerTurn { get; set; }
+
+    private const int DefaultDmg = 2;
     private int _selectedEnemyIndex;
     private bool _AttackInProgress;
 
     private EnemyBattleSprite _hoveredEnemySprite;
 
-    [Export] public PackedScene ChoiceContentScene { get; set; }
-    [Export] public Battle Battle { get; set; }
-    [Export] public StateNode BattlePlayerTurn { get; set; }
-
     public override async void _Input(InputEvent @event)
     {
-        if (@event is not InputEventKey keyEvent || !keyEvent.IsPressed() || _AttackInProgress)
+        if (@event is not InputEventKey keyEvent ||
+         !keyEvent.IsPressed() ||
+         _AttackInProgress)
         {
             return;
         }
@@ -43,67 +48,55 @@ public partial class BattlePlayerAttackMenu : StateNode
             case InputEventKey k when k.IsActionPressed("Accept"):
                 if (!_AttackInProgress && Battle.CurrFighter.AP >= apCost)
                 {
-                    await Attack();
-                    EmitSignal(SignalName.StateUpdate, BattlePlayerTurn.Name);
+                    await Attack((Player)Battle.CurrFighter);
                 }
                 break;
             case InputEventKey k when k.IsActionPressed("Cancel"):
-                _hoveredEnemySprite.HideHP();
+                SignalHub.Instance.EmitSignal(SignalHub.SignalName.AttackCancelled);
                 EmitSignal(SignalName.StateUpdate, BattlePlayerTurn.Name);
                 break;
-        }
-
-        if (prevIndex != _selectedEnemyIndex && Battle.CurrFighter is not Player)
-        {
-
         }
     }
 
     public void MoveSelection(int delta)
     {
         int count = Battle.Enemies.Count;
-        int prev = _selectedEnemyIndex;
         _selectedEnemyIndex = (_selectedEnemyIndex + delta + count) % count;
+        SignalHub.Instance.EmitSignal(SignalHub.SignalName.EnemySelected, Battle.Enemies[_selectedEnemyIndex], _selectedEnemyIndex);
     }
 
-    public async Task Attack()
+    public async Task Attack(Player player)
     {
         _AttackInProgress = true;
 
         Enemy enemy = Battle.Enemies[_selectedEnemyIndex];
-        EnemyBattleSprite sprite = Battle.GetEnemySprite(_selectedEnemyIndex);
 
         await Battle.UI.Log.AppendLine($"{Battle.CurrFighter.Name} attacks {enemy.Name}.");
         await Battle.Wait(500);
 
-        SoundManager.Instance.PlaySfx(SoundManager.Sfx.Slash);
-        await sprite.PlayEffect("slash");
-        SoundManager.Instance.PlaySfx(SoundManager.Sfx.Hurt, 8.0f);
-        sprite.Bleed();
-        sprite.Flinch();
-        Battle.UI.Log.AppendLine($"{enemy.Name} takes {DefaultDmg} damage.");
-        await sprite.TakeDamage(DefaultDmg);
-        Battle.UpdateAP(Battle.CurrFighter, GetAPCost(Battle.CurrFighter, enemy));
-        _hoveredEnemySprite.HideHP();
-        sprite.StopAnimation();
+        SignalHub.Instance.EmitSignal(
+            SignalHub.SignalName.AttackRequested,
+             Battle.CurrFighter,
+            enemy,
+            player.Weapon.Ability
+        );
 
-        enemy.HP -= DefaultDmg;
+        await Battle.Wait(500);
 
-        if (enemy.HP <= 0)
-        {
-            await sprite.Die();
-            sprite.QueueFree();
-
-            Battle.Enemies.RemoveAt(_selectedEnemyIndex);
-            Battle.TurnQueue = new Queue<Fighter>(Battle.TurnQueue.Where(fighter => fighter != enemy));
-            Battle.UI.SetTurnQueue(Battle.TurnQueue);
-
-            await Battle.UI.Log.AppendLine(enemy.DeathMsgLog);
-        }
+        await Battle.UI.Log.AppendLine($"{enemy.Name} takes {DefaultDmg} damage.");
+        EmitSignal(SignalName.StateUpdate, BattlePlayerTurn.Name);
     }
 
     public override async Task Enter()
     {
+        if (Battle.CurrFighter is not Player player)
+        {
+            throw new InvalidOperationException(
+                "AttackMenu can only be entered by a Player fighter. " +
+                $"Current fighter: {Battle.CurrFighter.GetType().Name}"
+            );
+        }
+
         _selectedEnemyIndex = 0;
         _AttackInProgress = false;
 
@@ -111,20 +104,18 @@ public partial class BattlePlayerAttackMenu : StateNode
 
         foreach (var enemy in Battle.Enemies)
         {
-            int apCost = GetAPCost(Battle.CurrFighter, enemy);
+            int apCost = GetAPCost(player, enemy);
             ChoiceContent choice = (ChoiceContent)ChoiceContentScene.Instantiate();
             choice.Label.Text = enemy.Name + $" [color={Game.APColor.ToHtml()}](AP: {apCost})[/color]";
-            choice.Enabled = Battle.CurrFighter.AP >= apCost;
+            choice.Enabled = player.AP >= apCost;
             Battle.UI.Commands.Choices.AddChoice(choice);
         }
 
-        Battle.UI.Commands.Choices.ShowArrow(_selectedEnemyIndex);
-
         _hoveredEnemySprite = Battle.GetEnemySprite(_selectedEnemyIndex);
-        _hoveredEnemySprite.ShowHP();
+        SignalHub.Instance.EmitSignal(SignalHub.SignalName.EnemySelected, Battle.Enemies[_selectedEnemyIndex], _selectedEnemyIndex);
     }
-    
-    
+
+
     /// <summary>
     /// Get the AP cost for an attack by an attacker against a defender.
     /// </summary>
@@ -135,7 +126,7 @@ public partial class BattlePlayerAttackMenu : StateNode
     {
         // For now, I'll use a fixed AP cost for attacks.
         // In the future, this could depend on the attack type, weapon, enemy, etc
-        int baseCost = 2;
+        int baseCost = 1;
         return baseCost;
     }
 }

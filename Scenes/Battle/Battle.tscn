@@ -10,11 +10,11 @@
 [ext_resource type="Script" uid="uid://mfqfr2pinyas" path="res://scenes/battle/state/NPCTurn.cs" id="7_diuyf"]
 [ext_resource type="Script" uid="uid://dcifapt71jp00" path="res://scripts/components/StateMachine/StateNode.cs" id="7_tmq01"]
 [ext_resource type="Script" uid="uid://cximkhuqra6pe" path="res://scenes/battle/state/PlayerTurn.cs" id="8_tmq01"]
-[ext_resource type="Script" uid="uid://dvhfitddx4u8k" path="res://scenes/battle/state/BattlePlayerAttackMenu.cs" id="9_cmwrv"]
+[ext_resource type="Script" uid="uid://dvhfitddx4u8k" path="res://scenes/battle/state/AttackMenu.cs" id="9_cmwrv"]
 [ext_resource type="PackedScene" uid="uid://cgfmftu70tvgf" path="res://scenes/ui/battle/BattleUI.tscn" id="9_tmq01"]
 [ext_resource type="Script" uid="uid://cv1fltfldbohi" path="res://scenes/battle/state/TurnEnd.cs" id="10_q0gc0"]
 [ext_resource type="PackedScene" uid="uid://btrajdgilaf0d" path="res://scenes/ui/game/choice/content/ChoiceContent.tscn" id="10_ukbm8"]
-[ext_resource type="Script" uid="uid://dtvkcfgapvb2a" path="res://scenes/battle/state/TurnQueueEmpty.cs" id="11_gibtw"]
+[ext_resource type="Script" uid="uid://dtvkcfgapvb2a" path="res://scenes/battle/state/QueueEmpty.cs" id="11_gibtw"]
 [ext_resource type="AudioStream" uid="uid://ceapr7mcvv0oa" path="res://assets/audio/random_encounter_01_v1.mp3" id="13_gibtw"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_gibtw"]
@@ -31,6 +31,8 @@ EnemyBattleSpriteScene = ExtResource("5_rremj")
 zoom = Vector2(3, 3)
 position_smoothing_enabled = true
 rotation_smoothing_enabled = true
+
+[node name="BattleUI" parent="." instance=ExtResource("9_tmq01")]
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("CurrStateNode")]
 script = ExtResource("4_odh8s")
@@ -58,11 +60,11 @@ metadata/_custom_type_script = "uid://dcifapt71jp00"
 [node name="PlayerTurn" type="Node" parent="StateMachine" node_paths=PackedStringArray("Battle", "BattlePlayerAttackMenu", "TurnEnd")]
 script = ExtResource("8_tmq01")
 Battle = NodePath("../..")
-BattlePlayerAttackMenu = NodePath("../BattlePlayerAttackMenu")
+BattlePlayerAttackMenu = NodePath("../AttackMenu")
 TurnEnd = NodePath("../TurnEnd")
 metadata/_custom_type_script = "uid://dcifapt71jp00"
 
-[node name="BattlePlayerAttackMenu" type="Node" parent="StateMachine" node_paths=PackedStringArray("Battle", "BattlePlayerTurn")]
+[node name="AttackMenu" type="Node" parent="StateMachine" node_paths=PackedStringArray("Battle", "BattlePlayerTurn")]
 script = ExtResource("9_cmwrv")
 ChoiceContentScene = ExtResource("10_ukbm8")
 Battle = NodePath("../..")
@@ -72,11 +74,11 @@ metadata/_custom_type_script = "uid://dcifapt71jp00"
 [node name="TurnEnd" type="Node" parent="StateMachine" node_paths=PackedStringArray("Battle", "TurnQueueEmpty", "TurnStart")]
 script = ExtResource("10_q0gc0")
 Battle = NodePath("../..")
-TurnQueueEmpty = NodePath("../TurnQueueEmpty")
+TurnQueueEmpty = NodePath("../QueueEmpty")
 TurnStart = NodePath("../TurnStart")
 metadata/_custom_type_script = "uid://dcifapt71jp00"
 
-[node name="TurnQueueEmpty" type="Node" parent="StateMachine" node_paths=PackedStringArray("Battle", "TurnStart")]
+[node name="QueueEmpty" type="Node" parent="StateMachine" node_paths=PackedStringArray("Battle", "TurnStart")]
 script = ExtResource("11_gibtw")
 Battle = NodePath("../..")
 TurnStart = NodePath("../TurnStart")
@@ -85,8 +87,6 @@ metadata/_custom_type_script = "uid://dcifapt71jp00"
 [node name="BattleEnd" type="Node" parent="StateMachine"]
 script = ExtResource("7_tmq01")
 metadata/_custom_type_script = "uid://dcifapt71jp00"
-
-[node name="BattleUI" parent="." instance=ExtResource("9_tmq01")]
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("13_gibtw")

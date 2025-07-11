@@ -12,13 +12,10 @@ public partial class OverworldParty : Node2D
     [Export] public float MoveSpeed { get; set; } = 30.0f;
     [Export] public float PartyFollowDistance { get; set; } = 15.0f;
     [Export] public float PartyFollowLag { get; set; } = 15.0f;
-    
-    private EventBus eventBus;
 
     public override void _Ready()
     {
-        eventBus = GetNode<EventBus>(EventBus.Path);
-        eventBus.PartyMemberAdded += OnPartyMemberAdded;
+        SignalHub.Instance.PartyMemberAdded += OnPartyMemberAdded;
 
         RemoveChild(Camera);
         PartyLeader.AddChild(Camera);

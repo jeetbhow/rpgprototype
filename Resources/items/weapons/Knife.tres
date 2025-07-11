@@ -1,8 +1,26 @@
-[gd_resource type="Resource" script_class="Weapon" load_steps=2 format=3 uid="uid://bvqdrkfn58gnb"]
+[gd_resource type="Resource" script_class="Weapon" load_steps=6 format=3 uid="uid://bvqdrkfn58gnb"]
 
 [ext_resource type="Script" uid="uid://bqwt2t7k1a4gc" path="res://scripts/resources/item/Weapon.cs" id="1_a5fqo"]
+[ext_resource type="Script" uid="uid://dbfni13yxb2qm" path="res://scripts/resources/combat/DamageRange.cs" id="1_amqjd"]
+[ext_resource type="Script" uid="uid://smqa58pqc1qe" path="res://scripts/resources/combat/Ability.cs" id="2_13fi8"]
+
+[sub_resource type="Resource" id="Resource_hkt8h"]
+script = ExtResource("1_amqjd")
+Max = 2
+Min = 1
+CritChance = 0.05
+CritMultiplier = 4.0
+metadata/_custom_type_script = "uid://dbfni13yxb2qm"
+
+[sub_resource type="Resource" id="Resource_28dy7"]
+script = ExtResource("2_13fi8")
+APCost = 1
+DamageRange = SubResource("Resource_hkt8h")
+Name = 0
+metadata/_custom_type_script = "uid://smqa58pqc1qe"
 
 [resource]
 script = ExtResource("1_a5fqo")
-Name = ""
+Name = "Knife"
+Ability = SubResource("Resource_28dy7")
 metadata/_custom_type_script = "uid://bqwt2t7k1a4gc"

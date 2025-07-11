@@ -2,6 +2,8 @@ using Godot;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
+using Combat;
+
 public partial class Game : Node
 {
     public const int D6Max = 6;

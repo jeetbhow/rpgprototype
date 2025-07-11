@@ -1,9 +1,8 @@
-[gd_scene load_steps=29 format=3 uid="uid://d1yvb465tt7ik"]
+[gd_scene load_steps=28 format=3 uid="uid://d1yvb465tt7ik"]
 
 [ext_resource type="Script" uid="uid://bkb5mjrrkux0b" path="res://scenes/battle/enemy/EnemyBattleSprite.cs" id="1_5aqwu"]
 [ext_resource type="Texture2D" uid="uid://4eerix34hw16" path="res://assets/characters/shadow.png" id="1_cgxef"]
 [ext_resource type="Texture2D" uid="uid://cddkxetbmoyh3" path="res://assets/enemies/jerry.png" id="1_jodb1"]
-[ext_resource type="Resource" uid="uid://bs8b37iwqpsr1" path="res://resources/enemies/Jeff/Jeff.tres" id="2_acpbt"]
 [ext_resource type="StyleBox" uid="uid://n57md1ke4av6" path="res://resources/styles/HPBarFill.tres" id="4_rgfcb"]
 [ext_resource type="Texture2D" uid="uid://dx6k6r3fdq5kt" path="res://assets/effects/combat/slash.png" id="4_smvei"]
 [ext_resource type="StyleBox" uid="uid://dg2wmvgh5xkej" path="res://resources/styles/HPBarBg.tres" id="5_sloyy"]
@@ -318,7 +317,6 @@ _data = {
 
 [node name="EnemyBattleSprite" type="Node2D"]
 script = ExtResource("1_5aqwu")
-Data = ExtResource("2_acpbt")
 
 [node name="Shadow" type="Sprite2D" parent="."]
 z_index = 1

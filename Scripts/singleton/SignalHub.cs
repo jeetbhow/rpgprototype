@@ -1,5 +1,6 @@
-using Combat;
 using Godot;
+
+using Combat;
 
 public partial class SignalHub : Node
 {
@@ -9,6 +10,8 @@ public partial class SignalHub : Node
     {
         Instance = this;
     }
+
+    // Textbox Signals
 
     [Signal]
     public delegate void DialogueStartedEventHandler(DialogueTree dialogueTree);
@@ -22,6 +25,20 @@ public partial class SignalHub : Node
     [Signal]
     public delegate void PartyMemberAddedEventHandler(OverworldCharacter partyMember);
 
+    // Combat Signals
+
     [Signal]
     public delegate void AttackRequestedEventHandler(Fighter attacker, Fighter defender, Ability ability);
+
+    [Signal]
+    public delegate void FighterAttackedEventHandler(Fighter attacker, Fighter defender, Ability ability);
+
+    [Signal]
+    public delegate void AttackCancelledEventHandler();
+
+    [Signal]
+    public delegate void EnemySelectedEventHandler(Enemy enemy, int index);
+
+    [Signal]
+    public delegate void FighterStatChangedEventHandler(StatType stat, int newValue);
 }

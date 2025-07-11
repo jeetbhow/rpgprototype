@@ -1,7 +1,9 @@
 using Godot;
 using System.Threading.Tasks;
 
-public partial class TurnQueueEmpty : StateNode
+namespace Combat;
+
+public partial class QueueEmpty : StateNode
 {
     [Export] Battle Battle;
     [Export] StateNode TurnStart;

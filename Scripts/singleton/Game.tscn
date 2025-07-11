@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://dsnk4qjipydnu"]
+[gd_scene load_steps=7 format=3 uid="uid://dsnk4qjipydnu"]
 
 [ext_resource type="Script" uid="uid://du5vf8rtpcdxv" path="res://scripts/singleton/Game.cs" id="1_h4u33"]
 [ext_resource type="Texture2D" uid="uid://3xurbpcp6po7" path="res://assets/characters/eri.png" id="2_88unm"]
-[ext_resource type="Script" uid="uid://v023qn4fhkid" path="res://scripts/resources/Combat/Player.cs" id="3_fi0pm"]
+[ext_resource type="Script" uid="uid://v023qn4fhkid" path="res://scripts/resources/combat/Player.cs" id="3_fi0pm"]
+[ext_resource type="Resource" uid="uid://bvqdrkfn58gnb" path="res://resources/items/weapons/Knife.tres" id="3_tsap6"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_i3gqq"]
 atlas = ExtResource("2_88unm")
@@ -10,6 +11,7 @@ region = Rect2(1, 0, 30, 23)
 
 [sub_resource type="Resource" id="Resource_owwpa"]
 script = ExtResource("3_fi0pm")
+Weapon = ExtResource("3_tsap6")
 Portrait = SubResource("AtlasTexture_i3gqq")
 Name = "Eri"
 Level = 1

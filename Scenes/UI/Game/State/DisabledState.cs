@@ -6,18 +6,15 @@ public partial class DisabledState : StateNode
     [Export] public UI UI;
     [Export] public StateNode EnabledStateNode;
 
-    private EventBus eventBus;
-
     public override void _Ready()
     {
         base._Ready();
-        eventBus = GetNode<EventBus>(EventBus.Path);
     }
 
     public override async Task Enter()
     {
         UI.Stop();
-        var result = await ToSignal(eventBus, EventBus.SignalName.DialogueStarted);
+        var result = await ToSignal(SignalHub.Instance, SignalHub.SignalName.DialogueStarted);
 
         DialogueTree dialogueTree = (DialogueTree)result[0];
         UI.LoadDialogue(dialogueTree);

@@ -3,22 +3,32 @@ using Godot;
 
 public partial class ChoiceState : StateNode
 {
-    [Export] UI UI { get; set; }
-    [Export] Textbox Textbox { get; set; }
-    [Export] StateNode EnabledStateNode { get; set; }
-    [Export] StateNode SkillCheckStateNode { get; set; }
-    [Export] StateNode DisabledStateNode { get; set; }
-    [Export] PackedScene ChoiceButtonScene { get; set; }
+    [Export]
+    public UI UI { get; set; }
+
+    [Export]
+    public Textbox Textbox { get; set; }
+
+    [Export]
+    public StateNode EnabledStateNode { get; set; }
+
+    [Export]
+    public StateNode SkillCheckStateNode { get; set; }
+
+    [Export]
+    public StateNode DisabledStateNode { get; set; }
+
+    [Export]
+    public PackedScene ChoiceButtonScene { get; set; }
 
     private SoundManager _soundManager;
-    private EventBus _eventBus;
+    private SignalHub _eventBus;
     private int _index;
 
     public override void _Ready()
     {
         base._Ready();
         _soundManager = GetNode<SoundManager>(SoundManager.Path);
-        _eventBus = GetNode<EventBus>(EventBus.Path);
     }
 
     public override void _Input(InputEvent @event)
@@ -104,7 +114,7 @@ public partial class ChoiceState : StateNode
         {
             case "regular":
                 UI.CurrNode = choice.Next;
-                _eventBus.EmitSignal(EventBus.SignalName.TextboxOptionSelected, UI.CurrNode.Key);
+                _eventBus.EmitSignal(SignalHub.SignalName.TextboxOptionSelected, UI.CurrNode.Key);
                 EmitSignal(SignalName.StateUpdate, EnabledStateNode.Name);
                 break;
             case "skill":

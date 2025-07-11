@@ -7,12 +7,10 @@ public partial class DialogueHitbox : Area2D
     [Export] public Node2D Parent { get; set; }
 
     private bool playerNearby = false;
-    private EventBus eventBus;
 
     public override void _Ready()
     {
         base._Ready();
-        eventBus = GetNode<EventBus>(EventBus.Path);
         BodyEntered += OnBodyEntered;
         BodyExited += OnBodyExited;
     }
@@ -26,7 +24,7 @@ public partial class DialogueHitbox : Area2D
         if (@event.IsActionPressed("Accept"))
         {
             DialogueTree tree = TreeBuilder.CreateTree(DialogueFile);
-            eventBus.EmitSignal(EventBus.SignalName.DialogueStarted, tree);
+            SignalHub.Instance.EmitSignal(SignalHub.SignalName.DialogueStarted, tree);
         }
     }
 

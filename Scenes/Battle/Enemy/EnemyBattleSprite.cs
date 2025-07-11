@@ -2,8 +2,13 @@ using Godot;
 using System;
 using System.Threading.Tasks;
 
+using Combat;
+
 public partial class EnemyBattleSprite : Node2D
 {
+    [Export]
+    public Enemy Enemy { get; set; }
+
     private readonly Random _rng = new();
 
     private AnimatedSprite2D _animatedSprite2D;
@@ -16,18 +21,21 @@ public partial class EnemyBattleSprite : Node2D
 
     private int _prev;           // Index of the previous attack dialogue entry.
 
-    [Export] public Enemy Data { get; set; }
-
     public ChatBallloon ChatBallloon { get; private set; }
     public ProgressBar Healthbar { get; set; }
     public GpuParticles2D DeathParticles { get; private set; }
 
     public override void _Ready()
     {
+        SignalHub.Instance.EnemySelected += OnEnemySelected;
+        SignalHub.Instance.AttackCancelled += OnAttackCancelled;
+        SignalHub.Instance.AttackRequested += OnAttackRequested;
+        SignalHub.Instance.FighterAttacked += OnFighterAttacked;
+
         _animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 
         _animatedSprite2D = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
-        _animatedSprite2D.SpriteFrames = Data.SpriteFrames;
+        _animatedSprite2D.SpriteFrames = Enemy.SpriteFrames;
 
         _effects = GetNode<AnimatedSprite2D>("Effects");
 
@@ -42,9 +50,68 @@ public partial class EnemyBattleSprite : Node2D
         ChatBallloon = GetNode<ChatBallloon>("ChatBalloon");
         DeathParticles = GetNode<GpuParticles2D>("DeathParticles");
         Healthbar = GetNode<ProgressBar>("Healthbar");
-        Healthbar.MaxValue = Data.HP;
-        Healthbar.Value = Data.HP;
-        _hpLabel.Text = $"{Data.HP}/{Data.MaxHP}";
+        Healthbar.MaxValue = Enemy.HP;
+        Healthbar.Value = Enemy.HP;
+        _hpLabel.Text = $"{Enemy.HP}/{Enemy.MaxHP}";
+    }
+
+    public void OnEnemySelected(Enemy enemy, int index)
+    {
+        if (enemy == Enemy)
+        {
+            ShowHP();
+        }
+        else
+        {
+            HideHP();
+        }
+    }
+
+    public void OnAttackCancelled()
+    {
+        HideHP();
+    }
+
+    public async void OnAttackRequested(Fighter attacker, Fighter defender, Ability ability)
+    {
+        if (defender != Enemy)
+        {
+            return;
+        }
+
+        await PlayEffects(ability);
+        SignalHub.Instance.EmitSignal(
+            SignalHub.SignalName.FighterAttacked,
+            attacker,
+            defender,
+            ability
+        );
+        // TODO - Change this later to use the DamageRange from the ability.
+        await TakeDamage(2);
+    }
+
+    public async void OnFighterAttacked(Fighter attacker, Fighter defender, Ability ability)
+    {
+        if (defender != Enemy)
+        {
+            return;
+        }
+
+        await Game.Instance.Wait(1000);
+        StopAnimation();
+    }
+
+    public async Task PlayEffects(Ability ability)
+    {
+        if (ability.Name == AbilityName.KnifeSlash)
+        {
+            SoundManager.Instance.PlaySfx(SoundManager.Sfx.Slash);
+            _effects.Play("slash");
+            await ToSignal(_effects, "animation_finished");
+            SoundManager.Instance.PlaySfx(SoundManager.Sfx.Hurt);
+            Bleed();
+            Flinch();
+        }
     }
 
     public void ShowHP()
@@ -66,7 +133,7 @@ public partial class EnemyBattleSprite : Node2D
 
     public async Task TakeDamage(int damage)
     {
-        double toValue = Mathf.Clamp(Healthbar.Value - damage, 0, Data.HP);
+        double toValue = Mathf.Clamp(Healthbar.Value - damage, 0, Enemy.HP);
 
         Tween tween = GetTree().CreateTween();
 
@@ -74,27 +141,27 @@ public partial class EnemyBattleSprite : Node2D
             .SetTrans(Tween.TransitionType.Sine)
             .SetEase(Tween.EaseType.Out);
 
-        _hpLabel.Text = $"{Math.Round(toValue)}/{Data.MaxHP}";
+        _hpLabel.Text = $"{Math.Round(toValue)}/{Enemy.MaxHP}";
 
         await ToSignal(tween, "finished");
     }
 
     public async Task Monologue()
     {
-        int index = _rng.Next(Data.AttackBalloonText.Length);
+        int index = _rng.Next(Enemy.AttackBalloonText.Length);
         if (index == _prev)
         {
             // This should prevent repeated dialogue from popping up during fights.
-            index = (index + 1) % Data.AttackBalloonText.Length;
+            index = (index + 1) % Enemy.AttackBalloonText.Length;
         }
 
-        await ChatBallloon.PlayMessage("[shake rate=50 level=5]" + Data.AttackBalloonText[index] + "[/shake]", 700);
+        await ChatBallloon.PlayMessage("[shake rate=50 level=5]" + Enemy.AttackBalloonText[index] + "[/shake]", 700);
         _prev = index;
     }
 
     public async Task Introduction()
     {
-        await ChatBallloon.PlayMessage("[shake rate=50 level=5]" + Data.IntroBalloon + "[/shake]", 700);
+        await ChatBallloon.PlayMessage("[shake rate=50 level=5]" + Enemy.IntroBalloon + "[/shake]", 700);
     }
 
     public async Task Die()
@@ -107,16 +174,10 @@ public partial class EnemyBattleSprite : Node2D
 
         // force at least one idle frame so you can actually SEE the particles start
         await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
-        await ChatBallloon.PlayMessage("[shake rate=50 level=5]" + Data.DeathMsgBalloon + "[/shake]", 700, false);
+        await ChatBallloon.PlayMessage("[shake rate=50 level=5]" + Enemy.DeathMsgBalloon + "[/shake]", 700, false);
 
         var timer = GetTree().CreateTimer(0.2);
         await ToSignal(timer, SceneTreeTimer.SignalName.Timeout);
-    }
-
-    public async Task PlayEffect(string name)
-    {
-        _effects.Play(name);
-        await ToSignal(_effects, "animation_finished");
     }
 
     public void Flinch()
@@ -132,5 +193,6 @@ public partial class EnemyBattleSprite : Node2D
     public void Bleed()
     {
         _bloodParticles.Emitting = true;
+
     }
 }

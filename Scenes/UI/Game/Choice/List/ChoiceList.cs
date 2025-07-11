@@ -1,8 +1,22 @@
 using Godot;
 
+using Combat;
+
 public partial class ChoiceList : VBoxContainer
 {
-    [Export] public PackedScene ChoiceContentScene { get; set; }
+    [Export]
+    public PackedScene ChoiceContentScene { get; set; }
+
+    public override void _Ready()
+    {
+        SignalHub.Instance.EnemySelected += OnEnemySelected;
+    }
+
+    public void OnEnemySelected(Enemy enemy, int index)
+    {
+        HideAllArrows();
+        ShowArrow(index);
+    }
 
     public void AddChoice(ChoiceContent btn)
     {
@@ -15,7 +29,7 @@ public partial class ChoiceList : VBoxContainer
         AddChild(choice);
         choice.Label.Text = text;
     }
-    
+
     public void HideAllArrows()
     {
         foreach (Node child in GetChildren())

@@ -1,8 +1,9 @@
 using Godot;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
+namespace Combat;
 
 public partial class NPCTurn : StateNode
 {
@@ -19,9 +20,9 @@ public partial class NPCTurn : StateNode
             FighterAI ai = enemy.AI;
 
             List<EnemyBattleSprite> sprites = [.. Battle.EnemyNodes.GetChildren().Cast<EnemyBattleSprite>()];
-            EnemyBattleSprite sprite = sprites.Find(sprite => sprite.Data == enemy);
+            EnemyBattleSprite sprite = sprites.Find(sprite => sprite.Enemy == enemy);
             await sprite.Monologue();
-    
+
             while (ai.CanAct(curr))
             {
                 AIAction action = ai.PickAction();

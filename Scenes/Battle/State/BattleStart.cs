@@ -1,6 +1,8 @@
 using Godot;
 using System.Threading.Tasks;
 
+namespace Combat;
+
 public partial class BattleStart : StateNode
 {
     [Export]

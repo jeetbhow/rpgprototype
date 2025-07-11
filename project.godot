@@ -17,9 +17,9 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-EventBus="*res://scripts/singleton/EventBus.cs"
 SoundManager="*res://scripts/singleton/sound_manager/SoundManager.tscn"
 Game="*res://scripts/singleton/Game.tscn"
+SignalHub="*res://scripts/singleton/SignalHub.cs"
 
 [display]
 

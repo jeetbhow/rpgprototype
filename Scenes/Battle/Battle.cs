@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using System;
 
+using Combat;
+
 public partial class Battle : Node2D
 {
     // Camera Shake Parameters.
@@ -57,7 +59,7 @@ public partial class Battle : Node2D
         {
             InitParty();
             await InitEnemies();
-            await DetermineTurnOrder();     
+            await DetermineTurnOrder();
             EmitSignal(SignalName.BattleReady);
         }
         catch (Exception e)
@@ -93,15 +95,6 @@ public partial class Battle : Node2D
     }
 
     /// <summary>
-    /// Initializes the Battle scene by setting up the UI and loading the enemies.
-    /// </summary>
-    /// <returns></returns>
-    public async Task Init()
-    {
-
-    }
-
-    /// <summary>
     /// Initializes the party by creating Fighter instances for each ally in the party
     /// and updates the UI with their information.
     /// </summary>
@@ -110,14 +103,8 @@ public partial class Battle : Node2D
         foreach (Ally a in Game.Instance.Party)
         {
             PartyInfoPanel panel = PartyInfoPanelScene.Instantiate<PartyInfoPanel>();
+            panel.PartyMember = a;
             UI.AddPartyInfoPanel(panel);
-
-            panel.PartyMemberName = a.Name;
-            panel.HP = a.HP;
-            panel.MaxHP = a.MaxHP;
-            panel.AP = a.AP;
-            panel.MaxAP = a.MaxAP;
-
             Party.Add(a);
         }
     }
@@ -133,8 +120,8 @@ public partial class Battle : Node2D
         foreach (Enemy e in Enemies)
         {
             var sprite = EnemyBattleSpriteScene.Instantiate<EnemyBattleSprite>();
+            sprite.Enemy = e;
             EnemyNodes.AddChild(sprite);
-            sprite.Data = e;
 
             await UI.Log.AppendLine(e.IntroLog);
             await sprite.Introduction();

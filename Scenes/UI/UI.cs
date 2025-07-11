@@ -6,17 +6,25 @@ using System.Threading.Tasks;
 public partial class UI : Control
 {
     // For testing purposes I've exposed this DialogueTree field to the editor.
-    [Export] public DialogueTree DialogueTree { get; set; }
-    [Export] public Textbox Textbox { get; set; }
-    [Export] public Portrait Portrait { get; set; }
-    [Export] public ChoiceTooltip Tooltip { get; set; }
-    [Export] public PlayerData PlayerData { get; set; }
+    [Export]
+    public DialogueTree DialogueTree { get; set; }
+
+    [Export]
+    public Textbox Textbox { get; set; }
+
+    [Export]
+    public Portrait Portrait { get; set; }
+
+    [Export]
+    public ChoiceTooltip Tooltip { get; set; }
+
+    [Export]
+    public PlayerData PlayerData { get; set; }
 
     public DialogueNode CurrNode { get; set; }
     public SkillCheck CurrSkillCheck { get; set; }
 
     private SoundManager _soundManager;
-    private EventBus _eventBus;
     private readonly Dictionary<string, Texture2D> _portraits = new()
     {
         { "Jeet", (Texture2D)GD.Load("res://assets/characters/jeet/jeet-face.png") }
@@ -26,7 +34,6 @@ public partial class UI : Control
     {
         Tooltip.Hide();
         _soundManager = GetNode<SoundManager>(SoundManager.Path);
-        _eventBus = GetNode<EventBus>(EventBus.Path);
     }
 
     public void Stop()

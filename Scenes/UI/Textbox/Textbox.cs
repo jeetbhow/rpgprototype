@@ -4,12 +4,23 @@ using System.Threading.Tasks;
 
 public partial class Textbox : PanelContainer
 {
-    [Export] public DialogueTree Tree { get; set; }
-    [Export] public RichTextLabel TextLabel { get; set; }
-    [Export] public RichTextLabel NameLabel { get; set; }
-    [Export] public ChoiceList Choices { get; set; }
-    [Export] public Timer SfxTimer { get; set; }
-    [Export] public AudioStreamPlayer Sfx { get; set; }
+    [Export]
+    public DialogueTree Tree { get; set; }
+
+    [Export]
+    public RichTextLabel TextLabel { get; set; }
+
+    [Export]
+    public RichTextLabel NameLabel { get; set; }
+
+    [Export]
+    public ChoiceList Choices { get; set; }
+
+    [Export]
+    public Timer SfxTimer { get; set; }
+
+    [Export]
+    public AudioStreamPlayer Sfx { get; set; }
 
     public bool SkipRequested { get; set; }
     public string TextBuffer { get; set; }      // Contains the entire text buffer with patterns removed.
@@ -18,7 +29,6 @@ public partial class Textbox : PanelContainer
 
     public override void _Ready()
     {
-        // This timer plays the typewriter sfx.
         SfxTimer.Timeout += OnSfxTimeout;
         _soundManager = GetNode<SoundManager>(SoundManager.Path);
     }

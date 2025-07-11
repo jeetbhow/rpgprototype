@@ -1,6 +1,8 @@
 using Godot;
 using System.Threading.Tasks;
 
+namespace Combat;
+
 public partial class PlayerTurn : StateNode
 {
     private int _index;
@@ -65,7 +67,7 @@ public partial class PlayerTurn : StateNode
     public override async Task Enter()
     {
         _index = 0;
-        
+
         if (!_isPlayerTurn)
         {
             await Battle.UI.Log.AppendLine($"{Battle.CurrFighter.Name} is ready to fight!");

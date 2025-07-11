@@ -1,5 +1,7 @@
 using Godot;
 
+using Combat;
+
 public partial class TurnQueuePanel : PanelContainer
 {
     private TextureRect _portrait;
