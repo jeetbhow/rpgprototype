@@ -1,12 +1,12 @@
 [gd_resource type="Resource" script_class="FighterAI" load_steps=10 format=3 uid="uid://chpxn2mgiv2v6"]
 
-[ext_resource type="Script" uid="uid://dbfni13yxb2qm" path="res://scripts/resources/combat/DamageRange.cs" id="1_j5efr"]
-[ext_resource type="Script" uid="uid://smqa58pqc1qe" path="res://scripts/resources/combat/Ability.cs" id="2_jfbxr"]
-[ext_resource type="Script" uid="uid://0tqpg4870nf5" path="res://scripts/resources/combat/AIAction.cs" id="3_5iirc"]
-[ext_resource type="Script" uid="uid://cwcixixia3jao" path="res://scripts/resources/combat/FighterAI.cs" id="4_qe881"]
+[ext_resource type="Script" uid="uid://dbfni13yxb2qm" path="res://scripts/resources/combat/DamageRange.cs" id="1_ap1uu"]
+[ext_resource type="Script" uid="uid://smqa58pqc1qe" path="res://scripts/resources/combat/Ability.cs" id="2_3ep64"]
+[ext_resource type="Script" uid="uid://0tqpg4870nf5" path="res://scripts/resources/combat/AIAction.cs" id="3_kccsm"]
+[ext_resource type="Script" uid="uid://cwcixixia3jao" path="res://scripts/resources/combat/FighterAI.cs" id="4_q0127"]
 
 [sub_resource type="Resource" id="Resource_ecb7r"]
-script = ExtResource("1_j5efr")
+script = ExtResource("1_ap1uu")
 Max = 1
 Min = 2
 CritChance = 0.0
@@ -14,14 +14,14 @@ CritMultiplier = 0.0
 metadata/_custom_type_script = "uid://dbfni13yxb2qm"
 
 [sub_resource type="Resource" id="Resource_m5wvx"]
-script = ExtResource("2_jfbxr")
+script = ExtResource("2_3ep64")
 APCost = 2
 DamageRange = SubResource("Resource_ecb7r")
 Name = 0
 metadata/_custom_type_script = "uid://smqa58pqc1qe"
 
 [sub_resource type="Resource" id="Resource_y5kv0"]
-script = ExtResource("3_5iirc")
+script = ExtResource("3_kccsm")
 Name = "Thrash"
 Message = "Jeff wiggles around sporadically."
 HasDmg = true
@@ -29,13 +29,13 @@ Ability = SubResource("Resource_m5wvx")
 metadata/_custom_type_script = "uid://0tqpg4870nf5"
 
 [sub_resource type="Resource" id="Resource_j5efr"]
-script = ExtResource("2_jfbxr")
+script = ExtResource("2_3ep64")
 APCost = 1
 Name = 0
 metadata/_custom_type_script = "uid://smqa58pqc1qe"
 
 [sub_resource type="Resource" id="Resource_ykkaq"]
-script = ExtResource("3_5iirc")
+script = ExtResource("3_kccsm")
 Name = "Pick nose"
 Message = "Jeff picks his nose."
 HasDmg = false
@@ -43,6 +43,6 @@ Ability = SubResource("Resource_j5efr")
 metadata/_custom_type_script = "uid://0tqpg4870nf5"
 
 [resource]
-script = ExtResource("4_qe881")
+script = ExtResource("4_q0127")
 Actions = Array[Object]([SubResource("Resource_y5kv0"), SubResource("Resource_ykkaq")])
 metadata/_custom_type_script = "uid://cwcixixia3jao"

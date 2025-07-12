@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://4eerix34hw16" path="res://assets/characters/shadow.png" id="1_cgxef"]
 [ext_resource type="Texture2D" uid="uid://cddkxetbmoyh3" path="res://assets/enemies/jerry.png" id="1_jodb1"]
 [ext_resource type="Shader" uid="uid://cvtq4of3uub7q" path="res://shaders/enemy.gdshader" id="3_a65ju"]
-[ext_resource type="SpriteFrames" uid="uid://dqitn7jtgv3ri" path="res://resources/enemies/Jeff/JeffSF.tres" id="4_q7m7l"]
+[ext_resource type="SpriteFrames" uid="uid://dqitn7jtgv3ri" path="res://resources/enemies/jeff/JeffSF.tres" id="4_q7m7l"]
 [ext_resource type="StyleBox" uid="uid://n57md1ke4av6" path="res://resources/styles/HPBarFill.tres" id="4_rgfcb"]
 [ext_resource type="Texture2D" uid="uid://dx6k6r3fdq5kt" path="res://assets/effects/combat/slash.png" id="4_smvei"]
 [ext_resource type="StyleBox" uid="uid://dg2wmvgh5xkej" path="res://resources/styles/HPBarBg.tres" id="5_sloyy"]

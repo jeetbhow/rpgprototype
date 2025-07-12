@@ -1,7 +1,7 @@
 [gd_scene load_steps=18 format=3 uid="uid://bhlaeslv50jid"]
 
 [ext_resource type="Script" uid="uid://bxwqvj1ig43b2" path="res://scenes/battle/Battle.cs" id="1_07e4u"]
-[ext_resource type="Resource" uid="uid://bs8b37iwqpsr1" path="res://resources/enemies/Jeff/Jeff.tres" id="2_8f5sm"]
+[ext_resource type="Resource" uid="uid://bs8b37iwqpsr1" path="res://resources/enemies/jeff/Jeff.tres" id="2_8f5sm"]
 [ext_resource type="PackedScene" uid="uid://dw7vckg81r5s3" path="res://scenes/ui/battle/party_info_panel/PartyInfoPanel.tscn" id="2_cmwrv"]
 [ext_resource type="Script" uid="uid://bxy8ovbqm6hg6" path="res://scenes/battle/state/BattleStart.cs" id="4_g1sps"]
 [ext_resource type="Script" uid="uid://c6hmuq7bnmysi" path="res://scripts/components/StateMachine/StateMachine.cs" id="4_odh8s"]

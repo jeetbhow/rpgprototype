@@ -7,8 +7,11 @@ namespace Combat;
 
 public partial class NPCTurn : StateNode
 {
-    [Export] public Battle Battle { get; set; }
-    [Export] public StateNode TurnEnd { get; set; }
+    [Export]
+    public Battle Battle { get; set; }
+
+    [Export]
+    public StateNode TurnEnd { get; set; }
 
     public override async Task Enter()
     {
@@ -17,15 +20,15 @@ public partial class NPCTurn : StateNode
 
         if (curr is Enemy enemy)
         {
-            FighterAI ai = enemy.AI;
+            Fighter target = Enemy.PickTarget([.. Battle.Party]);
 
             List<EnemyBattleSprite> sprites = [.. Battle.EnemyNodes.GetChildren().Cast<EnemyBattleSprite>()];
             EnemyBattleSprite sprite = sprites.Find(sprite => sprite.Enemy == enemy);
             await sprite.Monologue();
 
-            while (ai.CanAct(curr))
+            AIAction action;
+            while ((action = enemy.PickAction()) != null)
             {
-                AIAction action = ai.PickAction();
                 int dmg = -1;
 
                 if (action.HasDmg)
@@ -40,24 +43,25 @@ public partial class NPCTurn : StateNode
                 await Battle.UI.Log.AppendLine(action.Message);
                 await Task.Delay(500);
 
+                SignalHub.Instance.EmitSignal(
+                    SignalHub.SignalName.AttackRequested,
+                    curr,
+                    target,
+                    action.Ability);
+
                 if (dmg != -1)
                 {
-                    int targetIndex = ai.PickTarget(Battle.Party);
-                    Fighter target = Battle.Party[targetIndex];
-                    if (targetIndex != -1)
-                    {
-                        SignalHub.Instance.EmitSignal(
-                            SignalHub.SignalName.FighterAttacked,
-                            curr,
-                            target,
-                            action.Ability);
+                    SignalHub.Instance.EmitSignal(
+                        SignalHub.SignalName.FighterAttacked,
+                        curr,
+                        target,
+                        action.Ability);
 
-                        await Battle.UI.Log.AppendLine($"{curr.Name} dealt {dmg} damage.");
-                    }
+                    await Battle.UI.Log.AppendLine($"{curr.Name} dealt {dmg} damage.");
                 }
             }
         }
 
-        EmitSignal(SignalName.StateUpdate, TurnEnd.Name);
+        GD.Print($"NPCTurn: {curr.Name} finished their turn.");
     }
 }

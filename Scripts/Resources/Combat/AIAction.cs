@@ -16,4 +16,11 @@ public partial class AIAction : Resource
 
     [Export]
     public Ability Ability { get; set; }
+
+    public bool Enabled { get; set; } = true;
+
+    public bool CanExecute(int ap)
+    {
+        return Ability.APCost <= ap;
+    }
 }
