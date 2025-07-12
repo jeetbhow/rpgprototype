@@ -1,8 +1,10 @@
-[gd_scene load_steps=28 format=3 uid="uid://d1yvb465tt7ik"]
+[gd_scene load_steps=31 format=3 uid="uid://d1yvb465tt7ik"]
 
 [ext_resource type="Script" uid="uid://bkb5mjrrkux0b" path="res://scenes/battle/enemy/EnemyBattleSprite.cs" id="1_5aqwu"]
 [ext_resource type="Texture2D" uid="uid://4eerix34hw16" path="res://assets/characters/shadow.png" id="1_cgxef"]
 [ext_resource type="Texture2D" uid="uid://cddkxetbmoyh3" path="res://assets/enemies/jerry.png" id="1_jodb1"]
+[ext_resource type="Shader" uid="uid://cvtq4of3uub7q" path="res://shaders/enemy.gdshader" id="3_a65ju"]
+[ext_resource type="SpriteFrames" uid="uid://dqitn7jtgv3ri" path="res://resources/enemies/Jeff/JeffSF.tres" id="4_q7m7l"]
 [ext_resource type="StyleBox" uid="uid://n57md1ke4av6" path="res://resources/styles/HPBarFill.tres" id="4_rgfcb"]
 [ext_resource type="Texture2D" uid="uid://dx6k6r3fdq5kt" path="res://assets/effects/combat/slash.png" id="4_smvei"]
 [ext_resource type="StyleBox" uid="uid://dg2wmvgh5xkej" path="res://resources/styles/HPBarBg.tres" id="5_sloyy"]
@@ -10,6 +12,14 @@
 [ext_resource type="Theme" uid="uid://x6m3btvacua5" path="res://resources/styles/TextboxDefaultTheme.tres" id="6_evwod"]
 [ext_resource type="PackedScene" uid="uid://beqsl0i7k4bc0" path="res://scenes/ui/battle/chat_balloon/ChatBallloon.tscn" id="9_0o85k"]
 [ext_resource type="PackedScene" uid="uid://cbmyss2a0ljm8" path="res://scenes/battle/effects/blood.tscn" id="11_rhcfp"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_q7m7l"]
+shader = ExtResource("3_a65ju")
+shader_parameter/blink_initial_speed = 50.0
+shader_parameter/blink_min_speed = 1.0
+shader_parameter/blink_decay_rate = 2.0
+shader_parameter/elapsed_time = -1.0
+shader_parameter/blinking = false
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rhcfp"]
 atlas = ExtResource("4_smvei")
@@ -111,7 +121,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("AnimatedSprite2D:modulate")
+tracks/1/path = NodePath("Sprite:modulate")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -171,7 +181,7 @@ tracks/5/keys = {
 tracks/6/type = "value"
 tracks/6/imported = false
 tracks/6/enabled = true
-tracks/6/path = NodePath("AnimatedSprite2D:self_modulate")
+tracks/6/path = NodePath("Sprite:self_modulate")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
@@ -215,7 +225,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:self_modulate")
+tracks/0/path = NodePath("Sprite:self_modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -324,8 +334,10 @@ position = Vector2(0, 11)
 scale = Vector2(1.60938, 1.60938)
 texture = ExtResource("1_cgxef")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
 z_index = 1
+material = SubResource("ShaderMaterial_q7m7l")
+sprite_frames = ExtResource("4_q7m7l")
 autoplay = "default"
 
 [node name="Effects" type="AnimatedSprite2D" parent="."]
@@ -346,6 +358,10 @@ lifetime = 1.5
 one_shot = true
 explosiveness = 1.0
 process_material = SubResource("ShaderMaterial_hx7ra")
+
+[node name="Blood" parent="." instance=ExtResource("11_rhcfp")]
+scale = Vector2(0.3, 0.3)
+amount = 10
 
 [node name="Healthbar" type="ProgressBar" parent="."]
 visible = false
@@ -398,7 +414,3 @@ autoplay = "Default"
 [node name="HPTimer" type="Timer" parent="."]
 wait_time = 0.1
 one_shot = true
-
-[node name="Blood" parent="." instance=ExtResource("11_rhcfp")]
-scale = Vector2(0.3, 0.3)
-amount = 10

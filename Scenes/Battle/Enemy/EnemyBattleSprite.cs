@@ -9,6 +9,9 @@ public partial class EnemyBattleSprite : Node2D
     [Export]
     public Enemy Enemy { get; set; }
 
+    [Export]
+    public int BlinkSeconds = 1;
+
     private readonly Random _rng = new();
 
     private AnimatedSprite2D _animatedSprite2D;
@@ -18,7 +21,8 @@ public partial class EnemyBattleSprite : Node2D
     private RichTextLabel _hpLabel;
     private Timer _hpTimer;
     private GpuParticles2D _bloodParticles;
-
+    private ShaderMaterial _shader;
+    
     private int _prev;           // Index of the previous attack dialogue entry.
 
     public ChatBallloon ChatBallloon { get; private set; }
@@ -34,8 +38,10 @@ public partial class EnemyBattleSprite : Node2D
 
         _animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 
-        _animatedSprite2D = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
+        _animatedSprite2D = GetNode<AnimatedSprite2D>("Sprite");
         _animatedSprite2D.SpriteFrames = Enemy.SpriteFrames;
+
+        _shader = (ShaderMaterial)_animatedSprite2D.Material;
 
         _effects = GetNode<AnimatedSprite2D>("Effects");
 
@@ -86,19 +92,19 @@ public partial class EnemyBattleSprite : Node2D
             defender,
             ability
         );
+
         // TODO - Change this later to use the DamageRange from the ability.
         await TakeDamage(2);
     }
 
-    public async void OnFighterAttacked(Fighter attacker, Fighter defender, Ability ability)
+    public void OnFighterAttacked(Fighter attacker, Fighter defender, Ability ability)
     {
         if (defender != Enemy)
         {
             return;
         }
 
-        await Game.Instance.Wait(1000);
-        StopAnimation();
+        Blink();
     }
 
     public async Task PlayEffects(Ability ability)
@@ -110,7 +116,7 @@ public partial class EnemyBattleSprite : Node2D
             await ToSignal(_effects, "animation_finished");
             SoundManager.Instance.PlaySfx(SoundManager.Sfx.Hurt);
             Bleed();
-            Flinch();
+            Blink();
         }
     }
 
@@ -180,9 +186,14 @@ public partial class EnemyBattleSprite : Node2D
         await ToSignal(timer, SceneTreeTimer.SignalName.Timeout);
     }
 
-    public void Flinch()
+    public void Blink()
     {
-        _animationPlayer.Play("flinch");
+        _shader.SetShaderParameter("blinking", true);
+        _shader.SetShaderParameter("elapsed_time", Time.GetTicksMsec() / 1000.0f);
+        GetTree().CreateTimer(BlinkSeconds).Timeout += () =>
+        {
+            _shader.SetShaderParameter("blinking", false);
+        };
     }
 
     public void StopAnimation()
