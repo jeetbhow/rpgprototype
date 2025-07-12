@@ -38,22 +38,10 @@ public partial class PartyAPBar : HBoxContainer
 
     public override void _Ready()
     {
-        SignalHub.Instance.FighterStatChanged += OnFighterStatChanged;
         _bar = GetNode<ProgressBar>("ProgressBar");
         _label = GetNode<RichTextLabel>("ProgressBar/RichTextLabel");
         UpdateBar();
     }
-
-    private void OnFighterStatChanged(StatType statType, int newValue)
-    {
-        if (statType != StatType.AP)
-            return;
-
-        var tween = GetTree().CreateTween();
-        tween.TweenProperty(this, "Value", newValue, 1.0f)
-            .SetTrans(Tween.TransitionType.Sine)
-            .SetEase(Tween.EaseType.Out);
-    }   
 
     private void UpdateBar()
     {

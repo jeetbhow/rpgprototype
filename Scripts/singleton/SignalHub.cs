@@ -40,5 +40,5 @@ public partial class SignalHub : Node
     public delegate void EnemySelectedEventHandler(Enemy enemy, int index);
 
     [Signal]
-    public delegate void FighterStatChangedEventHandler(StatType stat, int newValue);
+    public delegate void FighterStatChangedEventHandler(Fighter fighter, StatType stat, int newValue);
 }

@@ -30,11 +30,11 @@ public partial class NPCTurn : StateNode
 
                 if (action.HasDmg)
                 {
-                    int minDmg = action.MinDmg;
-                    int maxDmg = action.MaxDmg;
+                    int minDmg = action.Ability.DamageRange.Min;
+                    int maxDmg = action.Ability.DamageRange.Max;
 
                     // Pick a random number in the range of minDmg and maxDmg
-                    dmg = (int)(GD.Randi() % (maxDmg - minDmg + 1)) + minDmg;
+                    dmg = GD.RandRange(minDmg, maxDmg);
                 }
 
                 await Battle.UI.Log.AppendLine(action.Message);
@@ -43,16 +43,18 @@ public partial class NPCTurn : StateNode
                 if (dmg != -1)
                 {
                     int targetIndex = ai.PickTarget(Battle.Party);
+                    Fighter target = Battle.Party[targetIndex];
                     if (targetIndex != -1)
                     {
-                        SoundManager.Instance.PlaySfx(SoundManager.Sfx.Hurt, 8.0f);
-                        Battle.ShakeCamera(1, 5);
-                        Battle.DamageAllyHP(targetIndex, dmg);
+                        SignalHub.Instance.EmitSignal(
+                            SignalHub.SignalName.FighterAttacked,
+                            curr,
+                            target,
+                            action.Ability);
+
                         await Battle.UI.Log.AppendLine($"{curr.Name} dealt {dmg} damage.");
                     }
                 }
-
-                curr.AP -= action.APCost;
             }
         }
 

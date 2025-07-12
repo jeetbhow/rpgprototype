@@ -10,7 +10,7 @@ public partial class EnemyBattleSprite : Node2D
     public Enemy Enemy { get; set; }
 
     [Export]
-    public int BlinkSeconds = 1;
+    public float BlinkSeconds = 1.0f;
 
     private readonly Random _rng = new();
 
@@ -34,7 +34,6 @@ public partial class EnemyBattleSprite : Node2D
         SignalHub.Instance.EnemySelected += OnEnemySelected;
         SignalHub.Instance.AttackCancelled += OnAttackCancelled;
         SignalHub.Instance.AttackRequested += OnAttackRequested;
-        SignalHub.Instance.FighterAttacked += OnFighterAttacked;
 
         _animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 
@@ -80,31 +79,23 @@ public partial class EnemyBattleSprite : Node2D
 
     public async void OnAttackRequested(Fighter attacker, Fighter defender, Ability ability)
     {
-        if (defender != Enemy)
+        if (attacker == Enemy)
         {
-            return;
+            Enemy.AP -= ability.APCost;
         }
-
-        await PlayEffects(ability);
-        SignalHub.Instance.EmitSignal(
-            SignalHub.SignalName.FighterAttacked,
-            attacker,
-            defender,
-            ability
-        );
-
-        // TODO - Change this later to use the DamageRange from the ability.
-        await TakeDamage(2);
-    }
-
-    public void OnFighterAttacked(Fighter attacker, Fighter defender, Ability ability)
-    {
-        if (defender != Enemy)
+        else if (defender == Enemy)
         {
-            return;
-        }
+            await PlayEffects(ability);
+            SignalHub.Instance.EmitSignal(
+                SignalHub.SignalName.FighterAttacked,
+                attacker,
+                defender,
+                ability
+            );
 
-        Blink();
+            // TODO - Change this later to use the DamageRange from the ability.
+            await TakeDamage(2);
+        }
     }
 
     public async Task PlayEffects(Ability ability)

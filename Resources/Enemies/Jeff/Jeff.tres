@@ -3,10 +3,10 @@
 [ext_resource type="Resource" uid="uid://chpxn2mgiv2v6" path="res://resources/enemies/Jeff/JeffAI.tres" id="1_bk74h"]
 [ext_resource type="Texture2D" uid="uid://cddkxetbmoyh3" path="res://assets/enemies/jerry.png" id="2_1u7we"]
 [ext_resource type="SpriteFrames" uid="uid://dqitn7jtgv3ri" path="res://resources/enemies/Jeff/JeffSF.tres" id="3_1u7we"]
-[ext_resource type="Script" uid="uid://bfsq0i25vcarl" path="res://scripts/resources/combat/Enemy.cs" id="4_1u7we"]
+[ext_resource type="Script" uid="uid://bfsq0i25vcarl" path="res://scripts/resources/combat/Enemy.cs" id="4_vcmg8"]
 
 [resource]
-script = ExtResource("4_1u7we")
+script = ExtResource("4_vcmg8")
 SpriteFrames = ExtResource("3_1u7we")
 IntroLog = "Jeff creeps up on you from behind. Gross."
 IntroBalloon = "Will you be my girlfriend?"

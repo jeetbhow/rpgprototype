@@ -107,6 +107,10 @@ public partial class AttackMenu : StateNode
             Battle.UI.Commands.Choices.AddChoice(choice);
         }
 
-        SignalHub.Instance.EmitSignal(SignalHub.SignalName.EnemySelected, Battle.Enemies[_selectedEnemyIndex], _selectedEnemyIndex);
+        SignalHub.Instance.EmitSignal(
+            SignalHub.SignalName.EnemySelected,
+            Battle.Enemies[_selectedEnemyIndex],
+            _selectedEnemyIndex
+        );
     }
 }

@@ -28,7 +28,7 @@ public partial class FighterAI : Resource
     {
         foreach (AIAction action in Actions)
         {
-            if (action.APCost <= fighter.AP)
+            if (action.Ability.APCost <= fighter.AP)
             {
                 return true;
             }

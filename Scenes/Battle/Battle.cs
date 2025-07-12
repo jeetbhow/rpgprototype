@@ -51,6 +51,8 @@ public partial class Battle : Node2D
 
     public async Task AsyncReady()
     {
+        SignalHub.Instance.FighterAttacked += OnFighterAttacked;
+
         UI = GetNode<BattleUI>("BattleUI");
         EnemyNodes = GetNode<Node2D>("EnemyNodes");
         _camera = GetNode<Camera2D>("Camera2D");
@@ -125,6 +127,15 @@ public partial class Battle : Node2D
 
             await UI.Log.AppendLine(e.IntroLog);
             await sprite.Introduction();
+        }
+    }
+
+    public void OnFighterAttacked(Fighter attacker, Fighter defender, Ability ability)
+    {
+        if (defender is Player)
+        {
+            ShakeCamera(1.0f, 8.0f);
+            SoundManager.Instance.PlaySfx(SoundManager.Sfx.Hurt);
         }
     }
 

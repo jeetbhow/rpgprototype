@@ -27,7 +27,15 @@ public partial class Fighter : Resource
     public int Level { get; set; }
 
     [Export]
-    public int HP { get; set; }
+    public int HP
+    { 
+        get { return _hp; }
+        set
+        {
+            _hp = Mathf.Max(0, value);
+            SignalHub.Instance?.EmitSignal(SignalHub.SignalName.FighterStatChanged, this, (int)StatType.HP, _hp);
+        }
+    }
 
     [Export]
     public int MaxHP { get; set; }
@@ -39,7 +47,7 @@ public partial class Fighter : Resource
         set
         {
             _ap = Mathf.Max(0, value);
-            SignalHub.Instance?.EmitSignal(SignalHub.SignalName.FighterStatChanged, (int)StatType.AP, _ap);
+            SignalHub.Instance?.EmitSignal(SignalHub.SignalName.FighterStatChanged, this, (int)StatType.AP, _ap);
         }
     }
 
@@ -58,5 +66,5 @@ public partial class Fighter : Resource
     [Export]
     public int Initiative { get; set; } = 0;   // Default value, set by the game logic.
 
-    private int _ap;
+    private int _ap, _hp;
 }
