@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://78fn51iu7a8k"]
 
 [ext_resource type="Theme" uid="uid://x6m3btvacua5" path="res://resources/styles/TextboxDefaultTheme.tres" id="1_ijbt3"]
-[ext_resource type="Script" uid="uid://b4ebu5butl1nf" path="res://scenes/ui/battle/party_info_panel/PartyAPBar/PartyAPBar.cs" id="2_ijbt3"]
+[ext_resource type="Script" uid="uid://b4ebu5butl1nf" path="res://scenes/battle/ui/party_info_panel/PartyAPBar/PartyAPBar.cs" id="2_ijbt3"]
 [ext_resource type="StyleBox" uid="uid://pbihsi6xiv83" path="res://resources/styles/APBarBg.tres" id="3_ijbt3"]
 [ext_resource type="StyleBox" uid="uid://b1tkg50ji28d7" path="res://resources/styles/APBarFill.tres" id="4_llvx4"]
 

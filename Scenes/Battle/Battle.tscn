@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bxwqvj1ig43b2" path="res://scenes/battle/Battle.cs" id="1_07e4u"]
 [ext_resource type="Resource" uid="uid://bs8b37iwqpsr1" path="res://resources/enemies/jeff/Jeff.tres" id="2_8f5sm"]
-[ext_resource type="PackedScene" uid="uid://dw7vckg81r5s3" path="res://scenes/ui/battle/party_info_panel/PartyInfoPanel.tscn" id="2_cmwrv"]
+[ext_resource type="PackedScene" uid="uid://dw7vckg81r5s3" path="res://scenes/battle/ui/party_info_panel/PartyInfoPanel.tscn" id="2_cmwrv"]
 [ext_resource type="Script" uid="uid://bxy8ovbqm6hg6" path="res://scenes/battle/state/BattleStart.cs" id="4_g1sps"]
 [ext_resource type="Script" uid="uid://c6hmuq7bnmysi" path="res://scripts/components/StateMachine/StateMachine.cs" id="4_odh8s"]
 [ext_resource type="PackedScene" uid="uid://d1yvb465tt7ik" path="res://scenes/battle/enemy/EnemyBattleSprite.tscn" id="5_rremj"]
@@ -11,7 +11,7 @@
 [ext_resource type="Script" uid="uid://dcifapt71jp00" path="res://scripts/components/StateMachine/StateNode.cs" id="7_tmq01"]
 [ext_resource type="Script" uid="uid://cximkhuqra6pe" path="res://scenes/battle/state/PlayerTurn.cs" id="8_tmq01"]
 [ext_resource type="Script" uid="uid://dvhfitddx4u8k" path="res://scenes/battle/state/AttackMenu.cs" id="9_cmwrv"]
-[ext_resource type="PackedScene" uid="uid://cgfmftu70tvgf" path="res://scenes/ui/battle/BattleUI.tscn" id="9_tmq01"]
+[ext_resource type="PackedScene" uid="uid://cgfmftu70tvgf" path="res://scenes/battle/ui/BattleUI.tscn" id="9_tmq01"]
 [ext_resource type="Script" uid="uid://cv1fltfldbohi" path="res://scenes/battle/state/TurnEnd.cs" id="10_q0gc0"]
 [ext_resource type="PackedScene" uid="uid://btrajdgilaf0d" path="res://scenes/ui/game/choice/content/ChoiceContent.tscn" id="10_ukbm8"]
 [ext_resource type="Script" uid="uid://dtvkcfgapvb2a" path="res://scenes/battle/state/QueueEmpty.cs" id="11_gibtw"]

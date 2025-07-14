@@ -13,7 +13,7 @@ public partial class EnemyBattleSprite : Node2D
     public float BlinkSeconds = 1.0f;
 
     private readonly Random _rng = new();
-
+    
     private AnimatedSprite2D _animatedSprite2D;
     private AnimatedSprite2D _effects;
     private AnimationPlayer _animationPlayer;
@@ -22,8 +22,7 @@ public partial class EnemyBattleSprite : Node2D
     private Timer _hpTimer;
     private GpuParticles2D _bloodParticles;
     private ShaderMaterial _shader;
-    
-    private int _prev;           // Index of the previous attack dialogue entry.
+    private int _prevMonologueIndex;
 
     public ChatBallloon ChatBallloon { get; private set; }
     public ProgressBar Healthbar { get; set; }
@@ -79,20 +78,10 @@ public partial class EnemyBattleSprite : Node2D
 
     public async void OnAttackRequested(Fighter attacker, Fighter defender, Ability ability)
     {
-        if (attacker == Enemy)
-        {
-            Enemy.AP -= ability.APCost;
-        }
-        else if (defender == Enemy)
+        if (defender == Enemy)
         {
             await PlayEffects(ability);
-            SignalHub.Instance.EmitSignal(
-                SignalHub.SignalName.FighterAttacked,
-                attacker,
-                defender,
-                ability
-            );
-
+            attacker.AP -= ability.APCost;
             // TODO - Change this later to use the DamageRange from the ability.
             await TakeDamage(2);
         }
@@ -146,14 +135,14 @@ public partial class EnemyBattleSprite : Node2D
     public async Task Monologue()
     {
         int index = _rng.Next(Enemy.AttackBalloonText.Length);
-        if (index == _prev)
+        if (index == _prevMonologueIndex)
         {
             // This should prevent repeated dialogue from popping up during fights.
             index = (index + 1) % Enemy.AttackBalloonText.Length;
         }
 
         await ChatBallloon.PlayMessage("[shake rate=50 level=5]" + Enemy.AttackBalloonText[index] + "[/shake]", 700);
-        _prev = index;
+        _prevMonologueIndex = index;
     }
 
     public async Task Introduction()

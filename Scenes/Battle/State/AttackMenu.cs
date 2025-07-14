@@ -69,7 +69,7 @@ public partial class AttackMenu : StateNode
         Enemy enemy = Battle.Enemies[_selectedEnemyIndex];
 
         await Battle.UI.Log.AppendLine($"{player.Name} attacks {enemy.Name}.");
-        await Battle.Wait(500);
+        await Game.Instance.Wait(500);
 
         SignalHub.Instance.EmitSignal(
             SignalHub.SignalName.AttackRequested,
@@ -78,7 +78,7 @@ public partial class AttackMenu : StateNode
             player.Weapon.Ability
         );
 
-        await Battle.Wait(500);
+        await Game.Instance.Wait(500);
 
         await Battle.UI.Log.AppendLine($"{enemy.Name} takes {DefaultDmg} damage.");
         EmitSignal(SignalName.StateUpdate, BattlePlayerTurn.Name);
@@ -112,5 +112,7 @@ public partial class AttackMenu : StateNode
             Battle.Enemies[_selectedEnemyIndex],
             _selectedEnemyIndex
         );
+
+        await Task.CompletedTask;
     }
 }

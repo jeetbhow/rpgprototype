@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=3 uid="uid://qnx6km8di2s8"]
 
 [ext_resource type="Theme" uid="uid://x6m3btvacua5" path="res://resources/styles/TextboxDefaultTheme.tres" id="1_1xgqi"]
-[ext_resource type="Script" uid="uid://dk6r365s2y1kn" path="res://scenes/ui/battle/dice_roll_info/DiceRollInfo.cs" id="2_pdyk5"]
+[ext_resource type="Script" uid="uid://dk6r365s2y1kn" path="res://scenes/battle/ui/dice_roll_info/DiceRollInfo.cs" id="2_pdyk5"]
 [ext_resource type="PackedScene" uid="uid://cipqk0exm12ho" path="res://scenes/battle/dice/Die.tscn" id="3_0wrqq"]
 [ext_resource type="Texture2D" uid="uid://3xurbpcp6po7" path="res://assets/characters/eri.png" id="4_pdyk5"]
 

@@ -29,19 +29,11 @@ public partial class NPCTurn : StateNode
             AIAction action;
             while ((action = enemy.PickAction()) != null)
             {
-                int dmg = -1;
-
-                if (action.HasDmg)
-                {
-                    int minDmg = action.Ability.DamageRange.Min;
-                    int maxDmg = action.Ability.DamageRange.Max;
-
-                    // Pick a random number in the range of minDmg and maxDmg
-                    dmg = GD.RandRange(minDmg, maxDmg);
-                }
+                var attackFinished = ToSignal(
+                    SignalHub.Instance,
+                    SignalHub.SignalName.FighterAttacked);
 
                 await Battle.UI.Log.AppendLine(action.Message);
-                await Task.Delay(500);
 
                 SignalHub.Instance.EmitSignal(
                     SignalHub.SignalName.AttackRequested,
@@ -49,19 +41,15 @@ public partial class NPCTurn : StateNode
                     target,
                     action.Ability);
 
-                if (dmg != -1)
+                await attackFinished;
+                if (action.HasDmg)
                 {
-                    SignalHub.Instance.EmitSignal(
-                        SignalHub.SignalName.FighterAttacked,
-                        curr,
-                        target,
-                        action.Ability);
-
-                    await Battle.UI.Log.AppendLine($"{curr.Name} dealt {dmg} damage.");
+                    await Game.Instance.Wait(500);
+                    await Battle.UI.Log.AppendLine($"{target.Name} took {action.Ability.Damage} damage.");
                 }
             }
         }
-
-        GD.Print($"NPCTurn: {curr.Name} finished their turn.");
+        
+        EmitSignal(SignalName.StateUpdate, TurnEnd.Name);
     }
 }

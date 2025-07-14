@@ -21,8 +21,11 @@ public partial class Ability : Resource
     [Export]
     public AbilityName Name { get; set; }
 
+    public int Damage { get; private set; }
+
     public int RollDamage()
     {
-        return GD.RandRange(DamageRange.Min, DamageRange.Max);
+        Damage = GD.RandRange(DamageRange.Min, DamageRange.Max);
+        return Damage;
     }
 }

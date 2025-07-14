@@ -1,6 +1,7 @@
 using Godot;
 
 using Combat;
+using System.Threading.Tasks;
 
 [GlobalClass]
 public partial class PartyInfoPanel : PanelContainer
@@ -13,7 +14,7 @@ public partial class PartyInfoPanel : PanelContainer
 
     public override void _Ready()
     {
-        SignalHub.Instance.FighterAttacked += OnFighterAttacked;
+        SignalHub.Instance.AttackRequested += OnAttackRequested;
         SignalHub.Instance.FighterStatChanged += OnFighterStatChanged;
         _nameLabel = GetNode<RichTextLabel>("MarginContainer/VBoxContainer/Name");
         _hpBar = GetNode<PartyHPBar>("MarginContainer/VBoxContainer/PartyHPBar");
@@ -26,18 +27,27 @@ public partial class PartyInfoPanel : PanelContainer
         _nameLabel.Text = PartyMember.Name;
     }
 
-    public void OnFighterAttacked(Fighter attacker, Fighter defender, Ability ability)
+    public async void OnAttackRequested(Fighter attacker, Fighter defender, Ability ability)
     {
-        if (attacker == PartyMember)
+        if (defender == PartyMember)
         {
-            PartyMember.AP -= ability.APCost;
-        }
-        else if (defender == PartyMember)
-        {
-            PartyMember.HP -= ability.RollDamage();
-        }
-    }
+            if (ability.DamageRange != null)
+            {
+                int dmg = ability.RollDamage();
+                PartyMember.HP -= dmg;
+            }
 
+            attacker.AP -= ability.APCost;
+            SignalHub.Instance.EmitSignal(
+                SignalHub.SignalName.FighterAttacked,
+                attacker,
+                defender,
+                ability
+            );
+        }
+
+        await Task.CompletedTask;
+    }
 
     private void OnFighterStatChanged(Fighter fighter, StatType statType, int newValue)
     {

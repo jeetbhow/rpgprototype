@@ -17,9 +17,9 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-SoundManager="*res://scripts/singleton/sound_manager/SoundManager.tscn"
-Game="*res://scripts/singleton/Game.tscn"
-SignalHub="*res://scripts/singleton/SignalHub.cs"
+SoundManager="*res://scripts/globals/sound_manager/SoundManager.tscn"
+Game="*res://scripts/globals/game/Game.tscn"
+SignalHub="*res://scripts/globals/SignalHub.cs"
 
 [display]
 

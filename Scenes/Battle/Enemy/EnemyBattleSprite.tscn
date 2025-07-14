@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://d1yvb465tt7ik"]
+[gd_scene load_steps=30 format=3 uid="uid://d1yvb465tt7ik"]
 
 [ext_resource type="Script" uid="uid://bkb5mjrrkux0b" path="res://scenes/battle/enemy/EnemyBattleSprite.cs" id="1_5aqwu"]
 [ext_resource type="Texture2D" uid="uid://4eerix34hw16" path="res://assets/characters/shadow.png" id="1_cgxef"]
@@ -10,7 +10,7 @@
 [ext_resource type="StyleBox" uid="uid://dg2wmvgh5xkej" path="res://resources/styles/HPBarBg.tres" id="5_sloyy"]
 [ext_resource type="Shader" uid="uid://b64ptem30f7km" path="res://shaders/disintegrate.gdshader" id="5_w5rdf"]
 [ext_resource type="Theme" uid="uid://x6m3btvacua5" path="res://resources/styles/TextboxDefaultTheme.tres" id="6_evwod"]
-[ext_resource type="PackedScene" uid="uid://beqsl0i7k4bc0" path="res://scenes/ui/battle/chat_balloon/ChatBallloon.tscn" id="9_0o85k"]
+[ext_resource type="PackedScene" uid="uid://beqsl0i7k4bc0" path="res://scenes/battle/ui/chat_balloon/ChatBallloon.tscn" id="9_0o85k"]
 [ext_resource type="PackedScene" uid="uid://cbmyss2a0ljm8" path="res://scenes/battle/effects/blood.tscn" id="11_rhcfp"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_q7m7l"]
@@ -109,7 +109,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath(".:modulate")
+tracks/0/path = NodePath("Shadow:self_modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -121,7 +121,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite:modulate")
+tracks/1/path = NodePath("Healthbar:modulate")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -133,58 +133,34 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Shadow:self_modulate")
+tracks/2/path = NodePath("Healthbar:position")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Color(1, 1, 1, 1)]
+"values": [Vector2(-21, -21)]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Healthbar:modulate")
+tracks/3/path = NodePath("Healthbar:scale")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Color(1, 1, 1, 1)]
+"values": [Vector2(1, 1)]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Healthbar:position")
+tracks/4/path = NodePath("Sprite:self_modulate")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(-21, -21)]
-}
-tracks/5/type = "value"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("Healthbar:scale")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(1, 1)]
-}
-tracks/6/type = "value"
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/path = NodePath("Sprite:self_modulate")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
@@ -214,23 +190,6 @@ tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0, 1),
 "transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_smvei"]
-resource_name = "flinch"
-length = 0.2
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite:self_modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1),
-"transitions": PackedFloat32Array(0.2, 0.2),
 "update": 0,
 "values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
 }
@@ -320,7 +279,6 @@ _data = {
 &"Default": SubResource("Animation_rgfcb"),
 &"RESET": SubResource("Animation_2k0bg"),
 &"destroy_extras": SubResource("Animation_wlrv3"),
-&"flinch": SubResource("Animation_smvei"),
 &"hp_appear": SubResource("Animation_sloyy"),
 &"hp_hide": SubResource("Animation_0o85k")
 }

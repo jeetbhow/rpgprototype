@@ -1,5 +1,4 @@
-using System;
-using System.Collections.Generic;
+using System.Linq;
 using Godot;
 
 namespace Combat;
@@ -18,27 +17,17 @@ public partial class Enemy : Fighter
     
     public AIAction PickAction()
     {
-        if (AI.Actions.Length == 0) return null;
+        var candidates = AI.Actions
+            .Where(a => a.CanExecute(AP))
+            .ToArray();
 
-        int index = (int)(GD.Randi() % AI.Actions.Length);
+        GD.Print(candidates.Length);
 
-        int count = 0;
-        while (count < AI.Actions.Length)
-        {
-            var action = AI.Actions[index];
-            if (action.Enabled)
-            {
-                if (action.CanExecute(AP))
-                    return action;
-                else
-                    action.Enabled = false;
-            }
+        if (candidates.Length == 0)
+            return null;
 
-            index = (index + 1) % AI.Actions.Length;
-            count++;
-        }
-
-        return null; // No valid action found
+        int idx = GD.RandRange(0, candidates.Length - 1);
+        return candidates[idx];
     }
 
     public static Ally PickTarget(Ally[] fighters)

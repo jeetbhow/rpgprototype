@@ -41,4 +41,10 @@ public partial class SignalHub : Node
 
     [Signal]
     public delegate void FighterStatChangedEventHandler(Fighter fighter, StatType stat, int newValue);
+
+    [Signal]
+    public delegate void FighterTurnEndedEventHandler(Fighter fighter);
+
+    [Signal]
+    public delegate void CombatLogUpdateRequestedEventHandler(string message);
 }

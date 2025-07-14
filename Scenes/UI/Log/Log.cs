@@ -14,6 +14,8 @@ public partial class Log : PanelContainer
 
     public override void _Ready()
     {
+        SignalHub.Instance.CombatLogUpdateRequested += async text => await AppendLine(text);
+    
         TextLabel = GetNode<RichTextLabel>("MarginContainer/RichTextLabel");
         _sfxTimer = GetNode<Timer>("SfxTimer");
         _sfxPlayer = GetNode<AudioStreamPlayer>("SfxPlayer");
@@ -27,12 +29,10 @@ public partial class Log : PanelContainer
 
     public async Task AppendLine(string text)
     {
-        // Wait a little before logging the next line.
-        await Task.Delay(200);
-
+        await Game.Instance.Wait(200);
         const string pattern = @"(\[[^\]]+\])";
         string[] parts = Regex.Split(text + "\n", pattern);
-        
+
         foreach (var part in parts)
         {
             if (part.StartsWith("[pause="))
@@ -42,10 +42,9 @@ public partial class Log : PanelContainer
                 continue;
             }
 
-            // --- visible text ---------------------------------------------------
-            int start = TextLabel.GetTotalCharacterCount();   // counts *visible* chars
+            int start = TextLabel.GetTotalCharacterCount();
             TextLabel.AppendText(part);
-            int end   = TextLabel.GetTotalCharacterCount();
+            int end = TextLabel.GetTotalCharacterCount();
 
             await Typewriter(start, end);
 

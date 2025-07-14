@@ -5,13 +5,15 @@ namespace Combat;
 
 public partial class QueueEmpty : StateNode
 {
-    [Export] Battle Battle;
-    [Export] StateNode TurnStart;
+    [Export]
+    Battle Battle;
+   
+    [Export]
+    StateNode TurnStart;
 
     public override async Task Enter()
     {
         await Battle.DetermineTurnOrder();
-        Battle.ResetAP();
         EmitSignal(SignalName.StateUpdate, TurnStart.Name);
     }
 }

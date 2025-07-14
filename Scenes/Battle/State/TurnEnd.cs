@@ -13,7 +13,10 @@ public partial class TurnEnd : StateNode
     {
         Battle.UI.AdvanceTurnQueue();
         Battle.UI.Commands.Hide();
-        Battle.TurnQueue.Dequeue();
+        
+        Fighter fighter = Battle.TurnQueue.Dequeue();
+        fighter.AP = fighter.MaxAP;
+
         if (Battle.TurnQueue.Count > 0)
         {
             EmitSignal(SignalName.StateUpdate, TurnStart.Name);
@@ -22,5 +25,7 @@ public partial class TurnEnd : StateNode
         {
             EmitSignal(SignalName.StateUpdate, TurnQueueEmpty.Name);
         }
+
+        await Task.CompletedTask;
     }
 }

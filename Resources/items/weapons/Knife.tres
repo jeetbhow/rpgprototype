@@ -16,7 +16,7 @@ metadata/_custom_type_script = "uid://dbfni13yxb2qm"
 script = ExtResource("2_13fi8")
 APCost = 1
 DamageRange = SubResource("Resource_hkt8h")
-Name = 0
+Name = 1
 metadata/_custom_type_script = "uid://smqa58pqc1qe"
 
 [resource]

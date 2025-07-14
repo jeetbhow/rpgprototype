@@ -1,21 +1,14 @@
 using Godot;
 using Godot.Collections;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.Generic;
-using System;
 
 using Combat;
 
 public partial class Battle : Node2D
 {
-    // Camera Shake Parameters.
-    private float _duration = 0.0f;
-    private float _shakeTime = 0.0f;
-    private float _initialShakeMagnitude = 0.0f;
-
-    private Camera2D _camera;
-
     [Signal]
     public delegate void BattleReadyEventHandler();
 
@@ -36,6 +29,12 @@ public partial class Battle : Node2D
     public List<Ally> Party { get; private set; } = [];
     public Queue<Fighter> TurnQueue { get; set; } = new();
     public Fighter CurrFighter { get; set; }
+
+    // Camera Parameters.
+    private Camera2D _camera;
+    private float _duration = 0.0f;
+    private float _shakeTime = 0.0f;
+    private float _initialShakeMagnitude = 0.0f;
 
     public void ShakeCamera(float duration, float magnitude)
     {
@@ -77,14 +76,11 @@ public partial class Battle : Node2D
         {
             _shakeTime -= (float)delta;
 
-            // Ease the magnitude down from initial -> 0
             float t = _shakeTime / _duration;
             float magnitude = Mathf.Lerp(_initialShakeMagnitude, 0.0f, 1 - t);
 
-            // Pick a random direction.
             float angle = GD.Randf() * Mathf.Tau;
 
-            // Create a direction vector moving in that direction via trigonometry
             Vector2 offset = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * magnitude;
             UI.Offset = offset;
             _camera.Offset = offset / 2.0f;
@@ -132,7 +128,7 @@ public partial class Battle : Node2D
 
     public void OnFighterAttacked(Fighter attacker, Fighter defender, Ability ability)
     {
-        if (defender is Player)
+        if (defender is Player && ability.DamageRange != null)
         {
             ShakeCamera(1.0f, 8.0f);
             SoundManager.Instance.PlaySfx(SoundManager.Sfx.Hurt);
@@ -166,7 +162,7 @@ public partial class Battle : Node2D
             await UI.Log.AppendLine($"{f.Name} rolled {f.Initiative} [color={Game.BodySkillColor.ToHtml()}](+{f.Athletics})[/color] on initiative.");
         }
 
-        await Wait(500);
+        await Game.Instance.Wait(500);
         TurnQueue = new Queue<Fighter>(allParticipants.OrderByDescending(p => p.Initiative));
 
         foreach (Fighter f in TurnQueue)
@@ -184,88 +180,5 @@ public partial class Battle : Node2D
     public EnemyBattleSprite GetEnemySprite(int index)
     {
         return EnemyNodes.GetChild<EnemyBattleSprite>(index, false);
-    }
-
-    public void DamageAllyHP(int index, int damage)
-    {
-        if (index < 0 || index >= Party.Count)
-        {
-            GD.PrintErr($"Invalid ally index: {index}");
-            return;
-        }
-
-        var ally = Party[index];
-        ally.HP -= damage;
-
-        // Update the UI panel for the ally
-        PartyInfoPanel panel = UI.GetPartyInfoPanel(index);
-        if (panel != null)
-        {
-            double finalVal = Mathf.Clamp(ally.HP, 0, ally.MaxHP);
-
-            Tween tween = GetTree().CreateTween();
-            tween.TweenProperty(panel, "HP", finalVal, 1.0f)
-                 .SetTrans(Tween.TransitionType.Sine)
-                 .SetEase(Tween.EaseType.Out);
-        }
-    }
-
-    public void DamageAllyAP(int index, int damage)
-    {
-        if (index < 0 || index >= Party.Count)
-        {
-            GD.PrintErr($"Invalid ally index: {index}");
-            return;
-        }
-
-        var ally = Party[index];
-        ally.AP -= damage;
-
-        // Update the UI panel for the ally
-        PartyInfoPanel panel = UI.GetPartyInfoPanel(index);
-        if (panel != null)
-        {
-            double finalVal = Mathf.Clamp(ally.AP, 0, ally.MaxAP);
-
-            Tween tween = GetTree().CreateTween();
-            tween.TweenProperty(panel, "AP", finalVal, 1.0f)
-                 .SetTrans(Tween.TransitionType.Sine)
-                 .SetEase(Tween.EaseType.Out);
-        }
-    }
-
-    /// <summary>
-    /// Updates the Action Points (AP) of the specified fighter by subtracting the given AP cost.
-    /// </summary>
-    /// <param name="fighter">The fighter that's being updated.</param>
-    /// <param name="apCost">The amount of AP to subtract.</param>
-    public void UpdateAP(Fighter fighter, int apCost)
-    {
-        if (fighter is Ally || fighter is Player)
-        {
-            DamageAllyAP(Party.IndexOf(fighter as Ally), apCost);
-        }
-        else
-        {
-            fighter.AP -= apCost;
-        }
-    }
-
-    public void ResetAP()
-    {
-        foreach (Fighter fighter in TurnQueue)
-        {
-            UpdateAP(fighter, fighter.AP - fighter.MaxAP);
-        }
-    }
-
-    /// <summary>
-    /// Use the Battle scene's timer to wait for some amount of ms.
-    /// </summary>
-    /// <param name="ms">The amount of time to wait.</param>
-    public async Task Wait(int ms)
-    {
-        var treeTimer = GetTree().CreateTimer(ms / 1000.0);
-        await ToSignal(treeTimer, SceneTreeTimer.SignalName.Timeout);
     }
 }
