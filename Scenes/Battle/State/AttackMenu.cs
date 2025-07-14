@@ -66,10 +66,14 @@ public partial class AttackMenu : StateNode
     {
         _AttackInProgress = true;
 
+        var attackFinished = ToSignal(
+            SignalHub.Instance,
+            SignalHub.SignalName.FighterAttacked);
+
         Enemy enemy = Battle.Enemies[_selectedEnemyIndex];
 
         await Battle.UI.Log.AppendLine($"{player.Name} attacks {enemy.Name}.");
-        await Game.Instance.Wait(500);
+        await Game.Instance.Wait(200);
 
         SignalHub.Instance.EmitSignal(
             SignalHub.SignalName.AttackRequested,
@@ -78,9 +82,9 @@ public partial class AttackMenu : StateNode
             player.Weapon.Ability
         );
 
-        await Game.Instance.Wait(500);
-
+        await attackFinished;
         await Battle.UI.Log.AppendLine($"{enemy.Name} takes {DefaultDmg} damage.");
+        
         EmitSignal(SignalName.StateUpdate, BattlePlayerTurn.Name);
     }
 

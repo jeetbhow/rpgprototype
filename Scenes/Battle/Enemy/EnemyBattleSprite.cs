@@ -33,6 +33,7 @@ public partial class EnemyBattleSprite : Node2D
         SignalHub.Instance.EnemySelected += OnEnemySelected;
         SignalHub.Instance.AttackCancelled += OnAttackCancelled;
         SignalHub.Instance.AttackRequested += OnAttackRequested;
+        SignalHub.Instance.FighterAttacked += (_, _, _) => HideHP();
 
         _animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 
@@ -84,6 +85,13 @@ public partial class EnemyBattleSprite : Node2D
             attacker.AP -= ability.APCost;
             // TODO - Change this later to use the DamageRange from the ability.
             await TakeDamage(2);
+            HideHP();
+            SignalHub.Instance.EmitSignal(
+                SignalHub.SignalName.FighterAttacked,
+                attacker,
+                defender,
+                ability
+            );
         }
     }
 
