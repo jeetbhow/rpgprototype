@@ -42,9 +42,10 @@ public partial class NPCTurn : StateNode
                     action.Ability);
 
                 await attackFinished;
+                await Game.Instance.Wait(500);
+
                 if (action.HasDmg)
                 {
-                    await Game.Instance.Wait(500);
                     await Battle.UI.Log.AppendLine($"{target.Name} took {action.Ability.Damage} damage.");
                 }
             }
