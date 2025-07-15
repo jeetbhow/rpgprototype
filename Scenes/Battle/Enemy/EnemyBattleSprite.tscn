@@ -14,7 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://beqsl0i7k4bc0" path="res://scenes/battle/ui/chat_balloon/ChatBallloon.tscn" id="9_0o85k"]
 [ext_resource type="PackedScene" uid="uid://cbmyss2a0ljm8" path="res://scenes/battle/effects/blood.tscn" id="11_rhcfp"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_q7m7l"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_du0bn"]
 shader = ExtResource("3_a65ju")
 shader_parameter/start_time = -1.0
 shader_parameter/blinking = false
@@ -23,9 +23,9 @@ shader_parameter/blink_min_speed = 1.0
 shader_parameter/blink_decay_rate = 2.0
 shader_parameter/shaking = false
 shader_parameter/shake_progress = 1.0
-shader_parameter/shake_intensity = 1.0
-shader_parameter/initial_shake_speed = 5.0
-shader_parameter/shake_duration = 0.1
+shader_parameter/shake_intensity = 4.0
+shader_parameter/initial_shake_speed = 80.0
+shader_parameter/shake_duration = 1.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_hx7ra"]
 shader = ExtResource("5_w5rdf")
@@ -46,7 +46,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Shadow:self_modulate")
+tracks/0/path = NodePath("Sprite/Shadow:self_modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -109,7 +109,7 @@ resource_name = "destroy_extras"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Shadow:self_modulate")
+tracks/0/path = NodePath("Sprite/Shadow:self_modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -224,20 +224,20 @@ _data = {
 script = ExtResource("1_5aqwu")
 KnifeSlashEffect = ExtResource("2_du0bn")
 BaseballBatHitEffect = ExtResource("3_7cgrk")
-InitialShakeSpeed = 30.0
+ShakeIntensity = 2.0
 ShakeDuration = 1.0
-
-[node name="Shadow" type="Sprite2D" parent="."]
-z_index = 1
-position = Vector2(0, 11)
-scale = Vector2(1.60938, 1.60938)
-texture = ExtResource("1_cgxef")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 z_index = 1
-material = SubResource("ShaderMaterial_q7m7l")
+material = SubResource("ShaderMaterial_du0bn")
 sprite_frames = ExtResource("4_q7m7l")
 autoplay = "default"
+
+[node name="Shadow" type="Sprite2D" parent="Sprite"]
+z_index = -1
+position = Vector2(0, 11)
+scale = Vector2(1.60938, 1.60938)
+texture = ExtResource("1_cgxef")
 
 [node name="DeathParticles" type="GPUParticles2D" parent="."]
 emitting = false

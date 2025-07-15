@@ -92,13 +92,14 @@ public partial class AttackMenu : StateNode
         if (Battle.CurrFighter is not Player player)
         {
             throw new InvalidOperationException(
-                "AttackMenu can only be entered by a Player fighter. " +
+                "AttackMenu can only be entered by a Player." +
                 $"Current fighter: {Battle.CurrFighter.GetType().Name}"
             );
         }
 
         _selectedEnemyIndex = 0;
         _AttackInProgress = false;
+
         string weapon = player.Weapon.Name;
         int apCost = player.Weapon.Ability.APCost;
 

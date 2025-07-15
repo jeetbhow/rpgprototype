@@ -75,6 +75,8 @@ public partial class PlayerTurn : StateNode
             Battle.UI.Commands.Visible = true;
         }
 
+        Battle.UI.Commands.TextLabel.Text = $"";
+        Battle.UI.Commands.TextLabel.Visible = false;
         Battle.UI.ShowPlayerCommands(_index);
     }
 }

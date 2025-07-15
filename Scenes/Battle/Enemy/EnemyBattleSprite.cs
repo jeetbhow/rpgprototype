@@ -59,7 +59,7 @@ public partial class EnemyBattleSprite : Node2D
 
         _bloodParticles = GetNode<GpuParticles2D>("Blood");
 
-        _shadow = GetNode<Sprite2D>("Shadow");
+        _shadow = GetNode<Sprite2D>("Sprite/Shadow");
         _hpLabel = GetNode<RichTextLabel>("Healthbar/RichTextLabel");
 
         _hpTimer = GetNode<Timer>("HPTimer");
@@ -127,16 +127,15 @@ public partial class EnemyBattleSprite : Node2D
         {
             SoundManager.Instance.PlaySfx(SoundManager.Sfx.BaseballBatSwing, 1.0f);
 
-            await Game.Instance.Wait(1200);
+            await Game.Instance.Wait(1000);
 
             var effect = BaseballBatHitEffect.Instantiate<BaseballBatHit>();
             AddChild(effect);
 
             SoundManager.Instance.PlaySfx(SoundManager.Sfx.Hurt, 9.0f);
-
-            await Game.Instance.Wait(300);
+            await Game.Instance.Wait(200);
             effect.QueueFree();
-            await Shake();
+            Shake();
         }
     }
 
@@ -216,7 +215,7 @@ public partial class EnemyBattleSprite : Node2D
         };
     }
 
-    public async Task Shake()
+    public void Shake()
     {
         _shader.SetShaderParameter("shaking", true);
         _shader.SetShaderParameter("initial_shake_speed", InitialShakeSpeed);

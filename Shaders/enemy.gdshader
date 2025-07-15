@@ -20,7 +20,7 @@ void vertex() {
 	if (shaking && elapsed < shake_duration) {
         float progress = elapsed / shake_duration;
         float shake_speed = mix(initial_shake_speed, 0.0, progress);
-        float x_offset = sin(TIME * shake_speed) * shake_intensity * (1.0 - progress);
+        float x_offset = sin(elapsed * shake_speed) * shake_intensity * (1.0 - progress);
         VERTEX.x += x_offset;
 	}
 }
