@@ -1,12 +1,13 @@
-[gd_scene load_steps=30 format=3 uid="uid://d1yvb465tt7ik"]
+[gd_scene load_steps=22 format=3 uid="uid://d1yvb465tt7ik"]
 
 [ext_resource type="Script" uid="uid://bkb5mjrrkux0b" path="res://scenes/battle/enemy/EnemyBattleSprite.cs" id="1_5aqwu"]
 [ext_resource type="Texture2D" uid="uid://4eerix34hw16" path="res://assets/characters/shadow.png" id="1_cgxef"]
 [ext_resource type="Texture2D" uid="uid://cddkxetbmoyh3" path="res://assets/enemies/jerry.png" id="1_jodb1"]
+[ext_resource type="PackedScene" uid="uid://ds5bn58vh87nf" path="res://scenes/battle/effects/knife_slash.tscn" id="2_du0bn"]
+[ext_resource type="PackedScene" uid="uid://b82crb5en50jb" path="res://scenes/battle/effects/baseball_bat_hit/baseball_bat_hit.tscn" id="3_7cgrk"]
 [ext_resource type="Shader" uid="uid://cvtq4of3uub7q" path="res://shaders/enemy.gdshader" id="3_a65ju"]
 [ext_resource type="SpriteFrames" uid="uid://dqitn7jtgv3ri" path="res://resources/enemies/jeff/JeffSF.tres" id="4_q7m7l"]
 [ext_resource type="StyleBox" uid="uid://n57md1ke4av6" path="res://resources/styles/HPBarFill.tres" id="4_rgfcb"]
-[ext_resource type="Texture2D" uid="uid://dx6k6r3fdq5kt" path="res://assets/effects/combat/slash.png" id="4_smvei"]
 [ext_resource type="StyleBox" uid="uid://dg2wmvgh5xkej" path="res://resources/styles/HPBarBg.tres" id="5_sloyy"]
 [ext_resource type="Shader" uid="uid://b64ptem30f7km" path="res://shaders/disintegrate.gdshader" id="5_w5rdf"]
 [ext_resource type="Theme" uid="uid://x6m3btvacua5" path="res://resources/styles/TextboxDefaultTheme.tres" id="6_evwod"]
@@ -15,80 +16,16 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_q7m7l"]
 shader = ExtResource("3_a65ju")
+shader_parameter/start_time = -1.0
+shader_parameter/blinking = false
 shader_parameter/blink_initial_speed = 50.0
 shader_parameter/blink_min_speed = 1.0
 shader_parameter/blink_decay_rate = 2.0
-shader_parameter/elapsed_time = -1.0
-shader_parameter/blinking = false
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_rhcfp"]
-atlas = ExtResource("4_smvei")
-region = Rect2(0, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_51dhj"]
-atlas = ExtResource("4_smvei")
-region = Rect2(32, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_264x0"]
-atlas = ExtResource("4_smvei")
-region = Rect2(64, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_8ucr6"]
-atlas = ExtResource("4_smvei")
-region = Rect2(96, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_hg8qp"]
-atlas = ExtResource("4_smvei")
-region = Rect2(128, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_d6l84"]
-atlas = ExtResource("4_smvei")
-region = Rect2(160, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_vj8pg"]
-atlas = ExtResource("4_smvei")
-region = Rect2(192, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_4io2t"]
-atlas = ExtResource("4_smvei")
-region = Rect2(224, 0, 32, 32)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_d6l84"]
-animations = [{
-"frames": [],
-"loop": true,
-"name": &"none",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_rhcfp")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_51dhj")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_264x0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_8ucr6")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hg8qp")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_d6l84")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_vj8pg")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_4io2t")
-}],
-"loop": false,
-"name": &"slash",
-"speed": 10.0
-}]
+shader_parameter/shaking = false
+shader_parameter/shake_progress = 1.0
+shader_parameter/shake_intensity = 1.0
+shader_parameter/initial_shake_speed = 5.0
+shader_parameter/shake_duration = 0.1
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_hx7ra"]
 shader = ExtResource("5_w5rdf")
@@ -285,6 +222,10 @@ _data = {
 
 [node name="EnemyBattleSprite" type="Node2D"]
 script = ExtResource("1_5aqwu")
+KnifeSlashEffect = ExtResource("2_du0bn")
+BaseballBatHitEffect = ExtResource("3_7cgrk")
+InitialShakeSpeed = 30.0
+ShakeDuration = 1.0
 
 [node name="Shadow" type="Sprite2D" parent="."]
 z_index = 1
@@ -297,17 +238,6 @@ z_index = 1
 material = SubResource("ShaderMaterial_q7m7l")
 sprite_frames = ExtResource("4_q7m7l")
 autoplay = "default"
-
-[node name="Effects" type="AnimatedSprite2D" parent="."]
-modulate = Color(0.797203, 0.925597, 0.96704, 1)
-z_index = 1
-position = Vector2(1, -1)
-scale = Vector2(2, 2)
-sprite_frames = SubResource("SpriteFrames_d6l84")
-animation = &"slash"
-autoplay = "none"
-frame = 7
-frame_progress = 1.0
 
 [node name="DeathParticles" type="GPUParticles2D" parent="."]
 emitting = false

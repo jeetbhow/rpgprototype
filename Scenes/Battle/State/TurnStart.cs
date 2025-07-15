@@ -5,9 +5,14 @@ namespace Combat;
 
 public partial class TurnStart : StateNode
 {
-    [Export] Battle Battle { get; set; }
-    [Export] StateNode NPCTurn { get; set; }
-    [Export] StateNode PlayerTurn { get; set; }
+    [Export]
+    Battle Battle { get; set; }
+
+    [Export]
+    StateNode NPCTurn { get; set; }
+
+    [Export]
+    StateNode PlayerTurn { get; set; }
 
     public override async Task Enter()
     {

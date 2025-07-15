@@ -12,10 +12,29 @@ public partial class EnemyBattleSprite : Node2D
     [Export]
     public float BlinkSeconds = 1.0f;
 
+    [Export]
+    public PackedScene KnifeSlashEffect { get; set; }
+
+    [Export]
+    public PackedScene BaseballBatHitEffect { get; set; }
+
+    [Export]
+    public float InitialShakeSpeed { get; set; } = 20.0f;
+
+    [Export]
+    public float ShakeIntensity { get; set; } = 1.0f;
+
+    [Export]
+    public float ShakeDuration { get; set; } = 0.5f;
+
+
+    public ChatBallloon ChatBallloon { get; private set; }
+    public ProgressBar Healthbar { get; set; }
+    public GpuParticles2D DeathParticles { get; private set; }
+
     private readonly Random _rng = new();
     
     private AnimatedSprite2D _animatedSprite2D;
-    private AnimatedSprite2D _effects;
     private AnimationPlayer _animationPlayer;
     private Sprite2D _shadow;
     private RichTextLabel _hpLabel;
@@ -23,10 +42,6 @@ public partial class EnemyBattleSprite : Node2D
     private GpuParticles2D _bloodParticles;
     private ShaderMaterial _shader;
     private int _prevMonologueIndex;
-
-    public ChatBallloon ChatBallloon { get; private set; }
-    public ProgressBar Healthbar { get; set; }
-    public GpuParticles2D DeathParticles { get; private set; }
 
     public override void _Ready()
     {
@@ -41,8 +56,6 @@ public partial class EnemyBattleSprite : Node2D
         _animatedSprite2D.SpriteFrames = Enemy.SpriteFrames;
 
         _shader = (ShaderMaterial)_animatedSprite2D.Material;
-
-        _effects = GetNode<AnimatedSprite2D>("Effects");
 
         _bloodParticles = GetNode<GpuParticles2D>("Blood");
 
@@ -83,9 +96,9 @@ public partial class EnemyBattleSprite : Node2D
         {
             await PlayEffects(ability);
             attacker.AP -= ability.APCost;
-            // TODO - Change this later to use the DamageRange from the ability.
-            await TakeDamage(2);
+            await TakeDamage(ability.RollDamage());
             HideHP();
+
             SignalHub.Instance.EmitSignal(
                 SignalHub.SignalName.FighterAttacked,
                 attacker,
@@ -99,12 +112,31 @@ public partial class EnemyBattleSprite : Node2D
     {
         if (ability.Name == AbilityName.KnifeSlash)
         {
-            SoundManager.Instance.PlaySfx(SoundManager.Sfx.Slash);
-            _effects.Play("slash");
-            await ToSignal(_effects, "animation_finished");
-            SoundManager.Instance.PlaySfx(SoundManager.Sfx.Hurt);
+            SoundManager.Instance.PlaySfx(SoundManager.Sfx.KnifeSlash);
+
+            var effect = KnifeSlashEffect.Instantiate<AnimatedSprite2D>();
+            effect.GlobalPosition = GlobalPosition;
+            GetTree().Root.AddChild(effect);
+
+            await ToSignal(effect, "animation_finished");
+            SoundManager.Instance.PlaySfx(SoundManager.Sfx.Hurt, 9.0f);
             Bleed();
             Blink();
+        }
+        else if (ability.Name == AbilityName.BaseballBatSwing)
+        {
+            SoundManager.Instance.PlaySfx(SoundManager.Sfx.BaseballBatSwing, 1.0f);
+
+            await Game.Instance.Wait(1200);
+
+            var effect = BaseballBatHitEffect.Instantiate<BaseballBatHit>();
+            AddChild(effect);
+
+            SoundManager.Instance.PlaySfx(SoundManager.Sfx.Hurt, 9.0f);
+
+            await Game.Instance.Wait(300);
+            effect.QueueFree();
+            await Shake();
         }
     }
 
@@ -177,10 +209,24 @@ public partial class EnemyBattleSprite : Node2D
     public void Blink()
     {
         _shader.SetShaderParameter("blinking", true);
-        _shader.SetShaderParameter("elapsed_time", Time.GetTicksMsec() / 1000.0f);
+        _shader.SetShaderParameter("start_time", Time.GetTicksMsec() / 1000.0f);
         GetTree().CreateTimer(BlinkSeconds).Timeout += () =>
         {
             _shader.SetShaderParameter("blinking", false);
+        };
+    }
+
+    public async Task Shake()
+    {
+        _shader.SetShaderParameter("shaking", true);
+        _shader.SetShaderParameter("initial_shake_speed", InitialShakeSpeed);
+        _shader.SetShaderParameter("shake_intensity", ShakeIntensity);
+        _shader.SetShaderParameter("start_time", Time.GetTicksMsec() / 1000.0f);
+        GetTree().CreateTimer(ShakeDuration).Timeout += () =>
+        {
+            _shader.SetShaderParameter("initial_shake_speed", 0.0f);
+            _shader.SetShaderParameter("shake_intensity", 0.0f);
+            _shader.SetShaderParameter("shaking", false);
         };
     }
 

@@ -1,0 +1,74 @@
+[gd_scene load_steps=11 format=3 uid="uid://ds5bn58vh87nf"]
+
+[ext_resource type="Texture2D" uid="uid://dx6k6r3fdq5kt" path="res://assets/effects/combat/slash.png" id="1_ekcdy"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_24flf"]
+atlas = ExtResource("1_ekcdy")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_37xgj"]
+atlas = ExtResource("1_ekcdy")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3wuml"]
+atlas = ExtResource("1_ekcdy")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w21ch"]
+atlas = ExtResource("1_ekcdy")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kphj8"]
+atlas = ExtResource("1_ekcdy")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_16861"]
+atlas = ExtResource("1_ekcdy")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d4otl"]
+atlas = ExtResource("1_ekcdy")
+region = Rect2(192, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qucui"]
+atlas = ExtResource("1_ekcdy")
+region = Rect2(224, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_i2t43"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_24flf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_37xgj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3wuml")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w21ch")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kphj8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_16861")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d4otl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qucui")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[node name="KnifeSlash" type="AnimatedSprite2D"]
+z_index = 1
+sprite_frames = SubResource("SpriteFrames_i2t43")
+autoplay = "default"
+frame = 1
+frame_progress = 0.126026

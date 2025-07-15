@@ -6,26 +6,27 @@ public enum AbilityName
 {
     None,
     KnifeSlash,
-    JeffWiggle
+    BaseballBatSwing,
+    JeffWiggle,
 }
 
 [GlobalClass]
 public partial class Ability : Resource
 {
     [Export]
-    public int APCost { get; set; }
+    public int APCost { get; private set; }
 
     [Export]
-    public DamageRange DamageRange { get; set; }
+    public DamageRange DamageRange { get; private set; }
 
     [Export]
-    public AbilityName Name { get; set; }
+    public AbilityName Name { get; private set; }
 
     public int Damage { get; private set; }
 
     public int RollDamage()
     {
-        Damage = GD.RandRange(DamageRange.Min, DamageRange.Max);
+        Damage = DamageRange.Roll();
         return Damage;
     }
 }

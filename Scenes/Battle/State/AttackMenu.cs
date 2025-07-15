@@ -15,7 +15,6 @@ public partial class AttackMenu : StateNode
     [Export]
     public StateNode BattlePlayerTurn { get; set; }
 
-    private const int DefaultDmg = 2;
     private int _selectedEnemyIndex;
     private bool _AttackInProgress;
 
@@ -83,7 +82,7 @@ public partial class AttackMenu : StateNode
         );
 
         await attackFinished;
-        await Battle.UI.Log.AppendLine($"{enemy.Name} takes {DefaultDmg} damage.");
+        await Battle.UI.Log.AppendLine($"{enemy.Name} takes {player.Weapon.Ability.Damage} damage.");
         
         EmitSignal(SignalName.StateUpdate, BattlePlayerTurn.Name);
     }
@@ -100,7 +99,11 @@ public partial class AttackMenu : StateNode
 
         _selectedEnemyIndex = 0;
         _AttackInProgress = false;
+        string weapon = player.Weapon.Name;
         int apCost = player.Weapon.Ability.APCost;
+
+        Battle.UI.Commands.TextLabel.Text = $"Weapon: {weapon}";
+        Battle.UI.Commands.TextLabel.Visible = true;
 
         Battle.UI.Commands.Choices.Clear();
         foreach (var enemy in Battle.Enemies)

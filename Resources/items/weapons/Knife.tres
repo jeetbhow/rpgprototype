@@ -8,7 +8,7 @@
 script = ExtResource("1_amqjd")
 Max = 2
 Min = 1
-CritChance = 0.05
+CritChance = 0.1
 CritMultiplier = 4.0
 metadata/_custom_type_script = "uid://dbfni13yxb2qm"
 

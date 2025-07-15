@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="Player" load_steps=5 format=3 uid="uid://dxrs5ympbge7y"]
+
+[ext_resource type="Texture2D" uid="uid://3xurbpcp6po7" path="res://assets/characters/eri.png" id="1_cu6nv"]
+[ext_resource type="Resource" uid="uid://cm66jpgrlmofo" path="res://resources/items/weapons/Baseball Bat.tres" id="2_72qri"]
+[ext_resource type="Script" uid="uid://v023qn4fhkid" path="res://scripts/resources/combat/Player.cs" id="3_h7u7i"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i3gqq"]
+atlas = ExtResource("1_cu6nv")
+region = Rect2(1, 0, 30, 23)
+
+[resource]
+script = ExtResource("3_h7u7i")
+Weapon = ExtResource("2_72qri")
+Portrait = SubResource("AtlasTexture_i3gqq")
+Name = "Eri"
+Level = 1
+HP = 99
+MaxHP = 99
+AP = 99
+MaxAP = 99
+Strength = 5
+Endurance = 5
+Athletics = 5
+Initiative = 0
+metadata/_custom_type_script = "uid://v023qn4fhkid"
