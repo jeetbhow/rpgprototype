@@ -6,8 +6,6 @@ using Combat;
 
 public partial class BattleUI : CanvasLayer
 {
-    private string[] CommandNames = ["Attack", "Item", "End Turn"];
-
     private const string PartyInfoPath = "MarginContainer/PartyInfo";
     private const string CommandTextboxPath = "MarginContainer/BattleInfo/Commands";
     private const string LogPath = "MarginContainer/BattleInfo/Log";
@@ -31,10 +29,6 @@ public partial class BattleUI : CanvasLayer
         Log = GetNode<Log>(LogPath);
         DiceRolls = GetNode<VBoxContainer>(DiceRollsPath);
         TurnQueue = GetNode<VBoxContainer>("MarginContainer/TurnQueue");
-
-        Commands.Choices.Visible = true;
-
-        ShowPlayerCommands();
     }
 
     /// <summary>
@@ -109,17 +103,6 @@ public partial class BattleUI : CanvasLayer
     public TurnQueuePanel TQPeek()
     {
         return TurnQueue.GetChild<TurnQueuePanel>(0);
-    }
-
-    public void ShowPlayerCommands()
-    {
-        Commands.Choices.RemoveAll();
-        foreach (var command in CommandNames)
-        {
-            Commands.Choices.AddChoice(command);
-        }
-        Commands.Choices.HideAllArrows();
-        Commands.Choices.ShowArrow(0);
     }
 
     public void AddPartyInfoPanel(PartyInfoPanel panel)

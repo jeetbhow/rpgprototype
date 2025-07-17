@@ -29,13 +29,18 @@ public partial class WeaponMenu : StateNode
 
     public override async Task Enter()
     {
+        Battle.UI.Commands.TextLabel.Text = $"Weapon swap: [color={Game.APColor.ToHtml()}]({Game.WeaponSwapAPCost} AP)[/color]";
+        Battle.UI.Commands.TextLabel.Visible = true;
         ListWeapons();
         await Task.CompletedTask;
     }
 
     public override async Task Exit()
     {
-        DestroyWeaponList();
+        Battle.UI.Commands.TextLabel.Text = null;
+        Battle.UI.Commands.TextLabel.Visible = false;
+        Battle.UI.Commands.Choices.RemoveAll();
+        Battle.UI.Commands.Choices.Active = false;
         await Task.CompletedTask;
     }
 
@@ -43,9 +48,6 @@ public partial class WeaponMenu : StateNode
     {
         var player = Battle.CurrFighter as Player;
         var weapons = player.GetWeapons();
-
-        Battle.UI.Commands.TextLabel.Text = $"Weapon swap: [color={Game.APColor.ToHtml()}]({Game.WeaponSwapAPCost} AP)[/color]";
-        Battle.UI.Commands.TextLabel.Visible = true;
 
         Battle.UI.Commands.Choices.RemoveAll();
         foreach (var weapon in weapons)
@@ -64,13 +66,6 @@ public partial class WeaponMenu : StateNode
         Battle.UI.Commands.Choices.ShowArrow(0);
         Battle.UI.Commands.Choices.Active = true;
     }
-
-    private void DestroyWeaponList()
-    {
-        Battle.UI.Commands.Choices.RemoveAll();
-        Battle.UI.Commands.Choices.Active = false;
-    }
-
     public void SelectWeapon()
     {
         int index = Battle.UI.Commands.Choices.GetSelectedIndex();

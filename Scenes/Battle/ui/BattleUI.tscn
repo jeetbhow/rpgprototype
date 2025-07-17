@@ -82,6 +82,7 @@ size_flags_vertical = 8
 theme_override_constants/separation = 10
 
 [node name="Commands" parent="MarginContainer/BattleInfo" instance=ExtResource("1_x05vq")]
+visible = false
 custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_tw16v")

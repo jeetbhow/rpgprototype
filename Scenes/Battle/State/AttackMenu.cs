@@ -30,7 +30,6 @@ public partial class AttackMenu : StateNode
             return;
         }
 
-        GetViewport().SetInputAsHandled();
         int pnlIndex = Battle.Party.IndexOf((Ally)Battle.CurrFighter);
         PartyInfoPanel panel = Battle.UI.GetPartyInfoPanel(pnlIndex);
 
@@ -84,7 +83,7 @@ public partial class AttackMenu : StateNode
 
         await attackFinished;
         await Battle.UI.Log.AppendLine($"{enemy.Name} takes {player.Weapon.Ability.Damage} damage.");
-        
+
         EmitSignal(SignalName.StateUpdate, BattlePlayerTurn.Name);
     }
 
@@ -122,6 +121,15 @@ public partial class AttackMenu : StateNode
             _selectedEnemyIndex
         );
 
+        await Task.CompletedTask;
+    }
+
+    public override async Task Exit()
+    {
+        Battle.UI.Commands.TextLabel.Text = null;
+        Battle.UI.Commands.TextLabel.Visible = false;
+        Battle.UI.Commands.Choices.Active = false;
+        Battle.UI.Commands.Choices.RemoveAll();
         await Task.CompletedTask;
     }
 }

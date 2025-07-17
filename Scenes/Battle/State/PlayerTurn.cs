@@ -8,6 +8,7 @@ enum CommandType
 {
     Invalid,
     Attack,
+    Talk,
     Item,
     EndTurn,
 }
@@ -26,9 +27,12 @@ public partial class PlayerTurn : StateNode
     [Export]
     public StateNode ItemMenu { get; set; }
 
+    private string[] CommandNames = ["Attack", "Talk", "Item", "End Turn"];
+
     private static readonly Dictionary<string, CommandType> Commands = new()
     {
         { "Attack", CommandType.Attack},
+        { "Talk", CommandType.Talk },
         { "Item", CommandType.Item },
         { "End Turn", CommandType.EndTurn }
     };
@@ -74,7 +78,6 @@ public partial class PlayerTurn : StateNode
         }
 
         InitializeCommands();
-        Battle.UI.ShowPlayerCommands();
     }
 
     public override async Task Exit()
@@ -85,16 +88,21 @@ public partial class PlayerTurn : StateNode
 
     public void InitializeCommands()
     {
+        Battle.UI.Commands.Choices.RemoveAll();
+        foreach (var command in CommandNames)
+        {
+            Battle.UI.Commands.Choices.AddChoice(command);
+        }
+        Battle.UI.Commands.Choices.HideAllArrows();
+        Battle.UI.Commands.Choices.ShowArrow(0);
+
+        Battle.UI.Commands.Choices.Visible = true;
         Battle.UI.Commands.Choices.Active = true;
-        Battle.UI.Commands.TextLabel.Text = null;
-        Battle.UI.Commands.TextLabel.Visible = false;
     }
 
     public void DeactivateCommands()
     {
         Battle.UI.Commands.Choices.RemoveAll();
         Battle.UI.Commands.Choices.Active = false;
-        Battle.UI.Commands.TextLabel.Text = null;
-        Battle.UI.Commands.TextLabel.Visible = false;
     }
 }
