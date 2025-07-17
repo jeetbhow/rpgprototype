@@ -224,7 +224,6 @@ _data = {
 script = ExtResource("1_5aqwu")
 KnifeSlashEffect = ExtResource("2_du0bn")
 BaseballBatHitEffect = ExtResource("3_7cgrk")
-ShakeIntensity = 2.0
 ShakeDuration = 1.0
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]

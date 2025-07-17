@@ -110,7 +110,7 @@ public partial class EnemyBattleSprite : Node2D
 
     public async Task PlayEffects(Ability ability)
     {
-        if (ability.Name == AbilityName.KnifeSlash)
+        if (ability.Type == AbilityType.KnifeSlash)
         {
             SoundManager.Instance.PlaySfx(SoundManager.Sfx.KnifeSlash);
 
@@ -123,7 +123,7 @@ public partial class EnemyBattleSprite : Node2D
             Bleed();
             Blink();
         }
-        else if (ability.Name == AbilityName.BaseballBatSwing)
+        else if (ability.Type == AbilityType.BaseballBatSwing)
         {
             SoundManager.Instance.PlaySfx(SoundManager.Sfx.BaseballBatSwing, 1.0f);
 

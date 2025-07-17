@@ -2,7 +2,7 @@ using Godot;
 
 namespace Combat;
 
-public enum AbilityName
+public enum AbilityType
 {
     None,
     KnifeSlash,
@@ -20,7 +20,7 @@ public partial class Ability : Resource
     public DamageRange DamageRange { get; private set; }
 
     [Export]
-    public AbilityName Name { get; private set; }
+    public AbilityType Type { get; private set; }
 
     public int Damage { get; private set; }
 

@@ -61,13 +61,14 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_qucui")
 }],
-"loop": true,
+"loop": false,
 "name": &"default",
 "speed": 10.0
 }]
 
 [node name="KnifeSlash" type="AnimatedSprite2D"]
 z_index = 1
+scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_i2t43")
 autoplay = "default"
 frame = 1

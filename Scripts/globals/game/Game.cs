@@ -8,6 +8,7 @@ public partial class Game : Node
 {
     public const int D6Max = 6;
     public const int D6Min = 1;
+    public const int WeaponSwapAPCost = 2;
 
     private Player _player;
 

@@ -7,6 +7,34 @@ public partial class ChoiceList : VBoxContainer
     [Export]
     public PackedScene ChoiceContentScene { get; set; }
 
+    public bool Active { get; set; } = false;
+    public int Count { get; private set; } = 0;
+    private int _index = 0;
+
+
+    public override void _Input(InputEvent @event)
+    {
+        if (!Active || @event is not InputEventKey keyEvent || !keyEvent.IsPressed())
+        {
+            return;
+        }
+
+        GetViewport().SetInputAsHandled();
+        int prevIndex = _index;
+        int numCmds = GetChoices().Length;
+
+        switch (keyEvent)
+        {
+            case InputEventKey k when k.IsActionPressed("MoveDown"):
+                _index = (_index + 1) % numCmds;
+                SwapArrows(prevIndex, _index);
+                return;
+            case InputEventKey k when k.IsActionPressed("MoveUp"):
+                _index = (_index - 1 + numCmds) % numCmds;
+                SwapArrows(prevIndex, _index);
+                return;
+        }
+    }
     public override void _Ready()
     {
         SignalHub.Instance.EnemySelected += OnEnemySelected;
@@ -21,13 +49,15 @@ public partial class ChoiceList : VBoxContainer
     public void AddChoice(ChoiceContent btn)
     {
         AddChild(btn);
+        Count++;
     }
 
     public void AddChoice(string text)
     {
         ChoiceContent choice = (ChoiceContent)ChoiceContentScene.Instantiate();
-        AddChild(choice);
         choice.Label.Text = text;
+        AddChild(choice);
+        Count++;
     }
 
     public void HideAllArrows()
@@ -44,22 +74,12 @@ public partial class ChoiceList : VBoxContainer
     public void HideArrow(int index)
     {
         ChoiceContent choice = GetChild<ChoiceContent>(index, false);
-        if (choice == null)
-        {
-            GD.PrintErr("Choice at index " + index + " is null.");
-            return;
-        }
         choice.HideArrow();
     }
 
     public void ShowArrow(int index)
     {
         ChoiceContent choice = GetChild<ChoiceContent>(index, false);
-        if (choice == null)
-        {
-            GD.PrintErr("Choice at index " + index + " is null.");
-            return;
-        }
         choice.ShowArrow();
     }
 
@@ -87,7 +107,7 @@ public partial class ChoiceList : VBoxContainer
         return choiceButtons;
     }
 
-    public void Clear()
+    public void RemoveAll()
     {
         foreach (Node child in GetChildren())
         {
@@ -96,6 +116,27 @@ public partial class ChoiceList : VBoxContainer
                 RemoveChild(choice);
                 choice.QueueFree();
             }
+        }
+        Count = 0;
+        _index = 0;
+    }
+    
+    public ChoiceContent GetSelectedChoice()
+    {
+        return GetChoice(_index);
+    }
+
+    public int GetSelectedIndex()
+    {
+        return _index;
+    }
+
+    private void SwapArrows(int prevIndex, int newIndex)
+    {
+        if (prevIndex != newIndex)
+        {
+            HideArrow(prevIndex);
+            ShowArrow(newIndex);
         }
     }
 }

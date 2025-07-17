@@ -76,7 +76,7 @@ public partial class Textbox : PanelContainer
 
     public void ClearChoices()
     {
-        Choices.Clear();
+        Choices.RemoveAll();
         Choices.Visible = false;
         TextLabel.VisibleCharacters = 0;
     }

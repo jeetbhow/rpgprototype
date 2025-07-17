@@ -30,6 +30,7 @@ public partial class AttackMenu : StateNode
             return;
         }
 
+        GetViewport().SetInputAsHandled();
         int pnlIndex = Battle.Party.IndexOf((Ally)Battle.CurrFighter);
         PartyInfoPanel panel = Battle.UI.GetPartyInfoPanel(pnlIndex);
 
@@ -106,7 +107,7 @@ public partial class AttackMenu : StateNode
         Battle.UI.Commands.TextLabel.Text = $"Weapon: {weapon}";
         Battle.UI.Commands.TextLabel.Visible = true;
 
-        Battle.UI.Commands.Choices.Clear();
+        Battle.UI.Commands.Choices.RemoveAll();
         foreach (var enemy in Battle.Enemies)
         {
             ChoiceContent choice = (ChoiceContent)ChoiceContentScene.Instantiate();

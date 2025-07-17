@@ -1,6 +1,5 @@
 using Godot;
-
-using Item;
+using Items;
 
 namespace Combat;
 

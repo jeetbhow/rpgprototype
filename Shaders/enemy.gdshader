@@ -16,7 +16,7 @@ uniform float shake_duration = 1.0;
 
 void vertex() {
 	float elapsed = TIME - start_time;
-	
+
 	if (shaking && elapsed < shake_duration) {
         float progress = elapsed / shake_duration;
         float shake_speed = mix(initial_shake_speed, 0.0, progress);

@@ -1,82 +1,100 @@
 using Godot;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Combat;
 
+enum CommandType
+{
+    Invalid,
+    Attack,
+    Item,
+    EndTurn,
+}
+
 public partial class PlayerTurn : StateNode
 {
-    private int _index;
-    private bool _isPlayerTurn = false;
+    [Export]
+    public Battle Battle { get; set; }
 
-    [Export] public Battle Battle { get; set; }
-    [Export] public StateNode BattlePlayerAttackMenu { get; set; }
-    [Export] public StateNode TurnEnd { get; set; }
+    [Export]
+    public StateNode AttackMenu { get; set; }
 
-    public override async void _Input(InputEvent @event)
+    [Export]
+    public StateNode EndTurn { get; set; }
+
+    [Export]
+    public StateNode ItemMenu { get; set; }
+
+    private static readonly Dictionary<string, CommandType> Commands = new()
     {
-        if (@event is not InputEventKey keyEvent || !keyEvent.IsPressed())
+        { "Attack", CommandType.Attack},
+        { "Item", CommandType.Item },
+        { "End Turn", CommandType.EndTurn }
+    };
+
+    // The player's turn is still going if they have not yet explicitly
+    // selected the end turn command. Depending on whether or not we're
+    // entering this state for the first time, we may need to initialize
+    // the commands list.
+    private bool _turnIsStillGoing = false;
+
+    public override void _Input(InputEvent @event)
+    {
+        if (!@event.IsActionPressed("Accept") || !_turnIsStillGoing)
         {
             return;
         }
 
-        int prevIndex = _index;
-        int numCmds = Battle.UI.Commands.GetChoices().Length;
-
-        switch (keyEvent)
+        string choice = Battle.UI.Commands.Choices.GetSelectedChoice().Label.Text;
+        CommandType key = Commands.GetValueOrDefault(choice, CommandType.Invalid);
+        switch (key)
         {
-            case InputEventKey k when k.IsActionPressed("MoveDown"):
-                _index = (_index + 1) % numCmds;
+            case CommandType.Attack:
+                EmitSignal(SignalName.StateUpdate, AttackMenu.Name);
                 break;
-            case InputEventKey k when k.IsActionPressed("MoveUp"):
-                _index = (_index - 1 + numCmds) % numCmds;
+            case CommandType.Item:
+                EmitSignal(SignalName.StateUpdate, ItemMenu.Name);
                 break;
-            case InputEventKey k when k.IsActionPressed("Accept"):
-                ChoiceContent choice = Battle.UI.Commands.GetChoices()[_index];
-                switch (choice.Label.Text)
-                {
-                    case "Attack":
-                        EmitSignal(SignalName.StateUpdate, BattlePlayerAttackMenu.Name);
-                        break;
-                    case "Defend":
-                        GD.Print("Defend chosen");
-                        break;
-                    case "Talk":
-                        GD.Print("Talk chosen");
-                        break;
-                    case "Item":
-                        GD.Print("Item chosen");
-                        break;
-                    case "Run":
-                        GD.Print("Run chosen");
-                        break;
-                    case "End Turn":
-                        _isPlayerTurn = false;
-                        EmitSignal(SignalName.StateUpdate, TurnEnd.Name);
-                        break;
-                }
+            case CommandType.EndTurn:
+                _turnIsStillGoing = false;
+                EmitSignal(SignalName.StateUpdate, EndTurn.Name);
                 break;
-        }
-
-        if (prevIndex != _index)
-        {
-            Battle.UI.Commands.Choices.HideArrow(prevIndex);
-            Battle.UI.Commands.Choices.ShowArrow(_index);
         }
     }
 
     public override async Task Enter()
     {
-        _index = 0;
-
-        if (!_isPlayerTurn)
+        if (!_turnIsStillGoing)
         {
+            _turnIsStillGoing = true;
+
             await Battle.UI.Log.AppendLine($"{Battle.CurrFighter.Name} is ready to fight!");
-            _isPlayerTurn = true;
             Battle.UI.Commands.Visible = true;
         }
 
-        Battle.UI.Commands.TextLabel.Text = $"";
+        InitializeCommands();
+        Battle.UI.ShowPlayerCommands();
+    }
+
+    public override async Task Exit()
+    {
+        DeactivateCommands();
+        await Task.CompletedTask;
+    }
+
+    public void InitializeCommands()
+    {
+        Battle.UI.Commands.Choices.Active = true;
+        Battle.UI.Commands.TextLabel.Text = null;
         Battle.UI.Commands.TextLabel.Visible = false;
-        Battle.UI.ShowPlayerCommands(_index);
+    }
+
+    public void DeactivateCommands()
+    {
+        Battle.UI.Commands.Choices.RemoveAll();
+        Battle.UI.Commands.Choices.Active = false;
+        Battle.UI.Commands.TextLabel.Text = null;
+        Battle.UI.Commands.TextLabel.Visible = false;
     }
 }

@@ -3,11 +3,16 @@ using System.Threading.Tasks;
 
 namespace Combat;
 
-public partial class TurnEnd : StateNode
+public partial class EndTurn : StateNode
 {
-    [Export] public Battle Battle { get; set; }
-    [Export] public StateNode TurnQueueEmpty { get; set; }
-    [Export] public StateNode TurnStart { get; set; }
+    [Export]
+    public Battle Battle { get; set; }
+
+    [Export]
+    public StateNode TurnQueueEmpty { get; set; }
+
+    [Export]
+    public StateNode TurnStart { get; set; }
 
     public override async Task Enter()
     {

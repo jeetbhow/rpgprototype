@@ -16,11 +16,12 @@ metadata/_custom_type_script = "uid://dbfni13yxb2qm"
 script = ExtResource("1_vmjw3")
 APCost = 3
 DamageRange = SubResource("Resource_7y6c5")
-Name = 2
+Type = 2
 metadata/_custom_type_script = "uid://smqa58pqc1qe"
 
 [resource]
 script = ExtResource("1_bt2mv")
-Name = "Baseball Bat"
 Ability = SubResource("Resource_b6ysu")
+ID = 2
+Name = "Baseball Bat"
 metadata/_custom_type_script = "uid://bqwt2t7k1a4gc"
