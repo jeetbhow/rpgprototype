@@ -1,10 +1,10 @@
 [gd_scene load_steps=6 format=3 uid="uid://d0qsc28ydi047"]
 
-[ext_resource type="Theme" uid="uid://x6m3btvacua5" path="res://resources/styles/TextboxDefaultTheme.tres" id="1_uadx1"]
-[ext_resource type="AudioStream" uid="uid://cnqk4vr8l78gj" path="res://assets/audio/SFX/blip.wav" id="3_4p0l2"]
-[ext_resource type="Script" uid="uid://b4f1xkx37w7sw" path="res://scenes/ui/textbox/Textbox.cs" id="3_fkp1p"]
-[ext_resource type="StyleBox" uid="uid://68msogk2h6y6" path="res://resources/styles/UIPanel.tres" id="11_ao6v7"]
-[ext_resource type="PackedScene" uid="uid://coby18dlu3js4" path="res://scenes/ui/game/choice/list/ChoiceList.tscn" id="14_of02c"]
+[ext_resource type="Theme" uid="uid://x6m3btvacua5" path="res://Resources/Styles/TextboxDefaultTheme.tres" id="1_uadx1"]
+[ext_resource type="AudioStream" uid="uid://cnqk4vr8l78gj" path="res://Assets/Audio/SFX/blip.wav" id="3_4p0l2"]
+[ext_resource type="Script" uid="uid://b4f1xkx37w7sw" path="res://Scenes/UI/textbox/Textbox.cs" id="3_fkp1p"]
+[ext_resource type="StyleBox" uid="uid://68msogk2h6y6" path="res://Resources/Styles/UIPanel.tres" id="11_ao6v7"]
+[ext_resource type="PackedScene" uid="uid://coby18dlu3js4" path="res://Scenes/UI/game/choice/list/ChoiceList.tscn" id="14_of02c"]
 
 [node name="Textbox" type="PanelContainer" node_paths=PackedStringArray("TextLabel", "NameLabel", "Choices", "SfxTimer", "Sfx")]
 offset_right = 36.0

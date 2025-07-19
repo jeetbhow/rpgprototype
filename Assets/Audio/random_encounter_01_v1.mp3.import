@@ -3,12 +3,12 @@
 importer="mp3"
 type="AudioStreamMP3"
 uid="uid://ceapr7mcvv0oa"
-path="res://.godot/imported/random_encounter_01_v1.mp3-da0089804430b42063dc80fef8282b8f.mp3str"
+path="res://.godot/imported/random_encounter_01_v1.mp3-8342d775d2b036f1225f17670d73f26d.mp3str"
 
 [deps]
 
-source_file="res://assets/audio/random_encounter_01_v1.mp3"
-dest_files=["res://.godot/imported/random_encounter_01_v1.mp3-da0089804430b42063dc80fef8282b8f.mp3str"]
+source_file="res://Assets/Audio/random_encounter_01_v1.mp3"
+dest_files=["res://.godot/imported/random_encounter_01_v1.mp3-8342d775d2b036f1225f17670d73f26d.mp3str"]
 
 [params]
 

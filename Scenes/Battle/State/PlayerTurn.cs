@@ -19,7 +19,7 @@ public partial class PlayerTurn : StateNode
     public Battle Battle { get; set; }
 
     [Export]
-    public StateNode AttackMenu { get; set; }
+    public StateNode EnemyTarget { get; set; }
 
     [Export]
     public StateNode EndTurn { get; set; }
@@ -55,10 +55,15 @@ public partial class PlayerTurn : StateNode
         switch (key)
         {
             case CommandType.Attack:
-                EmitSignal(SignalName.StateUpdate, AttackMenu.Name);
+                Battle.CurrPlayerState = Battle.PlayerState.Attacking;
+                EmitSignal(SignalName.StateUpdate, EnemyTarget.Name);
                 break;
             case CommandType.Item:
                 EmitSignal(SignalName.StateUpdate, ItemMenu.Name);
+                break;
+            case CommandType.Talk:
+                Battle.CurrPlayerState = Battle.PlayerState.Talking;
+                EmitSignal(SignalName.StateUpdate, EnemyTarget.Name);
                 break;
             case CommandType.EndTurn:
                 _turnIsStillGoing = false;

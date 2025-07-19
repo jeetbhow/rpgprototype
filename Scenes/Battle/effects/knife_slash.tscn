@@ -1,6 +1,6 @@
 [gd_scene load_steps=11 format=3 uid="uid://ds5bn58vh87nf"]
 
-[ext_resource type="Texture2D" uid="uid://dx6k6r3fdq5kt" path="res://assets/effects/combat/slash.png" id="1_ekcdy"]
+[ext_resource type="Texture2D" uid="uid://dx6k6r3fdq5kt" path="res://Assets/Effects/Combat/slash.png" id="1_ekcdy"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_24flf"]
 atlas = ExtResource("1_ekcdy")

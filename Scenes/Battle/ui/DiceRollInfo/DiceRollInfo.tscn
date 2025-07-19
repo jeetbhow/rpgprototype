@@ -1,0 +1,116 @@
+[gd_scene load_steps=10 format=3 uid="uid://qnx6km8di2s8"]
+
+[ext_resource type="Theme" uid="uid://x6m3btvacua5" path="res://Resources/Styles/TextboxDefaultTheme.tres" id="1_1xgqi"]
+[ext_resource type="Script" uid="uid://dk6r365s2y1kn" path="res://Scenes/Battle/UI/DiceRollInfo/DiceRollInfo.cs" id="2_pdyk5"]
+[ext_resource type="PackedScene" uid="uid://cipqk0exm12ho" path="res://Scenes/Battle/Dice/Die.tscn" id="3_0wrqq"]
+[ext_resource type="Texture2D" uid="uid://3xurbpcp6po7" path="res://Assets/Characters/eri.png" id="4_pdyk5"]
+
+[sub_resource type="Animation" id="Animation_5lust"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_0wrqq"]
+resource_name = "fade_in"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(0.2, 0.2),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_pdyk5"]
+resource_name = "fade_out"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(0.2, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_5lust"]
+_data = {
+&"RESET": SubResource("Animation_5lust"),
+&"fade_in": SubResource("Animation_0wrqq"),
+&"fade_out": SubResource("Animation_pdyk5")
+}
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0wrqq"]
+atlas = ExtResource("4_pdyk5")
+region = Rect2(6, 1, 19, 19)
+
+[node name="DiceRollInfo" type="HBoxContainer"]
+clip_contents = true
+offset_right = 124.0
+offset_bottom = 50.0
+size_flags_horizontal = 0
+theme = ExtResource("1_1xgqi")
+script = ExtResource("2_pdyk5")
+
+[node name="Control" type="Control" parent="."]
+custom_minimum_size = Vector2(70, 60)
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Control"]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 1
+offset_left = 4.0
+offset_top = 10.0
+offset_right = 44.0
+offset_bottom = 42.0
+theme = ExtResource("1_1xgqi")
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 4
+bbcode_enabled = true
+text = "+5"
+fit_content = true
+
+[node name="Dice" type="Node2D" parent="Control"]
+position = Vector2(5, -9)
+
+[node name="Dice1" parent="Control/Dice" instance=ExtResource("3_0wrqq")]
+position = Vector2(51, 23)
+
+[node name="Dice2" parent="Control/Dice" instance=ExtResource("3_0wrqq")]
+position = Vector2(51, 52)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_5lust")
+}
+
+[node name="Portrait" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(60, 50)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture = SubResource("AtlasTexture_0wrqq")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="LifetimeTimer" type="Timer" parent="."]
+wait_time = 3.0

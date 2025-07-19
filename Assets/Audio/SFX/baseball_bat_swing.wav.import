@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://clu2uvcvwj6oh"
-path="res://.godot/imported/baseball_bat_swing.wav-f22a1100bd206d014501181a515bf76f.sample"
+path="res://.godot/imported/baseball_bat_swing.wav-81ef43d236d389d9e4ace60b590b87fe.sample"
 
 [deps]
 
-source_file="res://assets/audio/SFX/baseball_bat_swing.wav"
-dest_files=["res://.godot/imported/baseball_bat_swing.wav-f22a1100bd206d014501181a515bf76f.sample"]
+source_file="res://Assets/Audio/SFX/baseball_bat_swing.wav"
+dest_files=["res://.godot/imported/baseball_bat_swing.wav-81ef43d236d389d9e4ace60b590b87fe.sample"]
 
 [params]
 

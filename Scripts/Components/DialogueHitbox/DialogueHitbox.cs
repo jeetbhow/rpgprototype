@@ -1,5 +1,7 @@
 using Godot;
 
+using Signal;
+
 [GlobalClass]
 public partial class DialogueHitbox : Area2D
 {

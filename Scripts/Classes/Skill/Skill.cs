@@ -1,20 +1,37 @@
-using System;
 using Godot;
+using System;
 
 public enum SkillType
 {
     None,
     Strength,
-    Athletics
+    Endurance,
+    Athletics,
+    Rhetoric,
+    Logic,
+    Knowledge,
+    Authority,
+    Empathy,
+    Charisma,
+    Dexterity,
+    Perception,
+    Reflexes
 }
 
 [GlobalClass]
 public partial class Skill : Resource
 {
-    [Export] public SkillType Type { get; set; } = SkillType.Strength;
-    [Export] public int Value { get; set; } = 0;
+    [Export]
+    public SkillType Type { get; set; }
 
-    public Skill() { } // Default constructor for Godot
+    [Export]
+    public int Value { get; set; }
+
+    public Skill()
+    {
+        Type = SkillType.None;
+        Value = 0;
+    }
 
     public Skill(SkillType type, int value)
     {

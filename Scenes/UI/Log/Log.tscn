@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://dne5mwmirps"]
 
-[ext_resource type="StyleBox" uid="uid://68msogk2h6y6" path="res://resources/styles/UIPanel.tres" id="1_3scw0"]
-[ext_resource type="Theme" uid="uid://x6m3btvacua5" path="res://resources/styles/TextboxDefaultTheme.tres" id="1_4vxe4"]
-[ext_resource type="Script" uid="uid://bipyj7uhakkgr" path="res://scenes/ui/log/Log.cs" id="3_3idgp"]
-[ext_resource type="AudioStream" uid="uid://cnqk4vr8l78gj" path="res://assets/audio/SFX/blip.wav" id="4_jt882"]
+[ext_resource type="StyleBox" uid="uid://68msogk2h6y6" path="res://Resources/Styles/UIPanel.tres" id="1_3scw0"]
+[ext_resource type="Theme" uid="uid://x6m3btvacua5" path="res://Resources/Styles/TextboxDefaultTheme.tres" id="1_4vxe4"]
+[ext_resource type="Script" uid="uid://bipyj7uhakkgr" path="res://Scenes/UI/log/Log.cs" id="3_3idgp"]
+[ext_resource type="AudioStream" uid="uid://cnqk4vr8l78gj" path="res://Assets/Audio/SFX/blip.wav" id="4_jt882"]
 
 [node name="Log" type="PanelContainer"]
 theme = ExtResource("1_4vxe4")

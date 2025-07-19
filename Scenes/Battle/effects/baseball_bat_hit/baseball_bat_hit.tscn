@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://b82crb5en50jb"]
 
-[ext_resource type="Texture2D" uid="uid://dtoto23bfubdq" path="res://assets/effects/combat/bat.png" id="1_nvap1"]
-[ext_resource type="Script" uid="uid://ci6l5w3ktpai0" path="res://scenes/battle/effects/baseball_bat_hit/BaseballBatHit.cs" id="2_dqyoi"]
+[ext_resource type="Texture2D" uid="uid://dtoto23bfubdq" path="res://Assets/Effects/Combat/bat.png" id="1_nvap1"]
+[ext_resource type="Script" uid="uid://ci6l5w3ktpai0" path="res://Scenes/Battle/Effects/baseball_bat_hit/BaseballBatHit.cs" id="2_dqyoi"]
 
 [node name="BatHit" type="Sprite2D"]
 z_index = 1

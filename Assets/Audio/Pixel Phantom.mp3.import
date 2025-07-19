@@ -3,12 +3,12 @@
 importer="mp3"
 type="AudioStreamMP3"
 uid="uid://bdgt8f4lb03qk"
-path="res://.godot/imported/Pixel Phantom.mp3-c9fb12ae4d30d2adcf7b21984b649433.mp3str"
+path="res://.godot/imported/Pixel Phantom.mp3-41ff2c5150ad1459885ac0bfd3726ebe.mp3str"
 
 [deps]
 
-source_file="res://assets/audio/Pixel Phantom.mp3"
-dest_files=["res://.godot/imported/Pixel Phantom.mp3-c9fb12ae4d30d2adcf7b21984b649433.mp3str"]
+source_file="res://Assets/Audio/Pixel Phantom.mp3"
+dest_files=["res://.godot/imported/Pixel Phantom.mp3-41ff2c5150ad1459885ac0bfd3726ebe.mp3str"]
 
 [params]
 

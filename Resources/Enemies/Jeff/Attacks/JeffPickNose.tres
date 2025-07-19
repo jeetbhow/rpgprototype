@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="AIAction" load_steps=2 format=3 uid="uid://cta2pvimbtsa0"]
+
+[ext_resource type="Script" uid="uid://0tqpg4870nf5" path="res://Scripts/Combat/AI/AIAction.cs" id="1_foj5n"]
+
+[resource]
+script = ExtResource("1_foj5n")
+Name = "Pick nose"
+Message = "Jeff picks his nose."
+APCost = 1
+HasDamage = false
+metadata/_custom_type_script = "uid://0tqpg4870nf5"

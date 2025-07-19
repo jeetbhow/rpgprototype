@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://btrajdgilaf0d"]
 
-[ext_resource type="Script" uid="uid://cf8jmuuq02ef4" path="res://scenes/ui/game/choice/content/ChoiceContent.cs" id="1_06upj"]
-[ext_resource type="Texture2D" uid="uid://b7t13l0yk61cx" path="res://assets/ui/arrrow.png" id="2_ivjlu"]
-[ext_resource type="Theme" uid="uid://x6m3btvacua5" path="res://resources/styles/TextboxDefaultTheme.tres" id="3_2x2q0"]
+[ext_resource type="Script" uid="uid://cf8jmuuq02ef4" path="res://Scenes/UI/game/choice/content/ChoiceContent.cs" id="1_06upj"]
+[ext_resource type="Texture2D" uid="uid://b7t13l0yk61cx" path="res://Assets/UI/arrrow.png" id="2_ivjlu"]
+[ext_resource type="Theme" uid="uid://x6m3btvacua5" path="res://Resources/Styles/TextboxDefaultTheme.tres" id="3_2x2q0"]
 
 [node name="HBoxContainer" type="HBoxContainer" node_paths=PackedStringArray("Arrow", "Label")]
 offset_right = 130.0

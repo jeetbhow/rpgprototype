@@ -5,32 +5,37 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 
-using Combat;
+using Signal;
+using Combat.UI;
+using Combat.Actors;
 
 public partial class Battle : Node2D
 {
+    public enum PlayerState
+    {
+        Talking,
+        Attacking,
+    }
+
     [Signal]
     public delegate void BattleReadyEventHandler();
 
-    [Signal]
-    public delegate void TurnEndEventHandler(Fighter f);
-
+    [Export]
+    public Array<Ally> Party { get; private set; }
     [Export]
     public Array<Enemy> Enemies { get; private set; }
-
     [Export]
     public PackedScene PartyInfoPanelScene { get; set; }
-
     [Export]
-    public PackedScene EnemyBattleSpriteScene { get; set; }
+    public PackedScene EnemyNodeScene { get; set; }
 
-    public Node2D EnemyNodes { get; private set; }
     public BattleUI UI { get; private set; }
-    public List<Ally> Party { get; private set; } = [];
+    public List<EnemyNode> EnemyNodes { get; private set; } = [];
     public Queue<Fighter> TurnQueue { get; set; } = new();
     public Fighter CurrFighter { get; set; }
+    public Fighter FighterTargetedByPlayer { get; set; }
+    public PlayerState CurrPlayerState { get; set; }
 
-    // Camera Parameters.
     private Camera2D _camera;
     private float _duration = 0.0f;
     private float _shakeTime = 0.0f;
@@ -50,22 +55,21 @@ public partial class Battle : Node2D
 
     public async Task AsyncReady()
     {
-        SignalHub.Instance.FighterAttacked += OnFighterAttacked;
+        SignalHub.FighterAttacked += OnFighterAttacked;
 
         UI = GetNode<BattleUI>("BattleUI");
-        EnemyNodes = GetNode<Node2D>("EnemyNodes");
         _camera = GetNode<Camera2D>("Camera2D");
 
         try
         {
-            InitParty();
-            await InitEnemies();
+            SetupPartyInfoPanels();
+            await SetupEnemyNodes();
             await DetermineTurnOrder();
             EmitSignal(SignalName.BattleReady);
         }
         catch (Exception e)
         {
-            GD.PrintErr($"Failed to initialize battle: {e}");
+            throw new Exception($"Failed to initialize battle: {e}");
         }
     }
 
@@ -92,56 +96,43 @@ public partial class Battle : Node2D
         }
     }
 
-    /// <summary>
-    /// Initializes the party by creating Fighter instances for each ally in the party
-    /// and updates the UI with their information.
-    /// </summary>
-    public void InitParty()
+    public void SetupPartyInfoPanels()
     {
-        foreach (Ally a in Game.Instance.Party)
+        foreach (Ally ally in Party)
         {
             PartyInfoPanel panel = PartyInfoPanelScene.Instantiate<PartyInfoPanel>();
-            panel.PartyMember = a;
+            panel.PartyMember = ally;
             UI.AddPartyInfoPanel(panel);
-            Party.Add(a);
         }
     }
 
-    /// <summary>
-    /// Initializes the enemies in the battle by iterating through the EnemyNodes.
-    /// For each BattleEnemy node, it creates a Fighter instance and adds it to the Enemies list.
-    /// It also plays a fade-in animation for each enemy and logs their introduction text
-    /// to the UI log.
-    /// </summary>
-    public async Task InitEnemies()
+    public async Task SetupEnemyNodes()
     {
-        foreach (Enemy e in Enemies)
+        foreach (Enemy enemy in Enemies)
         {
-            var sprite = EnemyBattleSpriteScene.Instantiate<EnemyBattleSprite>();
-            sprite.Enemy = e;
-            EnemyNodes.AddChild(sprite);
+            var node = EnemyNodeScene.Instantiate<EnemyNode>();
+            node.EnemyData = enemy;
+            EnemyNodes.Add(node);
+        }
 
-            await UI.Log.AppendLine(e.IntroLog);
-            await sprite.Introduction();
+        var enemyNodesContainer = GetNode<Node2D>("EnemyNodesContainer");
+        foreach (EnemyNode node in EnemyNodes)
+        {
+            enemyNodesContainer.AddChild(node);
+            await UI.Log.AppendLine(node.EnemyData.IntroLog);
+            await node.Introduction();
         }
     }
 
-    public void OnFighterAttacked(Fighter attacker, Fighter defender, Ability ability)
+    public void OnFighterAttacked(FighterEventArgs args)
     {
-        if (defender is Player && ability.DamageRange != null)
+        if (args.Defender is Player && args.Attack.HasDamage)
         {
             ShakeCamera(1.0f, 8.0f);
             SoundManager.Instance.PlaySfx(SoundManager.Sfx.Hurt);
         }
     }
 
-    /// <summary>
-    /// Determines the turn order for the battle participants based on their initiative.
-    /// Initiative is calculated by rolling two six-sided dice (D6) and adding the Athletics
-    /// skill of each participant.
-    /// The turn order is stored in the TurnQueue, which is a queue of Fighters sorted
-    /// in descending order of their initiative.
-    /// </summary>
     public async Task DetermineTurnOrder()
     {
         Fighter[] allParticipants = new Fighter[Party.Count + Enemies.Count];
@@ -156,10 +147,10 @@ public partial class Battle : Node2D
             int d1 = rng.RandiRange(Game.D6Min, Game.D6Max);
             int d2 = rng.RandiRange(Game.D6Min, Game.D6Max);
 
-            f.Initiative = d1 + d2 + f.Athletics;
-            UI.CreateDiceRollInfo(f, d1, d2, SkillType.Athletics, f.Athletics);
+            f.Initiative = d1 + d2 + f.Athletics.Value;
+            UI.CreateDiceRollInfo(f, d1, d2, SkillType.Athletics, f.Athletics.Value);
 
-            await UI.Log.AppendLine($"{f.Name} rolled {f.Initiative} [color={Game.BodySkillColor.ToHtml()}](+{f.Athletics})[/color] on initiative.");
+            await UI.Log.AppendLine($"{f.Name} rolled {f.Initiative} [color={Game.BodySkillColor.ToHtml()}](+{f.Athletics.Value})[/color] on initiative.");
         }
 
         await Game.Instance.Wait(500);
@@ -171,14 +162,13 @@ public partial class Battle : Node2D
         }
     }
 
-    /// <summary>
-    /// Retrieves the EnemyBattleSprite at the specified index.
-    /// The index corresponds to the position of the child node in the EnemyNodes node.
-    /// </summary>
-    /// <param name="index">The position of the enemy in the EnemyNodes node.</param>
-    /// <returns>The EnemyBattleSprite at the specified index.</returns>
-    public EnemyBattleSprite GetEnemySprite(int index)
+    public EnemyNode GetEnemyNode(int index)
     {
-        return EnemyNodes.GetChild<EnemyBattleSprite>(index, false);
+        return EnemyNodes[index];
+    }
+
+    public EnemyNode GetEnemyNode(Enemy enemy)
+    {
+        return EnemyNodes.FirstOrDefault(e => e.EnemyData == enemy);
     }
 }

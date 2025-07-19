@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://cbmyss2a0ljm8"]
 
-[ext_resource type="Texture2D" uid="uid://caittdo4wux2q" path="res://assets/effects/combat/circle_particle.png" id="1_d3ocd"]
+[ext_resource type="Texture2D" uid="uid://caittdo4wux2q" path="res://Assets/Effects/Combat/circle_particle.png" id="1_d3ocd"]
 
 [sub_resource type="Gradient" id="Gradient_n1bxn"]
 offsets = PackedFloat32Array(0.547809, 1)

@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://dlsdfp742qnou"]
 
-[ext_resource type="Theme" uid="uid://x6m3btvacua5" path="res://resources/styles/TextboxDefaultTheme.tres" id="1_dfkcu"]
-[ext_resource type="StyleBox" uid="uid://68msogk2h6y6" path="res://resources/styles/UIPanel.tres" id="2_5nhej"]
-[ext_resource type="Script" uid="uid://wenjpo4hmdbu" path="res://scenes/ui/game/choice/tooltip/ChoiceTooltip.cs" id="3_7l7cv"]
+[ext_resource type="Theme" uid="uid://x6m3btvacua5" path="res://Resources/Styles/TextboxDefaultTheme.tres" id="1_dfkcu"]
+[ext_resource type="StyleBox" uid="uid://68msogk2h6y6" path="res://Resources/Styles/UIPanel.tres" id="2_5nhej"]
+[ext_resource type="Script" uid="uid://wenjpo4hmdbu" path="res://Scenes/UI/game/choice/tooltip/ChoiceTooltip.cs" id="3_7l7cv"]
 
 [node name="Tooltip" type="PanelContainer" node_paths=PackedStringArray("SkillLabel", "DifficultyLabel", "OddsLabel", "ProbabilityLabel")]
 offset_left = 1.0

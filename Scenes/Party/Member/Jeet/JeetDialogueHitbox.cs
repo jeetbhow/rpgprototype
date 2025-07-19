@@ -1,3 +1,5 @@
+using Signal;
+
 public partial class JeetDialogueHitbox : DialogueHitbox
 {
     public override void _Ready()

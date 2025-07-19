@@ -1,7 +1,7 @@
 using Godot;
 using System.Threading.Tasks;
 
-namespace Combat;
+using Combat.Actors;
 
 public partial class TurnStart : StateNode
 {
@@ -17,8 +17,6 @@ public partial class TurnStart : StateNode
     public override async Task Enter()
     {
         Battle.CurrFighter = Battle.TurnQueue.Peek();
-
-        // Emit a signal to go to the state node corresponding to either the Player or NPC turn.
         switch (Battle.CurrFighter)
         {
             case Enemy:

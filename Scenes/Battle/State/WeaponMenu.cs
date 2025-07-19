@@ -1,7 +1,7 @@
 using Godot;
 using System.Threading.Tasks;
 
-using Combat;
+using Combat.Actors;
 
 public partial class WeaponMenu : StateNode
 {
@@ -68,7 +68,7 @@ public partial class WeaponMenu : StateNode
     }
     public void SelectWeapon()
     {
-        int index = Battle.UI.Commands.Choices.GetSelectedIndex();
+        int index = Battle.UI.Commands.Choices.SelectedIndex;
 
         var player = Battle.CurrFighter as Player;
         player.Weapon = player.GetWeapons()[index];

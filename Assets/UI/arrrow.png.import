@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://b7t13l0yk61cx"
-path="res://.godot/imported/arrrow.png-ae9d1f4029dd9daa3ebbbaee689d57bb.ctex"
+path="res://.godot/imported/arrrow.png-119637763e2801c4121e70bd4ca558b3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/ui/arrrow.png"
-dest_files=["res://.godot/imported/arrrow.png-ae9d1f4029dd9daa3ebbbaee689d57bb.ctex"]
+source_file="res://Assets/UI/arrrow.png"
+dest_files=["res://.godot/imported/arrrow.png-119637763e2801c4121e70bd4ca558b3.ctex"]
 
 [params]
 

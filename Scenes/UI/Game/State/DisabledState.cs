@@ -1,6 +1,8 @@
 using Godot;
 using System.Threading.Tasks;
 
+using Signal;
+
 public partial class DisabledState : StateNode
 {
     [Export] public UI UI;
@@ -24,5 +26,7 @@ public partial class DisabledState : StateNode
     }
 
     public override async Task Exit()
-    {}
+    {
+        await Task.CompletedTask;
+    }
 }

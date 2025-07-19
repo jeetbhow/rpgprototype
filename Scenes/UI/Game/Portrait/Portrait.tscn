@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://blyv6jei4aa5x"]
 
-[ext_resource type="StyleBox" uid="uid://68msogk2h6y6" path="res://resources/styles/UIPanel.tres" id="1_w2b7x"]
-[ext_resource type="Script" uid="uid://d4e0d51lculqo" path="res://scenes/ui/game/portrait/Portrait.cs" id="2_843it"]
-[ext_resource type="Texture2D" uid="uid://lrx7vtu7ef5u" path="res://assets/characters/Jeet/jeet-face.png" id="3_nw5hk"]
+[ext_resource type="StyleBox" uid="uid://68msogk2h6y6" path="res://Resources/Styles/UIPanel.tres" id="1_w2b7x"]
+[ext_resource type="Script" uid="uid://d4e0d51lculqo" path="res://Scenes/UI/game/portrait/Portrait.cs" id="2_843it"]
+[ext_resource type="Texture2D" uid="uid://lrx7vtu7ef5u" path="res://Assets/Characters/Jeet/jeet-face.png" id="3_nw5hk"]
 
 [node name="Portrait" type="PanelContainer" node_paths=PackedStringArray("Texture")]
 custom_minimum_size = Vector2(50, 0)

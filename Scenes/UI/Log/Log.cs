@@ -3,6 +3,8 @@ using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using System.Globalization;
 
+using Signal;
+
 [GlobalClass]
 public partial class Log : PanelContainer
 {
@@ -50,6 +52,8 @@ public partial class Log : PanelContainer
 
             _visibleChars = end;
         }
+
+        SignalHub.Instance.EmitSignal(SignalHub.SignalName.CombatLogUpdated);
     }
 
     private async Task Typewriter(int start, int end)

@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using Godot;
+using Signal;
 
 public partial class ChoiceState : StateNode
 {
@@ -22,7 +23,6 @@ public partial class ChoiceState : StateNode
     public PackedScene ChoiceButtonScene { get; set; }
 
     private SoundManager _soundManager;
-    private SignalHub _eventBus;
     private int _index;
 
     public override void _Ready()
@@ -114,7 +114,7 @@ public partial class ChoiceState : StateNode
         {
             case "regular":
                 UI.CurrNode = choice.Next;
-                _eventBus.EmitSignal(SignalHub.SignalName.TextboxOptionSelected, UI.CurrNode.Key);
+                SignalHub.Instance.EmitSignal(SignalHub.SignalName.TextboxOptionSelected, UI.CurrNode.Key);
                 EmitSignal(SignalName.StateUpdate, EnabledStateNode.Name);
                 break;
             case "skill":

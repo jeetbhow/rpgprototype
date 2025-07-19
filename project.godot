@@ -17,9 +17,9 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-SoundManager="*res://scripts/globals/sound_manager/SoundManager.tscn"
-Game="*res://scripts/globals/game/Game.tscn"
-SignalHub="*res://scripts/globals/SignalHub.cs"
+SoundManager="*res://Scripts/Globals/SoundManager/SoundManager.tscn"
+Game="*res://Scripts/Globals/Game/Game.tscn"
+SignalHub="*res://Scripts/Globals/SignalHub/SignalHub.cs"
 
 [display]
 
@@ -37,10 +37,10 @@ project/assembly_name="RPGPrototype"
 [file_customization]
 
 folder_colors={
-"res://assets/": "green",
-"res://resources/": "yellow",
-"res://scenes/": "red",
-"res://scripts/": "purple"
+"res://Assets/": "green",
+"res://Resources/": "yellow",
+"res://Scenes/": "red",
+"res://Scripts/": "purple"
 }
 
 [input]

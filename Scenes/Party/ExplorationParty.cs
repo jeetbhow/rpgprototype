@@ -1,6 +1,8 @@
 using Godot;
-using System;
 using Godot.Collections;
+using System;
+
+using Signal;
 
 [GlobalClass]
 public partial class OverworldParty : Node2D

@@ -29,8 +29,8 @@ public partial class ItemMenu : StateNode
 
     private static readonly Dictionary<string, MenuType> MainMenuChoices = new()
     {
-        { MainMenuChoicesText[0], MenuType.Weapons },
-        { MainMenuChoicesText[1], MenuType.Consumables }
+        { "Weapons", MenuType.Weapons },
+        { "Consumables", MenuType.Consumables }
     };
 
     public override void _Input(InputEvent @event)

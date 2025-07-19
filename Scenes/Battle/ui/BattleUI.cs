@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Godot;
 
-using Combat;
+using Combat.Actors;
 
 public partial class BattleUI : CanvasLayer
 {

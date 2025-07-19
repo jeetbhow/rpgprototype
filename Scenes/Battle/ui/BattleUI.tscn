@@ -1,10 +1,10 @@
 [gd_scene load_steps=10 format=3 uid="uid://cgfmftu70tvgf"]
 
-[ext_resource type="PackedScene" uid="uid://d0qsc28ydi047" path="res://scenes/ui/textbox/Textbox.tscn" id="1_x05vq"]
-[ext_resource type="Script" uid="uid://bjxt637oo30a6" path="res://scenes/battle/ui/BattleUI.cs" id="1_yakd7"]
-[ext_resource type="PackedScene" uid="uid://bp32y8bvhaf1s" path="res://scenes/battle/ui/turn_queue_panel/TurnQueuePanel.tscn" id="2_tw16v"]
-[ext_resource type="PackedScene" uid="uid://qnx6km8di2s8" path="res://scenes/battle/ui/dice_roll_info/DiceRollInfo.tscn" id="2_xnj7u"]
-[ext_resource type="PackedScene" uid="uid://dne5mwmirps" path="res://scenes/ui/log/Log.tscn" id="3_aswum"]
+[ext_resource type="PackedScene" uid="uid://d0qsc28ydi047" path="res://Scenes/UI/textbox/Textbox.tscn" id="1_x05vq"]
+[ext_resource type="Script" uid="uid://bjxt637oo30a6" path="res://Scenes/Battle/UI/BattleUI.cs" id="1_yakd7"]
+[ext_resource type="PackedScene" uid="uid://bp32y8bvhaf1s" path="res://Scenes/Battle/UI/TurnQueuePanel/TurnQueuePanel.tscn" id="2_tw16v"]
+[ext_resource type="PackedScene" uid="uid://qnx6km8di2s8" path="res://Scenes/Battle/UI/DiceRollInfo/DiceRollInfo.tscn" id="2_xnj7u"]
+[ext_resource type="PackedScene" uid="uid://dne5mwmirps" path="res://Scenes/UI/log/Log.tscn" id="3_aswum"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tw16v"]
 resource_local_to_scene = true

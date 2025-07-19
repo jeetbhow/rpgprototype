@@ -1,6 +1,7 @@
 using Godot;
 
-using Combat;
+using Signal;
+using Combat.Actors;
 
 public partial class ChoiceList : VBoxContainer
 {
@@ -9,7 +10,7 @@ public partial class ChoiceList : VBoxContainer
 
     public bool Active { get; set; } = false;
     public int Count { get; private set; } = 0;
-    private int _index = 0;
+    public int SelectedIndex { get; private set; } = 0;
 
 
     public override void _Input(InputEvent @event)
@@ -20,18 +21,18 @@ public partial class ChoiceList : VBoxContainer
         }
 
         GetViewport().SetInputAsHandled();
-        int prevIndex = _index;
+        int prevIndex = SelectedIndex;
         int numCmds = GetChoices().Length;
 
         switch (keyEvent)
         {
             case InputEventKey k when k.IsActionPressed("MoveDown"):
-                _index = (_index + 1) % numCmds;
-                SwapArrows(prevIndex, _index);
+                SelectedIndex = (SelectedIndex + 1) % numCmds;
+                SwapArrows(prevIndex, SelectedIndex);
                 return;
             case InputEventKey k when k.IsActionPressed("MoveUp"):
-                _index = (_index - 1 + numCmds) % numCmds;
-                SwapArrows(prevIndex, _index);
+                SelectedIndex = (SelectedIndex - 1 + numCmds) % numCmds;
+                SwapArrows(prevIndex, SelectedIndex);
                 return;
         }
     }
@@ -118,17 +119,12 @@ public partial class ChoiceList : VBoxContainer
             }
         }
         Count = 0;
-        _index = 0;
+        SelectedIndex = 0;
     }
     
     public ChoiceContent GetSelectedChoice()
     {
-        return GetChoice(_index);
-    }
-
-    public int GetSelectedIndex()
-    {
-        return _index;
+        return GetChoice(SelectedIndex);
     }
 
     private void SwapArrows(int prevIndex, int newIndex)

@@ -1,33 +1,36 @@
-[gd_scene load_steps=20 format=3 uid="uid://bhlaeslv50jid"]
+[gd_scene load_steps=22 format=3 uid="uid://bhlaeslv50jid"]
 
-[ext_resource type="Script" uid="uid://bxwqvj1ig43b2" path="res://scenes/battle/Battle.cs" id="1_07e4u"]
-[ext_resource type="Resource" uid="uid://bs8b37iwqpsr1" path="res://resources/enemies/jeff/Jeff.tres" id="2_8f5sm"]
-[ext_resource type="PackedScene" uid="uid://dw7vckg81r5s3" path="res://scenes/battle/ui/party_info_panel/PartyInfoPanel.tscn" id="2_cmwrv"]
-[ext_resource type="Script" uid="uid://bxy8ovbqm6hg6" path="res://scenes/battle/state/BattleStart.cs" id="4_g1sps"]
-[ext_resource type="Script" uid="uid://c6hmuq7bnmysi" path="res://scripts/components/StateMachine/StateMachine.cs" id="4_odh8s"]
-[ext_resource type="PackedScene" uid="uid://d1yvb465tt7ik" path="res://scenes/battle/enemy/EnemyBattleSprite.tscn" id="5_rremj"]
-[ext_resource type="Script" uid="uid://d02xxv3gs66k6" path="res://scenes/battle/state/TurnStart.cs" id="6_dby5i"]
-[ext_resource type="Script" uid="uid://mfqfr2pinyas" path="res://scenes/battle/state/NPCTurn.cs" id="7_diuyf"]
-[ext_resource type="Script" uid="uid://dcifapt71jp00" path="res://scripts/components/StateMachine/StateNode.cs" id="7_tmq01"]
-[ext_resource type="Script" uid="uid://cximkhuqra6pe" path="res://scenes/battle/state/PlayerTurn.cs" id="8_tmq01"]
-[ext_resource type="Script" uid="uid://dvhfitddx4u8k" path="res://scenes/battle/state/AttackMenu.cs" id="9_cmwrv"]
-[ext_resource type="PackedScene" uid="uid://cgfmftu70tvgf" path="res://scenes/battle/ui/BattleUI.tscn" id="9_tmq01"]
-[ext_resource type="Script" uid="uid://cv1fltfldbohi" path="res://scenes/battle/state/EndTurn.cs" id="10_q0gc0"]
-[ext_resource type="PackedScene" uid="uid://btrajdgilaf0d" path="res://scenes/ui/game/choice/content/ChoiceContent.tscn" id="10_ukbm8"]
-[ext_resource type="Script" uid="uid://dtvkcfgapvb2a" path="res://scenes/battle/state/QueueEmpty.cs" id="11_gibtw"]
-[ext_resource type="Script" uid="uid://do7rrmaq78boi" path="res://scenes/battle/state/ItemMenu.cs" id="13_g3qtk"]
-[ext_resource type="AudioStream" uid="uid://ceapr7mcvv0oa" path="res://assets/audio/random_encounter_01_v1.mp3" id="13_gibtw"]
-[ext_resource type="Script" uid="uid://cv67r44boui52" path="res://scenes/battle/state/WeaponMenu.cs" id="13_s833s"]
+[ext_resource type="Script" uid="uid://bxwqvj1ig43b2" path="res://Scenes/Battle/Battle.cs" id="1_07e4u"]
+[ext_resource type="PackedScene" uid="uid://dw7vckg81r5s3" path="res://Scenes/Battle/UI/PartyInfoPanel/PartyInfoPanel.tscn" id="2_cmwrv"]
+[ext_resource type="Resource" uid="uid://tts4qaemr8lh" path="res://Resources/Enemies/Jeff/Jeff.tres" id="2_nw8o3"]
+[ext_resource type="Resource" uid="uid://dxrs5ympbge7y" path="res://Resources/Player.tres" id="2_tx6ec"]
+[ext_resource type="Script" uid="uid://bxy8ovbqm6hg6" path="res://Scenes/Battle/State/BattleStart.cs" id="4_g1sps"]
+[ext_resource type="Script" uid="uid://c6hmuq7bnmysi" path="res://Scripts/Components/StateMachine/StateMachine.cs" id="4_odh8s"]
+[ext_resource type="PackedScene" uid="uid://d1yvb465tt7ik" path="res://Scenes/Battle/Enemy/EnemyNode.tscn" id="5_rremj"]
+[ext_resource type="Script" uid="uid://d02xxv3gs66k6" path="res://Scenes/Battle/State/TurnStart.cs" id="6_dby5i"]
+[ext_resource type="Script" uid="uid://mfqfr2pinyas" path="res://Scenes/Battle/State/NPCTurn.cs" id="7_diuyf"]
+[ext_resource type="Script" uid="uid://dcifapt71jp00" path="res://Scripts/Components/StateMachine/StateNode.cs" id="7_tmq01"]
+[ext_resource type="Script" uid="uid://cximkhuqra6pe" path="res://Scenes/Battle/State/PlayerTurn.cs" id="8_tmq01"]
+[ext_resource type="Script" uid="uid://dvhfitddx4u8k" path="res://Scenes/Battle/State/EnemyTarget.cs" id="9_cmwrv"]
+[ext_resource type="PackedScene" uid="uid://cgfmftu70tvgf" path="res://Scenes/Battle/UI/BattleUI.tscn" id="9_tmq01"]
+[ext_resource type="Script" uid="uid://cv1fltfldbohi" path="res://Scenes/Battle/State/EndTurn.cs" id="10_q0gc0"]
+[ext_resource type="PackedScene" uid="uid://btrajdgilaf0d" path="res://Scenes/UI/game/choice/content/ChoiceContent.tscn" id="10_ukbm8"]
+[ext_resource type="Script" uid="uid://dtvkcfgapvb2a" path="res://Scenes/Battle/State/QueueEmpty.cs" id="11_gibtw"]
+[ext_resource type="Script" uid="uid://do7rrmaq78boi" path="res://Scenes/Battle/State/ItemMenu.cs" id="13_g3qtk"]
+[ext_resource type="AudioStream" uid="uid://ceapr7mcvv0oa" path="res://Assets/Audio/random_encounter_01_v1.mp3" id="13_gibtw"]
+[ext_resource type="Script" uid="uid://cv67r44boui52" path="res://Scenes/Battle/State/WeaponMenu.cs" id="13_s833s"]
+[ext_resource type="Script" uid="uid://dhus4kwai8l0b" path="res://Scenes/Battle/State/TalkMenu.cs" id="14_nw8o3"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_gibtw"]
 
 [node name="Battle" type="Node2D"]
 script = ExtResource("1_07e4u")
-Enemies = [ExtResource("2_8f5sm")]
+Party = Array[Object]([ExtResource("2_tx6ec")])
+Enemies = [ExtResource("2_nw8o3")]
 PartyInfoPanelScene = ExtResource("2_cmwrv")
-EnemyBattleSpriteScene = ExtResource("5_rremj")
+EnemyNodeScene = ExtResource("5_rremj")
 
-[node name="EnemyNodes" type="Node2D" parent="."]
+[node name="EnemyNodesContainer" type="Node2D" parent="."]
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(3, 3)
@@ -59,26 +62,20 @@ Battle = NodePath("../..")
 TurnEnd = NodePath("../EndTurn")
 metadata/_custom_type_script = "uid://dcifapt71jp00"
 
-[node name="PlayerTurn" type="Node" parent="StateMachine" node_paths=PackedStringArray("Battle", "AttackMenu", "EndTurn", "ItemMenu")]
+[node name="PlayerTurn" type="Node" parent="StateMachine" node_paths=PackedStringArray("Battle", "EnemyTarget", "EndTurn", "ItemMenu")]
 script = ExtResource("8_tmq01")
 Battle = NodePath("../..")
-AttackMenu = NodePath("../AttackMenu")
+EnemyTarget = NodePath("../EnemyTarget")
 EndTurn = NodePath("../EndTurn")
 ItemMenu = NodePath("../ItemMenu")
 metadata/_custom_type_script = "uid://dcifapt71jp00"
 
-[node name="AttackMenu" type="Node" parent="StateMachine" node_paths=PackedStringArray("Battle", "BattlePlayerTurn")]
+[node name="EnemyTarget" type="Node" parent="StateMachine" node_paths=PackedStringArray("Battle", "PlayerTurn", "TalkMenu")]
 script = ExtResource("9_cmwrv")
 ChoiceContentScene = ExtResource("10_ukbm8")
 Battle = NodePath("../..")
-BattlePlayerTurn = NodePath("../PlayerTurn")
-metadata/_custom_type_script = "uid://dcifapt71jp00"
-
-[node name="WeaponMenu" type="Node" parent="StateMachine" node_paths=PackedStringArray("Battle", "ItemMenu", "PlayerTurn")]
-script = ExtResource("13_s833s")
-Battle = NodePath("../..")
-ItemMenu = NodePath("../ItemMenu")
 PlayerTurn = NodePath("../PlayerTurn")
+TalkMenu = NodePath("../TalkMenu")
 metadata/_custom_type_script = "uid://dcifapt71jp00"
 
 [node name="ItemMenu" type="Node" parent="StateMachine" node_paths=PackedStringArray("Battle", "PlayerTurn", "WeaponMenu")]
@@ -86,6 +83,20 @@ script = ExtResource("13_g3qtk")
 Battle = NodePath("../..")
 PlayerTurn = NodePath("../PlayerTurn")
 WeaponMenu = NodePath("../WeaponMenu")
+metadata/_custom_type_script = "uid://dcifapt71jp00"
+
+[node name="TalkMenu" type="Node" parent="StateMachine" node_paths=PackedStringArray("Battle", "PlayerTurn", "EnemyTarget")]
+script = ExtResource("14_nw8o3")
+Battle = NodePath("../..")
+PlayerTurn = NodePath("../PlayerTurn")
+EnemyTarget = NodePath("../EnemyTarget")
+metadata/_custom_type_script = "uid://dcifapt71jp00"
+
+[node name="WeaponMenu" type="Node" parent="StateMachine" node_paths=PackedStringArray("Battle", "ItemMenu", "PlayerTurn")]
+script = ExtResource("13_s833s")
+Battle = NodePath("../..")
+ItemMenu = NodePath("../ItemMenu")
+PlayerTurn = NodePath("../PlayerTurn")
 metadata/_custom_type_script = "uid://dcifapt71jp00"
 
 [node name="EndTurn" type="Node" parent="StateMachine" node_paths=PackedStringArray("Battle", "TurnQueueEmpty", "TurnStart")]
@@ -109,6 +120,7 @@ metadata/_custom_type_script = "uid://dcifapt71jp00"
 stream = ExtResource("13_gibtw")
 
 [node name="TextureRect" type="TextureRect" parent="."]
+visible = false
 modulate = Color(0, 0, 0, 1)
 z_index = -1
 offset_left = -388.0

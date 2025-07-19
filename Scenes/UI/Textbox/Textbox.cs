@@ -6,19 +6,14 @@ public partial class Textbox : PanelContainer
 {
     [Export]
     public DialogueTree Tree { get; set; }
-
     [Export]
     public RichTextLabel TextLabel { get; set; }
-
     [Export]
     public RichTextLabel NameLabel { get; set; }
-
     [Export]
     public ChoiceList Choices { get; set; }
-
     [Export]
     public Timer SfxTimer { get; set; }
-
     [Export]
     public AudioStreamPlayer Sfx { get; set; }
 

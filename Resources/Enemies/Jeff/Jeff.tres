@@ -1,19 +1,108 @@
-[gd_resource type="Resource" script_class="Enemy" load_steps=5 format=3 uid="uid://bs8b37iwqpsr1"]
+[gd_resource type="Resource" script_class="Jeff" load_steps=25 format=3 uid="uid://tts4qaemr8lh"]
 
-[ext_resource type="Resource" uid="uid://chpxn2mgiv2v6" path="res://resources/enemies/jeff/JeffAI.tres" id="1_3bqnh"]
-[ext_resource type="Texture2D" uid="uid://cddkxetbmoyh3" path="res://assets/enemies/jerry.png" id="2_84m5o"]
-[ext_resource type="SpriteFrames" uid="uid://dqitn7jtgv3ri" path="res://resources/enemies/jeff/JeffSF.tres" id="3_4jmfa"]
-[ext_resource type="Script" uid="uid://bfsq0i25vcarl" path="res://scripts/resources/combat/Enemy.cs" id="4_rin6t"]
+[ext_resource type="Resource" uid="uid://cta2pvimbtsa0" path="res://Resources/Enemies/Jeff/Attacks/JeffPickNose.tres" id="1_junf6"]
+[ext_resource type="Script" uid="uid://cq7dqoi4kd4vd" path="res://Scripts/Classes/Skill/Skill.cs" id="1_ml5de"]
+[ext_resource type="SpriteFrames" uid="uid://dqitn7jtgv3ri" path="res://Resources/Enemies/Jeff/JeffSF.tres" id="2_3bqnh"]
+[ext_resource type="Texture2D" uid="uid://cddkxetbmoyh3" path="res://Assets/Enemies/jerry.png" id="2_84m5o"]
+[ext_resource type="Script" uid="uid://cj7a66n22hbwy" path="res://Scripts/Combat/Actors/Enemies/Jeff.cs" id="2_bk74h"]
+[ext_resource type="Resource" uid="uid://nuvnfsnmtooc" path="res://Resources/Enemies/Jeff/Attacks/JeffWiggle.tres" id="2_dj5qp"]
+[ext_resource type="Script" uid="uid://c7lud6jc6v1nt" path="res://Scripts/Combat/Talk/TalkActionResult.cs" id="4_2aulp"]
+[ext_resource type="Script" uid="uid://cwcixixia3jao" path="res://Scripts/Combat/AI/FighterAI.cs" id="4_df5iv"]
+[ext_resource type="Script" uid="uid://c5u74yuyjsqlf" path="res://Scripts/Combat/Talk/TalkAction.cs" id="7_dj5qp"]
+
+[sub_resource type="Resource" id="Resource_7hv17"]
+script = ExtResource("4_df5iv")
+Actions = Array[Object]([ExtResource("1_junf6"), ExtResource("2_dj5qp")])
+metadata/_custom_type_script = "uid://cwcixixia3jao"
+
+[sub_resource type="Resource" id="Resource_ee4xw"]
+script = ExtResource("4_2aulp")
+StartLogEntry = "You ask Jeff if slimes are weak to anything."
+SuccessBalloonText = "Fire will melt slimes like me into goop."
+FailureBalloonText = "If I tell you, then you'll just reject me."
+SuccessLogEntry = "It looks like he's weak to fire."
+FailureLogEntry = "It didn't work."
+metadata/_custom_type_script = "uid://c7lud6jc6v1nt"
+
+[sub_resource type="Resource" id="Resource_2np04"]
+script = ExtResource("1_ml5de")
+Type = 3
+Value = 2
+
+[sub_resource type="Resource" id="Resource_1u7we"]
+script = ExtResource("1_ml5de")
+Type = 7
+Value = 2
+
+[sub_resource type="Resource" id="Resource_ds453"]
+script = ExtResource("1_ml5de")
+Type = 9
+Value = 2
+
+[sub_resource type="Resource" id="Resource_sammx"]
+script = ExtResource("1_ml5de")
+Type = 10
+Value = 3
+
+[sub_resource type="Resource" id="Resource_htm34"]
+script = ExtResource("1_ml5de")
+Type = 8
+Value = 2
+
+[sub_resource type="Resource" id="Resource_1h15v"]
+script = ExtResource("1_ml5de")
+Type = 2
+Value = 2
+
+[sub_resource type="Resource" id="Resource_dj5qp"]
+script = ExtResource("1_ml5de")
+Type = 6
+Value = 2
+
+[sub_resource type="Resource" id="Resource_2aulp"]
+script = ExtResource("1_ml5de")
+Type = 5
+Value = 2
+
+[sub_resource type="Resource" id="Resource_ffodp"]
+script = ExtResource("1_ml5de")
+Type = 11
+Value = 3
+
+[sub_resource type="Resource" id="Resource_u2v2x"]
+script = ExtResource("1_ml5de")
+Type = 12
+Value = 2
+
+[sub_resource type="Resource" id="Resource_ldtig"]
+script = ExtResource("1_ml5de")
+Type = 4
+Value = 2
+
+[sub_resource type="Resource" id="Resource_7hxiu"]
+script = ExtResource("1_ml5de")
+Type = 1
+Value = 2
+
+[sub_resource type="Resource" id="Resource_i5sp2"]
+script = ExtResource("7_dj5qp")
+ID = 0
+Text = "Weakness"
+Description = "Ask them about their weaknesses."
+Difficulty = 3
+metadata/_custom_type_script = "uid://c5u74yuyjsqlf"
 
 [resource]
-script = ExtResource("4_rin6t")
-SpriteFrames = ExtResource("3_4jmfa")
-IntroLog = "Jeff creeps up on you from behind. Gross."
+script = ExtResource("2_bk74h")
+AskAboutWeakness = SubResource("Resource_ee4xw")
+SpriteFrames = ExtResource("2_3bqnh")
+AI = SubResource("Resource_7hv17")
+TalkActions = Array[Object]([SubResource("Resource_i5sp2")])
+IntroLog = "Jeff creeps up on you from behind."
 IntroBalloon = "Will you be my girlfriend?"
 DeathMsgLog = "Jeff will die alone."
 DeathMsgBalloon = "I guess nice slimes really do finish last."
-AttackBalloonText = PackedStringArray("You will regret rejecting me.", "You were ugly anyways", "Slimes don\'t have noses...", "Why doesn\'t anyone like me?", "*Wiggling intensifies*")
-AI = ExtResource("1_3bqnh")
+AttackBalloonText = PackedStringArray("You will regret rejecting me.", "You were ugly anyways.", "Why does no one like me?")
 Portrait = ExtResource("2_84m5o")
 Name = "Jeff"
 Level = 1
@@ -21,8 +110,17 @@ HP = 10
 MaxHP = 10
 AP = 3
 MaxAP = 3
-Strength = 1
-Endurance = 1
-Athletics = 1
-Initiative = 1
-metadata/_custom_type_script = "uid://bfsq0i25vcarl"
+Strength = SubResource("Resource_7hxiu")
+Endurance = SubResource("Resource_1h15v")
+Athletics = SubResource("Resource_2np04")
+Rhetoric = SubResource("Resource_ldtig")
+Logic = SubResource("Resource_2aulp")
+Knowledge = SubResource("Resource_dj5qp")
+Authority = SubResource("Resource_1u7we")
+Empathy = SubResource("Resource_htm34")
+Charisma = SubResource("Resource_ds453")
+Perception = SubResource("Resource_ffodp")
+Reflexes = SubResource("Resource_u2v2x")
+Dexterity = SubResource("Resource_sammx")
+Initiative = 0
+metadata/_custom_type_script = "uid://cj7a66n22hbwy"

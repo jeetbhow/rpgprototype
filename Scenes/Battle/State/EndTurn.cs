@@ -1,6 +1,8 @@
 using Godot;
 using System.Threading.Tasks;
 
+using Combat.Actors;
+
 namespace Combat;
 
 public partial class EndTurn : StateNode
@@ -18,7 +20,7 @@ public partial class EndTurn : StateNode
     {
         Battle.UI.AdvanceTurnQueue();
         Battle.UI.Commands.Hide();
-        
+
         Fighter fighter = Battle.TurnQueue.Dequeue();
         fighter.AP = fighter.MaxAP;
 

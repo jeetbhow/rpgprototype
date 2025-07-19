@@ -1,18 +1,79 @@
-[gd_resource type="Resource" script_class="Player" load_steps=6 format=3 uid="uid://dxrs5ympbge7y"]
+[gd_resource type="Resource" script_class="Player" load_steps=19 format=3 uid="uid://dxrs5ympbge7y"]
 
-[ext_resource type="Resource" uid="uid://bvqdrkfn58gnb" path="res://resources/items/weapons/Knife.tres" id="1_72qri"]
-[ext_resource type="Texture2D" uid="uid://3xurbpcp6po7" path="res://assets/characters/eri.png" id="1_cu6nv"]
-[ext_resource type="Resource" uid="uid://cm66jpgrlmofo" path="res://resources/items/weapons/Baseball Bat.tres" id="2_72qri"]
-[ext_resource type="Script" uid="uid://v023qn4fhkid" path="res://scripts/resources/combat/Player.cs" id="3_h7u7i"]
+[ext_resource type="Texture2D" uid="uid://3xurbpcp6po7" path="res://Assets/Characters/eri.png" id="1_cu6nv"]
+[ext_resource type="Script" uid="uid://cq7dqoi4kd4vd" path="res://Scripts/Classes/Skill/Skill.cs" id="1_h7u7i"]
+[ext_resource type="Script" uid="uid://v023qn4fhkid" path="res://Scripts/Combat/Actors/Player.cs" id="3_h7u7i"]
+[ext_resource type="Resource" uid="uid://bjrxbljk8ydl4" path="res://Resources/Items/Weapons/BaseballBat.tres" id="3_sammx"]
+[ext_resource type="Resource" uid="uid://cpgiswthhpyrs" path="res://Resources/Items/Weapons/Knife.tres" id="3_t6fh0"]
+
+[sub_resource type="Resource" id="Resource_h7u7i"]
+script = ExtResource("1_h7u7i")
+Type = 3
+Value = 3
+
+[sub_resource type="Resource" id="Resource_3bqnh"]
+script = ExtResource("1_h7u7i")
+Type = 7
+Value = 3
+
+[sub_resource type="Resource" id="Resource_84m5o"]
+script = ExtResource("1_h7u7i")
+Type = 9
+Value = 3
+
+[sub_resource type="Resource" id="Resource_sammx"]
+script = ExtResource("1_h7u7i")
+Type = 10
+Value = 3
+
+[sub_resource type="Resource" id="Resource_4jmfa"]
+script = ExtResource("1_h7u7i")
+Type = 8
+Value = 3
+
+[sub_resource type="Resource" id="Resource_rdogn"]
+script = ExtResource("1_h7u7i")
+Type = 2
+Value = 3
+
+[sub_resource type="Resource" id="Resource_yudwl"]
+script = ExtResource("1_h7u7i")
+Type = 6
+Value = 3
+
+[sub_resource type="Resource" id="Resource_xjr6u"]
+script = ExtResource("1_h7u7i")
+Type = 5
+Value = 3
+
+[sub_resource type="Resource" id="Resource_ffodp"]
+script = ExtResource("1_h7u7i")
+Type = 11
+Value = 3
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_i3gqq"]
 atlas = ExtResource("1_cu6nv")
 region = Rect2(1, 0, 30, 23)
 
+[sub_resource type="Resource" id="Resource_n1ykm"]
+script = ExtResource("1_h7u7i")
+Type = 12
+Value = 3
+
+[sub_resource type="Resource" id="Resource_df5iv"]
+script = ExtResource("1_h7u7i")
+Type = 4
+Value = 3
+
+[sub_resource type="Resource" id="Resource_0jtd4"]
+script = ExtResource("1_h7u7i")
+Type = 1
+Value = 3
+
 [resource]
 script = ExtResource("3_h7u7i")
-Inventory = Array[Resource]([ExtResource("1_72qri"), ExtResource("2_72qri")])
-Weapon = ExtResource("1_72qri")
+Inventory = Array[Resource]([ExtResource("3_t6fh0"), ExtResource("3_sammx")])
+Weapon = ExtResource("3_t6fh0")
 Portrait = SubResource("AtlasTexture_i3gqq")
 Name = "Eri"
 Level = 1
@@ -20,8 +81,17 @@ HP = 10
 MaxHP = 10
 AP = 4
 MaxAP = 4
-Strength = 5
-Endurance = 5
-Athletics = 5
+Strength = SubResource("Resource_0jtd4")
+Endurance = SubResource("Resource_rdogn")
+Athletics = SubResource("Resource_h7u7i")
+Rhetoric = SubResource("Resource_df5iv")
+Logic = SubResource("Resource_xjr6u")
+Knowledge = SubResource("Resource_yudwl")
+Authority = SubResource("Resource_3bqnh")
+Empathy = SubResource("Resource_4jmfa")
+Charisma = SubResource("Resource_84m5o")
+Perception = SubResource("Resource_ffodp")
+Reflexes = SubResource("Resource_n1ykm")
+Dexterity = SubResource("Resource_sammx")
 Initiative = 0
 metadata/_custom_type_script = "uid://v023qn4fhkid"

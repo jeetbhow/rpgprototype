@@ -1,10 +1,10 @@
 [gd_scene load_steps=6 format=3 uid="uid://dc5kcw03my0bd"]
 
-[ext_resource type="Script" uid="uid://bw5j7ijajayey" path="res://scenes/party/ExplorationParty.cs" id="1_qyl56"]
-[ext_resource type="PackedScene" uid="uid://bi2b0cm7mniaa" path="res://scenes/party/member/Eri/Eri.tscn" id="2_tmmad"]
-[ext_resource type="Script" uid="uid://c6hmuq7bnmysi" path="res://scripts/components/StateMachine/StateMachine.cs" id="3_cwqf0"]
-[ext_resource type="Script" uid="uid://cyn6fjvdje1mq" path="res://scenes/party/state/Idle.cs" id="4_m4lt0"]
-[ext_resource type="Script" uid="uid://ci4ls4yq7bvv2" path="res://scenes/party/state/Walk.cs" id="5_ela20"]
+[ext_resource type="Script" uid="uid://bw5j7ijajayey" path="res://Scenes/Party/ExplorationParty.cs" id="1_qyl56"]
+[ext_resource type="PackedScene" uid="uid://bi2b0cm7mniaa" path="res://Scenes/Party/member/Eri/Eri.tscn" id="2_tmmad"]
+[ext_resource type="Script" uid="uid://c6hmuq7bnmysi" path="res://Scripts/Components/StateMachine/StateMachine.cs" id="3_cwqf0"]
+[ext_resource type="Script" uid="uid://cyn6fjvdje1mq" path="res://Scenes/Party/state/Idle.cs" id="4_m4lt0"]
+[ext_resource type="Script" uid="uid://ci4ls4yq7bvv2" path="res://Scenes/Party/state/Walk.cs" id="5_ela20"]
 
 [node name="ExplorationParty" type="Node2D" node_paths=PackedStringArray("PartyLeader", "Camera")]
 z_index = 3
