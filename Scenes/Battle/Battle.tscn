@@ -88,6 +88,7 @@ metadata/_custom_type_script = "uid://dcifapt71jp00"
 [node name="TalkMenu" type="Node" parent="StateMachine" node_paths=PackedStringArray("Battle", "PlayerTurn", "EnemyTarget")]
 script = ExtResource("14_nw8o3")
 Battle = NodePath("../..")
+ChoiceContentScene = ExtResource("10_ukbm8")
 PlayerTurn = NodePath("../PlayerTurn")
 EnemyTarget = NodePath("../EnemyTarget")
 metadata/_custom_type_script = "uid://dcifapt71jp00"

@@ -90,8 +90,6 @@ public partial class Game : Node
         int effectiveDifficulty = (enemyD6Sum + enemy.Rhetoric.Value + difficulty) - (player.Rhetoric.Value + playerD6Sum);
         float successChance = GetSuccessChance(effectiveDifficulty);
 
-        GD.Print($"Combat speech check: {enemyD6Sum + enemy.Rhetoric.Value + difficulty} - {player.Rhetoric.Value + playerD6Sum} = {effectiveDifficulty}, success chance: {successChance}");
-
         return _rng.Randf() < successChance;
     }
 
