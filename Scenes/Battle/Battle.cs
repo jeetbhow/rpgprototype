@@ -17,17 +17,12 @@ public partial class Battle : Node2D
         Attacking,
     }
 
-    [Signal]
-    public delegate void BattleReadyEventHandler();
+    [Signal] public delegate void BattleReadyEventHandler();
 
-    [Export]
-    public Array<Ally> Party { get; private set; }
-    [Export]
-    public Array<Enemy> Enemies { get; private set; }
-    [Export]
-    public PackedScene PartyInfoPanelScene { get; set; }
-    [Export]
-    public PackedScene EnemyNodeScene { get; set; }
+    [Export] public Array<Ally> Party { get; private set; }
+    [Export] public Array<Enemy> Enemies { get; private set; }
+    [Export] public PackedScene PartyInfoPanelScene { get; set; }
+    [Export] public PackedScene EnemyNodeScene { get; set; }
 
     public BattleUI UI { get; private set; }
     public List<EnemyNode> EnemyNodes { get; private set; } = [];
@@ -62,6 +57,8 @@ public partial class Battle : Node2D
 
         try
         {
+            Enemies.ToList().ForEach(enemy => enemy.InitializeHPAndAP());
+
             SetupPartyInfoPanels();
             await SetupEnemyNodes();
             await DetermineTurnOrder();
@@ -102,7 +99,7 @@ public partial class Battle : Node2D
         {
             PartyInfoPanel panel = PartyInfoPanelScene.Instantiate<PartyInfoPanel>();
             panel.PartyMember = ally;
-            UI.AddPartyInfoPanel(panel);
+            UI.AddPartyInfoPanel(panel: panel);
         }
     }
 

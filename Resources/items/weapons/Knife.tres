@@ -15,6 +15,7 @@ metadata/_custom_type_script = "uid://dbfni13yxb2qm"
 script = ExtResource("1_8r2dc")
 APCost = 1
 DamageRange = SubResource("Resource_gitxv")
+WeaponType = 0
 Name = "Knife"
 ID = 2
 Description = "A weathered blade with a chipped edge and flecks of rust. It's seen better days, but in the right hands, it’s still deadly."

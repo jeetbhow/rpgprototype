@@ -87,7 +87,7 @@ public partial class Game : Node
         ValueTuple<int, int> enemyTwoD6 = RollTwoD6();
         int enemyD6Sum = enemyTwoD6.Item1 + enemyTwoD6.Item2;
 
-        int effectiveDifficulty = (enemyD6Sum + enemy.Rhetoric.Value + difficulty) - (player.Rhetoric.Value + playerD6Sum);
+        int effectiveDifficulty = (enemyD6Sum + enemy.Rhetoric.Value + difficulty) - (player.Charisma.Value + playerD6Sum);
         float successChance = GetSuccessChance(effectiveDifficulty);
 
         return _rng.Randf() < successChance;

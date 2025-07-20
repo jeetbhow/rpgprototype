@@ -1,29 +1,23 @@
-using System.Linq;
 using Godot;
+using System.Linq;
 
 using Combat.Talk;
 
 namespace Combat.Actors;
 
 [GlobalClass]
-public abstract partial class Enemy : Fighter
+public partial class Enemy : Fighter
 {
-    [Export]
-    public SpriteFrames SpriteFrames { get; set; }
-    [Export]
-    public FighterAI AI { get; set; }
-    [Export]
-    public TalkAction[] TalkActions { get; set; }
-    [Export]
-    public string IntroLog { get; set; }
-    [Export]
-    public string IntroBalloon { get; set; }
-    [Export]
-    public string DeathMsgLog { get; set; }
-    [Export]
-    public string DeathMsgBalloon { get; set; }
-    [Export]
-    public string[] AttackBalloonText { get; set; }
+    [Export] public SpriteFrames SpriteFrames { get; set; }
+    [Export] public FighterAI AI { get; set; }
+    [Export] public TalkAction[] TalkActions { get; set; }
+
+    [ExportGroup("Enemy Dialogue")]
+    [Export] public string IntroLog { get; set; }
+    [Export] public string IntroBalloon { get; set; }
+    [Export] public string DeathMsgLog { get; set; }
+    [Export] public string DeathMsgBalloon { get; set; }
+    [Export] public string[] AttackBalloonText { get; set; }
 
     public AIAction PickAction()
     {
@@ -42,10 +36,17 @@ public abstract partial class Enemy : Fighter
     {
         if (fighters.Length == 0) return null;
 
-        // Simple random selection for now
+        // TODO: Implement smarter targeting logic.
         int index = (int)(GD.Randi() % fighters.Length);
         return fighters[index];
     }
 
-    public abstract TalkActionResult GetTalkActionResult(Player player, TalkAction action);
+    public void RevealWeakness()
+    {
+        TalkActions
+            .Where(action => action.Type == TalkActionType.WeaknessExposed)
+            .ToList()
+            .ForEach(action => action.Visible = true);
+
+    }
 }

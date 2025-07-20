@@ -83,6 +83,22 @@ public partial class EnemyNode : Node2D
         HideHP();
     }
 
+    public async void Surrender(Enemy enemy)
+    {
+        if (enemy != EnemyData) return;
+        try
+        {
+            HideHP();
+            _animationPlayer.Play("fade_out");
+            await ToSignal(_animationPlayer, "animation_finished");
+            QueueFree();
+        }
+        catch (Exception e)
+        {
+            GD.PushError($"Surrender failed: {e}");
+        }
+    }
+
     public async void OnAttackRequested(FighterEventArgs args)
     {
         if (args.Attacker is Ally && args.Defender == EnemyData)
@@ -131,25 +147,41 @@ public partial class EnemyNode : Node2D
     public async Task RespondToTalkAction(Player player, TalkAction action)
     {
         HideHP();
-        TalkActionResult result = EnemyData.GetTalkActionResult(player, action);
-
-        SignalHub.Instance.EmitSignal(SignalHub.SignalName.CombatLogUpdateRequested, result.StartLogEntry);
+        TalkActionResult result = action.Result;
+        SignalHub.Instance.EmitSignal(SignalHub.SignalName.CombatLogUpdateRequested, result.InitialLogEntry);
         await ToSignal(SignalHub.Instance, SignalHub.SignalName.CombatLogUpdated);
 
-        string balloonText;
-        string endLogEntry;
         if (Game.Instance.CombatSpeechCheck(player, EnemyData, action.Difficulty))
         {
-            balloonText = result.SuccessBalloonText;
-            endLogEntry = result.SuccessLogEntry;
+            await ChatBalloon.PlayMessage($"[shake rate={TextShakeRate} level={TextShakeLevel}]" + result.SuccessBalloonText + "[/shake]", 700);
+            SignalHub.Instance.EmitSignal(SignalHub.SignalName.CombatLogUpdateRequested, result.SuccessLogEntry);
+            ApplyTalkActionEffect(result.Effect, player);
         }
         else
         {
-            balloonText = result.FailureBalloonText;
-            endLogEntry = result.FailureLogEntry;
+            await ChatBalloon.PlayMessage($"[shake rate={TextShakeRate} level={TextShakeLevel}]" + result.FailureBalloonText + "[/shake]", 700);
+            SignalHub.Instance.EmitSignal(SignalHub.SignalName.CombatLogUpdateRequested, result.FailureLogEntry);
         }
-        await ChatBalloon.PlayMessage($"[shake rate={TextShakeRate} level={TextShakeLevel}]" + balloonText + "[/shake]", 700);
-        SignalHub.Instance.EmitSignal(SignalHub.SignalName.CombatLogUpdateRequested, endLogEntry);
+    }
+
+    private void ApplyTalkActionEffect(TalkActionEffect effect, Player player)
+    {
+        switch (effect)
+        {
+            case TalkActionEffect.RevealWeakness:
+                EnemyData.RevealWeakness();
+                break;
+            case TalkActionEffect.Surrender:
+                SignalHub.Instance.EmitSignal(SignalHub.SignalName.EnemySurrendered, EnemyData);
+                break;
+            case TalkActionEffect.Death:
+                _ = Die();
+                break;
+            case TalkActionEffect.None:
+            default:
+                // No effect
+                break;
+        }
     }
 
     public void ShowHP()

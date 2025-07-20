@@ -15,6 +15,7 @@ metadata/_custom_type_script = "uid://dbfni13yxb2qm"
 script = ExtResource("2_8vrg1")
 APCost = 3
 DamageRange = SubResource("Resource_otuss")
+WeaponType = 0
 Name = "Baseball Bat"
 ID = 1
 Description = "A solid wooden bat with a few nicks and scratches—clearly well-used, and maybe not just for baseball. Balanced and heavy, it’s just as good for home runs as it is for fending off trouble."

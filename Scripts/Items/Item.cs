@@ -6,7 +6,8 @@ public enum ItemID
 {
     None,
     BaseballBat,
-    Knife
+    Knife,
+    SlimeJelly
 }
 
 [GlobalClass]
@@ -17,6 +18,9 @@ public partial class Item : Resource
 
     [Export]
     public ItemID ID { get; set; }
+
+    [Export]
+    public int Value { get; set; }
 
     [Export]
     public string Description { get; set; }

@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://dugp3mi6abxwy" path="res://Assets/UI/chat_balloon.png" id="1_e61kb"]
 [ext_resource type="Script" uid="uid://dc2a7by0qr8uk" path="res://Scenes/Battle/UI/ChatBalloon/ChatBallloon.cs" id="2_adk1f"]
-[ext_resource type="FontFile" uid="uid://wilonhv4avlx" path="res://Resources/Fonts/upheavtt.ttf" id="3_fj2jp"]
+[ext_resource type="FontFile" uid="uid://bss32c83k3n3l" path="res://Resources/Fonts/DePixelHalbfett.otf" id="3_adk1f"]
 [ext_resource type="AudioStream" uid="uid://cnqk4vr8l78gj" path="res://Assets/Audio/SFX/blip.wav" id="4_fj2o6"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_fj2o6"]
@@ -10,8 +10,8 @@ texture = ExtResource("1_e61kb")
 region_rect = Rect2(3, 1, 25, 29)
 
 [sub_resource type="Theme" id="Theme_fj2o6"]
-default_font = ExtResource("3_fj2jp")
-default_font_size = 22
+default_font = ExtResource("3_adk1f")
+default_font_size = 14
 
 [node name="ChatBalloon" type="PanelContainer"]
 offset_top = 10.0

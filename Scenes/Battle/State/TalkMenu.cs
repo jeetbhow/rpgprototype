@@ -44,8 +44,8 @@ public partial class TalkMenu : StateNode
     public async void HandleTalkAction()
     {
         _isCurrentlyTalking = true;
-
         Battle.UI.Commands.Choices.Active = false;
+
         int index = Battle.UI.Commands.Choices.SelectedIndex;
         TalkAction action = _targetedEnemy.TalkActions[index];
         EnemyNode enemyNode = Battle.EnemyNodes.Find(node => node.EnemyData == _targetedEnemy);
@@ -71,7 +71,10 @@ public partial class TalkMenu : StateNode
             ChoiceContent choiceContent = ChoiceContentScene.Instantiate<ChoiceContent>();
             choiceContent.Label.Text = action.Text;
             choiceContent.Enabled = Game.Instance.Player.AP >= _TalkAPCost;
-            Battle.UI.Commands.Choices.AddChoice(choiceContent);
+            if (action.Visible)
+            {
+                Battle.UI.Commands.Choices.AddChoice(choiceContent);
+            }
         }
         Battle.UI.Commands.Choices.HideAllArrows();
         Battle.UI.Commands.Choices.ShowArrow(0);

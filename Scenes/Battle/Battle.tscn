@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" uid="uid://bxwqvj1ig43b2" path="res://Scenes/Battle/Battle.cs" id="1_07e4u"]
 [ext_resource type="PackedScene" uid="uid://dw7vckg81r5s3" path="res://Scenes/Battle/UI/PartyInfoPanel/PartyInfoPanel.tscn" id="2_cmwrv"]
-[ext_resource type="Resource" uid="uid://tts4qaemr8lh" path="res://Resources/Enemies/Jeff/Jeff.tres" id="2_nw8o3"]
 [ext_resource type="Resource" uid="uid://dxrs5ympbge7y" path="res://Resources/Player.tres" id="2_tx6ec"]
+[ext_resource type="Resource" uid="uid://d4785ruwpdcw" path="res://Resources/Enemies/Jeff/Jeff.tres" id="3_jsxpm"]
 [ext_resource type="Script" uid="uid://bxy8ovbqm6hg6" path="res://Scenes/Battle/State/BattleStart.cs" id="4_g1sps"]
 [ext_resource type="Script" uid="uid://c6hmuq7bnmysi" path="res://Scripts/Components/StateMachine/StateMachine.cs" id="4_odh8s"]
 [ext_resource type="PackedScene" uid="uid://d1yvb465tt7ik" path="res://Scenes/Battle/Enemy/EnemyNode.tscn" id="5_rremj"]
@@ -26,7 +26,7 @@
 [node name="Battle" type="Node2D"]
 script = ExtResource("1_07e4u")
 Party = Array[Object]([ExtResource("2_tx6ec")])
-Enemies = [ExtResource("2_nw8o3")]
+Enemies = [ExtResource("3_jsxpm")]
 PartyInfoPanelScene = ExtResource("2_cmwrv")
 EnemyNodeScene = ExtResource("5_rremj")
 

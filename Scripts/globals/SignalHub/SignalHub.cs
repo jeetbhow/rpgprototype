@@ -81,6 +81,9 @@ public partial class SignalHub : Node
     public delegate void FighterTurnEndedEventHandler(Fighter fighter);
 
     [Signal]
+    public delegate void EnemySurrenderedEventHandler(Enemy enemy);
+
+    [Signal]
     public delegate void CombatLogUpdateRequestedEventHandler(string message);
 
     [Signal]

@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="TalkAction" load_steps=4 format=3 uid="uid://cw7jc4vlgcr1e"]
+
+[ext_resource type="Script" uid="uid://c7lud6jc6v1nt" path="res://Scripts/Combat/Talk/TalkActionResult.cs" id="1_0ushb"]
+[ext_resource type="Script" uid="uid://c5u74yuyjsqlf" path="res://Scripts/Combat/Talk/TalkAction.cs" id="1_bol4o"]
+
+[sub_resource type="Resource" id="Resource_hmlmi"]
+script = ExtResource("1_0ushb")
+Effect = 1
+InitialLogEntry = "You ask Jeff if he's weak to anything."
+SuccessLogEntry = "It seems like he's weak to fire."
+FailureLogEntry = "It didn't work."
+SuccessBalloonText = "Slimes like me melt when we get hot."
+FailureBalloonText = "You'll only use that information to reject me."
+metadata/_custom_type_script = "uid://c7lud6jc6v1nt"
+
+[resource]
+script = ExtResource("1_bol4o")
+Text = "Weakness"
+Description = "Ask Jeff about his weaknesses. "
+Difficulty = 3
+Visible = true
+Result = SubResource("Resource_hmlmi")
+metadata/_custom_type_script = "uid://c5u74yuyjsqlf"

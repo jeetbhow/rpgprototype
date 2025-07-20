@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="FighterAI" load_steps=4 format=3 uid="uid://csvt78dlccdgf"]
+
+[ext_resource type="Script" uid="uid://cwcixixia3jao" path="res://Scripts/Combat/AI/FighterAI.cs" id="1_cf5n6"]
+[ext_resource type="Resource" uid="uid://cta2pvimbtsa0" path="res://Resources/Enemies/Jeff/Attacks/JeffPickNose.tres" id="1_y5kv0"]
+[ext_resource type="Resource" uid="uid://nuvnfsnmtooc" path="res://Resources/Enemies/Jeff/Attacks/JeffWiggle.tres" id="2_il3h2"]
+
+[resource]
+script = ExtResource("1_cf5n6")
+Actions = Array[Object]([ExtResource("1_y5kv0"), ExtResource("2_il3h2")])
+metadata/_custom_type_script = "uid://cwcixixia3jao"

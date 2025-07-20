@@ -13,7 +13,6 @@ metadata/_custom_type_script = "uid://dbfni13yxb2qm"
 
 [resource]
 script = ExtResource("1_r3bjm")
-Name = "Wiggle"
 Message = "Jeff wiggles around sporadically"
 DamageRange = SubResource("Resource_hjhax")
 APCost = 2
