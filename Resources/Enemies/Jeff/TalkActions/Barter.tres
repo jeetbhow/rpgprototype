@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="TalkAction" load_steps=4 format=3 uid="uid://cih7whrrff0dm"]
+
+[ext_resource type="Script" uid="uid://c5u74yuyjsqlf" path="res://Scripts/Combat/Talk/TalkAction.cs" id="1_gt8t1"]
+[ext_resource type="Script" uid="uid://c7lud6jc6v1nt" path="res://Scripts/Combat/Talk/TalkActionResult.cs" id="1_st4k8"]
+
+[sub_resource type="Resource" id="Resource_dap48"]
+script = ExtResource("1_st4k8")
+Effect = 1
+InitialLogEntry = "You tell Jeff that you would like to buy parts of his body."
+SuccessLogEntry = "You barter with Jeff."
+FailureLogEntry = "It didn't work."
+SuccessBalloonText = "*Sigh*, fiiine I guess I could give you some."
+FailureBalloonText = "That's disgusting."
+metadata/_custom_type_script = "uid://c7lud6jc6v1nt"
+
+[resource]
+script = ExtResource("1_gt8t1")
+Text = "Barter"
+Description = "Purchase their items."
+Difficulty = 3
+Visible = true
+Type = 0
+Result = SubResource("Resource_dap48")
+metadata/_custom_type_script = "uid://c5u74yuyjsqlf"

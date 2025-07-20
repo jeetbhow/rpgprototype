@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Item" load_steps=2 format=3 uid="uid://cc0rqxiu5p5u2"]
+
+[ext_resource type="Script" uid="uid://1r6t4iq1jn48" path="res://Scripts/Items/Item.cs" id="1_0htka"]
+
+[resource]
+script = ExtResource("1_0htka")
+Name = "Slime Jelly"
+ID = 3
+Value = 5
+Description = "A piece of jelly from a slime. It smells kind of fruity."
+metadata/_custom_type_script = "uid://1r6t4iq1jn48"

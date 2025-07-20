@@ -8,8 +8,8 @@ namespace Combat.Actors;
 [GlobalClass]
 public partial class Player : Ally
 {
-    [Export]
-    public Item[] Inventory { get; set; }
+    [Export] public Item[] Inventory { get; set; }
+    [Export] public int Money { get; set; }
 
     /// <summary>
     /// Returns all weapons in the player's inventory.

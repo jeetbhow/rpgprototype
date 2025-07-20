@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://bhlaeslv50jid"]
+[gd_scene load_steps=23 format=3 uid="uid://bhlaeslv50jid"]
 
 [ext_resource type="Script" uid="uid://bxwqvj1ig43b2" path="res://Scenes/Battle/Battle.cs" id="1_07e4u"]
 [ext_resource type="PackedScene" uid="uid://dw7vckg81r5s3" path="res://Scenes/Battle/UI/PartyInfoPanel/PartyInfoPanel.tscn" id="2_cmwrv"]
@@ -20,6 +20,7 @@
 [ext_resource type="AudioStream" uid="uid://ceapr7mcvv0oa" path="res://Assets/Audio/random_encounter_01_v1.mp3" id="13_gibtw"]
 [ext_resource type="Script" uid="uid://cv67r44boui52" path="res://Scenes/Battle/State/WeaponMenu.cs" id="13_s833s"]
 [ext_resource type="Script" uid="uid://dhus4kwai8l0b" path="res://Scenes/Battle/State/TalkMenu.cs" id="14_nw8o3"]
+[ext_resource type="Script" uid="uid://b1l8oa4xg5ksu" path="res://Scenes/Battle/State/Barter.cs" id="15_odwtk"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_gibtw"]
 
@@ -78,19 +79,24 @@ PlayerTurn = NodePath("../PlayerTurn")
 TalkMenu = NodePath("../TalkMenu")
 metadata/_custom_type_script = "uid://dcifapt71jp00"
 
-[node name="ItemMenu" type="Node" parent="StateMachine" node_paths=PackedStringArray("Battle", "PlayerTurn", "WeaponMenu")]
-script = ExtResource("13_g3qtk")
-Battle = NodePath("../..")
-PlayerTurn = NodePath("../PlayerTurn")
-WeaponMenu = NodePath("../WeaponMenu")
-metadata/_custom_type_script = "uid://dcifapt71jp00"
-
-[node name="TalkMenu" type="Node" parent="StateMachine" node_paths=PackedStringArray("Battle", "PlayerTurn", "EnemyTarget")]
+[node name="TalkMenu" type="Node" parent="StateMachine" node_paths=PackedStringArray("Battle", "PlayerTurn", "EnemyTarget", "Barter")]
 script = ExtResource("14_nw8o3")
 Battle = NodePath("../..")
 ChoiceContentScene = ExtResource("10_ukbm8")
 PlayerTurn = NodePath("../PlayerTurn")
 EnemyTarget = NodePath("../EnemyTarget")
+Barter = NodePath("../Barter")
+metadata/_custom_type_script = "uid://dcifapt71jp00"
+
+[node name="Barter" type="Node" parent="StateMachine"]
+script = ExtResource("15_odwtk")
+metadata/_custom_type_script = "uid://dcifapt71jp00"
+
+[node name="ItemMenu" type="Node" parent="StateMachine" node_paths=PackedStringArray("Battle", "PlayerTurn", "WeaponMenu")]
+script = ExtResource("13_g3qtk")
+Battle = NodePath("../..")
+PlayerTurn = NodePath("../PlayerTurn")
+WeaponMenu = NodePath("../WeaponMenu")
 metadata/_custom_type_script = "uid://dcifapt71jp00"
 
 [node name="WeaponMenu" type="Node" parent="StateMachine" node_paths=PackedStringArray("Battle", "ItemMenu", "PlayerTurn")]

@@ -27,15 +27,24 @@ public partial class ChoiceList : VBoxContainer
         switch (keyEvent)
         {
             case InputEventKey k when k.IsActionPressed("MoveDown"):
-                SelectedIndex = (SelectedIndex + 1) % numCmds;
-                SwapArrows(prevIndex, SelectedIndex);
+                MoveSelection(1);
                 return;
             case InputEventKey k when k.IsActionPressed("MoveUp"):
-                SelectedIndex = (SelectedIndex - 1 + numCmds) % numCmds;
-                SwapArrows(prevIndex, SelectedIndex);
+                MoveSelection(-1);
                 return;
         }
     }
+
+    public void MoveSelection(int delta)
+    {
+        int prevIndex = SelectedIndex;
+        do
+        {
+            SelectedIndex = (SelectedIndex + delta + Count) % Count;
+        } while (!GetChoice(SelectedIndex).Visible);
+        SwapArrows(prevIndex, SelectedIndex);
+    }
+
     public override void _Ready()
     {
         SignalHub.Instance.EnemySelected += OnEnemySelected;

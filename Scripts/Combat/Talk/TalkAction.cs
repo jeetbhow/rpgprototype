@@ -1,13 +1,8 @@
-using System;
 using Godot;
 
-namespace Combat.Talk;
+using Combat.Actors;
 
-public enum TalkActionType
-{
-    Regular,
-    WeaknessExposed,
-}
+namespace Combat.Talk;
 
 [GlobalClass]
 public partial class TalkAction : Resource
@@ -16,6 +11,16 @@ public partial class TalkAction : Resource
     [Export] public string Description { get; set; }
     [Export] public int Difficulty { get; set; }
     [Export] public bool Visible { get; set; } = true;
-    [Export] public TalkActionType Type { get; set; } = TalkActionType.Regular;
+    [Export] public bool Enabled { get; set; } = true;
     [Export] public TalkActionResult Result { get; set; }
+
+    public virtual bool IsVisible(Player player, Enemy enemy)
+    {
+        return Visible;
+    }
+
+    public virtual bool IsEnabled(Player player, Enemy enemy)
+    {
+        return Enabled;
+    }
 }

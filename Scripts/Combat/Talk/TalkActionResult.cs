@@ -5,6 +5,7 @@ namespace Combat.Talk;
 public enum TalkActionEffect
 {
     None,
+    Barter,
     RevealWeakness,
     Surrender,
     Death,

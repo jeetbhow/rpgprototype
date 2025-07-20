@@ -144,7 +144,7 @@ public partial class EnemyNode : Node2D
         }
     }
 
-    public async Task RespondToTalkAction(Player player, TalkAction action)
+    public async Task<TalkActionEffect> RespondToTalkAction(Player player, TalkAction action)
     {
         HideHP();
         TalkActionResult result = action.Result;
@@ -162,6 +162,8 @@ public partial class EnemyNode : Node2D
             await ChatBalloon.PlayMessage($"[shake rate={TextShakeRate} level={TextShakeLevel}]" + result.FailureBalloonText + "[/shake]", 700);
             SignalHub.Instance.EmitSignal(SignalHub.SignalName.CombatLogUpdateRequested, result.FailureLogEntry);
         }
+
+        return result.Effect;
     }
 
     private void ApplyTalkActionEffect(TalkActionEffect effect, Player player)
@@ -169,7 +171,7 @@ public partial class EnemyNode : Node2D
         switch (effect)
         {
             case TalkActionEffect.RevealWeakness:
-                EnemyData.RevealWeakness();
+                EnemyData.WeaknessExposed = true;
                 break;
             case TalkActionEffect.Surrender:
                 SignalHub.Instance.EmitSignal(SignalHub.SignalName.EnemySurrendered, EnemyData);

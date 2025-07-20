@@ -5,11 +5,11 @@
 
 [sub_resource type="Resource" id="Resource_hmlmi"]
 script = ExtResource("1_0ushb")
-Effect = 1
-InitialLogEntry = "You ask Jeff if he's weak to anything."
-SuccessLogEntry = "It seems like he's weak to fire."
+Effect = 2
+InitialLogEntry = "You ask Jeff if he's scared of anything."
+SuccessLogEntry = "It seems like he's weak to blades."
 FailureLogEntry = "It didn't work."
-SuccessBalloonText = "Slimes like me melt when we get hot."
+SuccessBalloonText = "Bladed weapons can slice me to pieces."
 FailureBalloonText = "You'll only use that information to reject me."
 metadata/_custom_type_script = "uid://c7lud6jc6v1nt"
 
@@ -19,5 +19,6 @@ Text = "Weakness"
 Description = "Ask Jeff about his weaknesses. "
 Difficulty = 3
 Visible = true
+Type = 0
 Result = SubResource("Resource_hmlmi")
 metadata/_custom_type_script = "uid://c5u74yuyjsqlf"

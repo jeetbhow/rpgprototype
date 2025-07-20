@@ -58,6 +58,7 @@ public partial class Battle : Node2D
         try
         {
             Enemies.ToList().ForEach(enemy => enemy.InitializeHPAndAP());
+            Party.ToList().ForEach(member => member.InitializeHPAndAP());
 
             SetupPartyInfoPanels();
             await SetupEnemyNodes();

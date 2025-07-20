@@ -12,6 +12,7 @@ public partial class TalkMenu : StateNode
     [Export] public PackedScene ChoiceContentScene { get; set; }
     [Export] public StateNode PlayerTurn { get; set; }
     [Export] public StateNode EnemyTarget { get; set; }
+    [Export] public StateNode Barter { get; set; }
 
     private const int _TalkAPCost = 2;
 
@@ -52,9 +53,16 @@ public partial class TalkMenu : StateNode
 
         // TODO: Find a better formula for handing AP costs for speech checks.
         Game.Instance.Player.AP -= _TalkAPCost;
-        await enemyNode.RespondToTalkAction(Game.Instance.Player, action);
+        TalkActionEffect effect = await enemyNode.RespondToTalkAction(player: Game.Instance.Player, action);
 
-        EmitSignal(SignalName.StateUpdate, PlayerTurn.Name);
+        if (effect != TalkActionEffect.Barter)
+        {
+            EmitSignal(SignalName.StateUpdate, PlayerTurn.Name);
+        }
+        else
+        {
+            EmitSignal(SignalName.StateUpdate, Barter.Name);
+        }
     }
 
     public override async Task Enter()
@@ -70,11 +78,12 @@ public partial class TalkMenu : StateNode
         {
             ChoiceContent choiceContent = ChoiceContentScene.Instantiate<ChoiceContent>();
             choiceContent.Label.Text = action.Text;
-            choiceContent.Enabled = Game.Instance.Player.AP >= _TalkAPCost;
-            if (action.Visible)
-            {
-                Battle.UI.Commands.Choices.AddChoice(choiceContent);
-            }
+            choiceContent.Enabled =
+                Game.Instance.Player.AP >= _TalkAPCost &&
+                action.IsEnabled(Game.Instance.Player, _targetedEnemy);
+            choiceContent.Visible = action.IsVisible(Game.Instance.Player, _targetedEnemy);
+            
+            Battle.UI.Commands.Choices.AddChoice(choiceContent);
         }
         Battle.UI.Commands.Choices.HideAllArrows();
         Battle.UI.Commands.Choices.ShowArrow(0);
