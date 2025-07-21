@@ -1,5 +1,7 @@
 using Godot;
 
+using Combat.Actors;
+
 namespace Combat.Talk;
 
 public enum TalkActionEffect
@@ -24,7 +26,9 @@ public partial class TalkActionResult : Resource
     [ExportGroup("Balloon Text")]
     [Export] public string SuccessBalloonText { get; set; }
     [Export] public string FailureBalloonText { get; set; }
-
-
-    public bool IsSuccess { get; private set; }
+ 
+    public virtual bool PrematureFailure(Player player, Enemy enemy)
+    {
+        return false;
+    }
 }

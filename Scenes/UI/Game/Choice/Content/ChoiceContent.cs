@@ -1,6 +1,6 @@
 using Godot;
 
-public partial class ChoiceContent : HBoxContainer
+public partial class ChoiceContent : PanelContainer
 {
     private bool _enabled = true;
 

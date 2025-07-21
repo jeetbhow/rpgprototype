@@ -14,8 +14,12 @@ public partial class EnemyNode : Node2D
     [Export] public Enemy EnemyData { get; set; }
     [Export] public PackedScene KnifeSlashEffect { get; set; }
     [Export] public PackedScene BaseballBatHitEffect { get; set; }
+
+    [ExportGroup("Text Effects")]
     [Export] public int TextShakeRate = 50;
     [Export] public int TextShakeLevel = 10;
+
+    [ExportGroup("Combat Effects")]
     [Export] public float BlinkSeconds = 1.0f;
     [Export] public float InitialShakeSpeed { get; set; } = 20.0f;
     [Export] public float ShakeIntensity { get; set; } = 1.0f;
@@ -83,9 +87,8 @@ public partial class EnemyNode : Node2D
         HideHP();
     }
 
-    public async void Surrender(Enemy enemy)
+    public async void Surrender()
     {
-        if (enemy != EnemyData) return;
         try
         {
             HideHP();
@@ -151,19 +154,28 @@ public partial class EnemyNode : Node2D
         SignalHub.Instance.EmitSignal(SignalHub.SignalName.CombatLogUpdateRequested, result.InitialLogEntry);
         await ToSignal(SignalHub.Instance, SignalHub.SignalName.CombatLogUpdated);
 
+        await Game.Instance.Wait(500);
+
+        if (result.PrematureFailure(player, EnemyData))
+        {
+            return TalkActionEffect.None;
+        }
+
         if (Game.Instance.CombatSpeechCheck(player, EnemyData, action.Difficulty))
         {
             await ChatBalloon.PlayMessage($"[shake rate={TextShakeRate} level={TextShakeLevel}]" + result.SuccessBalloonText + "[/shake]", 700);
             SignalHub.Instance.EmitSignal(SignalHub.SignalName.CombatLogUpdateRequested, result.SuccessLogEntry);
             ApplyTalkActionEffect(result.Effect, player);
+            return result.Effect;
         }
         else
         {
             await ChatBalloon.PlayMessage($"[shake rate={TextShakeRate} level={TextShakeLevel}]" + result.FailureBalloonText + "[/shake]", 700);
             SignalHub.Instance.EmitSignal(SignalHub.SignalName.CombatLogUpdateRequested, result.FailureLogEntry);
+            return TalkActionEffect.None;
         }
 
-        return result.Effect;
+
     }
 
     private void ApplyTalkActionEffect(TalkActionEffect effect, Player player)
@@ -174,7 +186,7 @@ public partial class EnemyNode : Node2D
                 EnemyData.WeaknessExposed = true;
                 break;
             case TalkActionEffect.Surrender:
-                SignalHub.Instance.EmitSignal(SignalHub.SignalName.EnemySurrendered, EnemyData);
+                Surrender();
                 break;
             case TalkActionEffect.Death:
                 _ = Die();

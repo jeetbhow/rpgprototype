@@ -1,24 +1,14 @@
-[gd_resource type="Resource" script_class="BrandishKnife" load_steps=4 format=3 uid="uid://0h6dwasw5bg8"]
+[gd_resource type="Resource" script_class="BrandishKnife" load_steps=3 format=3 uid="uid://0h6dwasw5bg8"]
 
-[ext_resource type="Script" uid="uid://5sja8j20r5ci" path="res://Scripts/Combat/Talk/EnemySpecific/Jeff/BrandishKnife.cs" id="1_fh2yh"]
-[ext_resource type="Script" uid="uid://c7lud6jc6v1nt" path="res://Scripts/Combat/Talk/TalkActionResult.cs" id="1_vuk02"]
-
-[sub_resource type="Resource" id="Resource_vuk02"]
-script = ExtResource("1_vuk02")
-Effect = 3
-InitialLogEntry = "You wave your knife around, threateningly."
-SuccessLogEntry = "Jeff flees from fear of being hacked into pieces."
-FailureLogEntry = "It didn't work."
-SuccessBalloonText = "Eeep! Get away from me!"
-FailureBalloonText = "I'm not afraid of you."
-metadata/_custom_type_script = "uid://c7lud6jc6v1nt"
+[ext_resource type="Resource" uid="uid://inexqty2aux6" path="res://Resources/Enemies/Jeff/TalkActionResult/BrandishKnifeResult.tres" id="1_vuk02"]
+[ext_resource type="Script" uid="uid://5sja8j20r5ci" path="res://Scripts/Combat/Talk/EnemySpecific/Jeff/Actions/BrandishKnife.cs" id="2_vuk02"]
 
 [resource]
-script = ExtResource("1_fh2yh")
+script = ExtResource("2_vuk02")
 Text = "Brandish knife"
 Description = "Threaten Jeff with your knife."
 Difficulty = 0
 Visible = false
-Enabled = false
-Result = SubResource("Resource_vuk02")
+Enabled = true
+Result = ExtResource("1_vuk02")
 metadata/_custom_type_script = "uid://5sja8j20r5ci"

@@ -14,7 +14,7 @@ theme_override_styles/panel = ExtResource("11_ao6v7")
 script = ExtResource("3_fkp1p")
 TextLabel = NodePath("MarginContainer/VBoxContainer/Text")
 NameLabel = NodePath("MarginContainer/VBoxContainer/Name")
-Choices = NodePath("MarginContainer/VBoxContainer/Choices")
+Choices = NodePath("MarginContainer/VBoxContainer/ScrollContainer/Choices")
 SfxTimer = NodePath("SfxTimer")
 Sfx = NodePath("Sfx")
 
@@ -47,7 +47,12 @@ fit_content = true
 scroll_active = false
 scroll_following = true
 
-[node name="Choices" parent="MarginContainer/VBoxContainer" instance=ExtResource("14_of02c")]
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(300, 150)
+layout_mode = 2
+follow_focus = true
+
+[node name="Choices" parent="MarginContainer/VBoxContainer/ScrollContainer" instance=ExtResource("14_of02c")]
 visible = false
 layout_mode = 2
 theme = null

@@ -4,24 +4,27 @@
 [ext_resource type="Texture2D" uid="uid://b7t13l0yk61cx" path="res://Assets/UI/arrrow.png" id="2_ivjlu"]
 [ext_resource type="Theme" uid="uid://x6m3btvacua5" path="res://Resources/Styles/TextboxDefaultTheme.tres" id="3_2x2q0"]
 
-[node name="HBoxContainer" type="HBoxContainer" node_paths=PackedStringArray("Arrow", "Label")]
-offset_right = 130.0
+[node name="HBoxContainer" type="PanelContainer" node_paths=PackedStringArray("Arrow", "Label")]
+offset_right = 176.0
 offset_bottom = 32.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme_override_constants/separation = 8
+focus_mode = 2
 script = ExtResource("1_06upj")
-Arrow = NodePath("Arrow")
-Label = NodePath("Text")
+Arrow = NodePath("HBoxContainer/Arrow")
+Label = NodePath("HBoxContainer/Text")
 
-[node name="Arrow" type="TextureRect" parent="."]
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Arrow" type="TextureRect" parent="HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = ExtResource("2_ivjlu")
 stretch_mode = 3
 
-[node name="Text" type="RichTextLabel" parent="."]
+[node name="Text" type="RichTextLabel" parent="HBoxContainer"]
 clip_contents = false
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2

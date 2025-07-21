@@ -1,4 +1,5 @@
 using Godot;
+using Godot.Collections;
 using System.Linq;
 
 using Items;
@@ -8,7 +9,7 @@ namespace Combat.Actors;
 [GlobalClass]
 public partial class Player : Ally
 {
-    [Export] public Item[] Inventory { get; set; }
+    [Export] public Array<Item> Inventory { get; set; }
     [Export] public int Money { get; set; }
 
     /// <summary>

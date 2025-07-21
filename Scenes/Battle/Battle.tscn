@@ -88,8 +88,10 @@ EnemyTarget = NodePath("../EnemyTarget")
 Barter = NodePath("../Barter")
 metadata/_custom_type_script = "uid://dcifapt71jp00"
 
-[node name="Barter" type="Node" parent="StateMachine"]
+[node name="Barter" type="Node" parent="StateMachine" node_paths=PackedStringArray("Battle", "PlayerTurn")]
 script = ExtResource("15_odwtk")
+Battle = NodePath("../..")
+PlayerTurn = NodePath("../PlayerTurn")
 metadata/_custom_type_script = "uid://dcifapt71jp00"
 
 [node name="ItemMenu" type="Node" parent="StateMachine" node_paths=PackedStringArray("Battle", "PlayerTurn", "WeaponMenu")]

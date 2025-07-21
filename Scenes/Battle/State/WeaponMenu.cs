@@ -2,19 +2,15 @@ using Godot;
 using System.Threading.Tasks;
 
 using Combat.Actors;
+using Items;
 
 public partial class WeaponMenu : StateNode
 {
-    [Export]
-    public Battle Battle { get; set; }
+    [Export] public Battle Battle { get; set; }
+    [Export] public StateNode ItemMenu { get; set; }
+    [Export] public StateNode PlayerTurn { get; set; }
 
-    [Export]
-    public StateNode ItemMenu { get; set; }
-
-    [Export]
-    public StateNode PlayerTurn { get; set; }
-
-    public override void _Input(InputEvent @event)
+    public override async void _Input(InputEvent @event)
     {
         if (@event.IsActionPressed("Cancel"))
         {
@@ -23,7 +19,7 @@ public partial class WeaponMenu : StateNode
 
         if (@event.IsActionPressed("Accept"))
         {
-            SelectWeapon();
+            await SelectWeapon();
         }
     }
 
@@ -50,15 +46,21 @@ public partial class WeaponMenu : StateNode
         var weapons = player.GetWeapons();
 
         Battle.UI.Commands.Choices.RemoveAll();
-        foreach (var weapon in weapons)
+        for (int i = 0; i < weapons.Length; i++)
         {
-            if (player.Weapon == weapon)
+            Weapon currWeapon = weapons[i];
+            if (player.Weapon == currWeapon)
             {
-                Battle.UI.Commands.Choices.AddChoice($"{weapon.Name} (E)");
+                Battle.UI.Commands.Choices.AddChoice($"{currWeapon.Name} (E)");
             }
             else
             {
-                Battle.UI.Commands.Choices.AddChoice(weapon.Name);
+                Battle.UI.Commands.Choices.AddChoice(currWeapon.Name);
+            }
+
+            if (player.AP < Game.WeaponSwapAPCost)
+            {
+                Battle.UI.Commands.Choices.ToggleChoiceAvailability(i, false);
             }
         }
 
@@ -66,14 +68,15 @@ public partial class WeaponMenu : StateNode
         Battle.UI.Commands.Choices.ShowArrow(0);
         Battle.UI.Commands.Choices.Active = true;
     }
-    public void SelectWeapon()
+    public async Task SelectWeapon()
     {
         int index = Battle.UI.Commands.Choices.SelectedIndex;
 
         var player = Battle.CurrFighter as Player;
         player.Weapon = player.GetWeapons()[index];
         player.AP -= Game.WeaponSwapAPCost;
-        
+
+        await Battle.UI.Log.AppendLine($"You swapped to the {player.Weapon.Name}.");
         EmitSignal(SignalName.StateUpdate, PlayerTurn.Name);
     }
 }

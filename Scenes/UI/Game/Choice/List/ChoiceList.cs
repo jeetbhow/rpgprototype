@@ -2,16 +2,15 @@ using Godot;
 
 using Signal;
 using Combat.Actors;
+using System;
 
 public partial class ChoiceList : VBoxContainer
 {
-    [Export]
-    public PackedScene ChoiceContentScene { get; set; }
+    [Export] public PackedScene ChoiceContentScene { get; set; }
 
     public bool Active { get; set; } = false;
     public int Count { get; private set; } = 0;
     public int SelectedIndex { get; private set; } = 0;
-
 
     public override void _Input(InputEvent @event)
     {
@@ -37,12 +36,30 @@ public partial class ChoiceList : VBoxContainer
 
     public void MoveSelection(int delta)
     {
+        if (delta == 0)
+        {
+            throw new ArgumentException($"ChoiceList: Invalid delta {delta}");
+        }
+
         int prevIndex = SelectedIndex;
         do
         {
             SelectedIndex = (SelectedIndex + delta + Count) % Count;
         } while (!GetChoice(SelectedIndex).Visible);
+
         SwapArrows(prevIndex, SelectedIndex);
+
+        if (SelectedIndex == 0 || SelectedIndex == Count - 1)
+        {
+            FocusChoice(SelectedIndex);
+            return;
+        }
+
+        int focusIndex = delta > 0
+            ? Math.Min(SelectedIndex + 2, Count - 1)
+            : Math.Max(SelectedIndex - 2, 0);
+
+        FocusChoice(focusIndex);
     }
 
     public override void _Ready()
@@ -81,6 +98,12 @@ public partial class ChoiceList : VBoxContainer
         }
     }
 
+    public void ToggleChoiceAvailability(int index, bool enabled)
+    {
+        ChoiceContent choiceContent = GetChoice(index);
+        choiceContent.Enabled = enabled;
+    }
+
     public void HideArrow(int index)
     {
         ChoiceContent choice = GetChild<ChoiceContent>(index, false);
@@ -91,6 +114,12 @@ public partial class ChoiceList : VBoxContainer
     {
         ChoiceContent choice = GetChild<ChoiceContent>(index, false);
         choice.ShowArrow();
+    }
+
+    public void FocusChoice(int index)
+    {
+        ChoiceContent choice = GetChild<ChoiceContent>(index, false);
+        choice.GrabFocus();
     }
 
     public ChoiceContent GetChoice(int index)
@@ -130,7 +159,7 @@ public partial class ChoiceList : VBoxContainer
         Count = 0;
         SelectedIndex = 0;
     }
-    
+
     public ChoiceContent GetSelectedChoice()
     {
         return GetChoice(SelectedIndex);

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="BrandishKnifeResult" load_steps=2 format=3 uid="uid://inexqty2aux6"]
+
+[ext_resource type="Script" uid="uid://dgovliq63ob41" path="res://Scripts/Combat/Talk/EnemySpecific/Jeff/Effects/BrandishKnifeResult.cs" id="1_800hj"]
+
+[resource]
+script = ExtResource("1_800hj")
+Effect = 3
+InitialLogEntry = "You wave your knife around, threateningly."
+SuccessLogEntry = "Jeff flees out of fear of being hacked into pieces."
+FailureLogEntry = "It didn't work."
+SuccessBalloonText = "Eeep! Get away from me!"
+FailureBalloonText = "I'm not afraid of you."
+metadata/_custom_type_script = "uid://dgovliq63ob41"
