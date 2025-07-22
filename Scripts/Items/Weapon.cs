@@ -13,7 +13,8 @@ public enum PhysicalDamageType
 [GlobalClass]
 public partial class Weapon : Item, IAttack
 {
-    [Export] public int APCost { get; private set; }
+    [Export] public int APCost { get; set; }
+    [Export] public int MPCost { get; set; }
     [Export] public float CritChance { get; set; }
     [Export] public float CritMultiplier { get; set; }
     [Export] public DamageRange DamageRange { get; set; }

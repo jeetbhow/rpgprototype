@@ -14,6 +14,7 @@ metadata/_custom_type_script = "uid://dbfni13yxb2qm"
 [resource]
 script = ExtResource("1_8r2dc")
 APCost = 2
+MPCost = 0
 CritChance = 0.2
 CritMultiplier = 4.0
 DamageRange = SubResource("Resource_gitxv")

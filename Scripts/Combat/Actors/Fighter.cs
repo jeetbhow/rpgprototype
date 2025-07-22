@@ -7,6 +7,7 @@ namespace Combat.Actors;
 public enum StatType
 {
     HP,
+    MP,
     AP,
 }
 
@@ -24,6 +25,7 @@ public partial class Fighter : Resource
     [ExportGroup("General")]
     [Export] public int Level { get; set; }
     [Export] public int MaxHP { get; set; }
+    [Export] public int MaxMP { get; set; }
     [Export] public int MaxAP { get; set; }
 
     [ExportGroup("Body")]
@@ -47,6 +49,7 @@ public partial class Fighter : Resource
     [Export] public Skill Dexterity { get; set; } = new Skill(SkillType.Dexterity, 0);
 
     public int Initiative { get; set; }   // Set at runtime. 
+
     public int HP
     {
         get { return _hp; }
@@ -54,6 +57,15 @@ public partial class Fighter : Resource
         {
             _hp = Mathf.Max(0, value);
             SignalHub.Instance?.EmitSignal(SignalHub.SignalName.FighterStatChanged, this, (int)StatType.HP, _hp);
+        }
+    }
+    public int MP
+    {
+        get { return _mp; }
+        set
+        {
+            _mp = Mathf.Max(0, value);
+            SignalHub.Instance?.EmitSignal(SignalHub.SignalName.FighterStatChanged, this, (int)StatType.MP);
         }
     }
     public int AP
@@ -66,11 +78,12 @@ public partial class Fighter : Resource
         }
     }
 
-    private int _ap, _hp;
+    private int _hp, _mp, _ap;
 
-    public void InitializeHPAndAP()
+    public void InitializeStats()
     {
         AP = MaxAP;
+        MP = MaxMP;
         HP = MaxHP;
     }
 

@@ -58,8 +58,8 @@ public partial class Battle : Node2D
         _camera = GetNode<Camera2D>("Camera2D");
         try
         {
-            Enemies.ToList().ForEach(enemy => enemy.InitializeHPAndAP());
-            Party.ToList().ForEach(member => member.InitializeHPAndAP());
+            Enemies.ToList().ForEach(enemy => enemy.InitializeStats());
+            Party.ToList().ForEach(member => member.InitializeStats());
 
             SetupPartyInfoPanels();
             CreateNPCWeaponSkills();

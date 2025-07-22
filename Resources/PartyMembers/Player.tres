@@ -79,6 +79,7 @@ Portrait = SubResource("AtlasTexture_ui8vl")
 Name = "Eri"
 Level = 1
 MaxHP = 10
+MaxMP = 10
 MaxAP = 4
 Strength = SubResource("Resource_svadj")
 Endurance = SubResource("Resource_867lb")

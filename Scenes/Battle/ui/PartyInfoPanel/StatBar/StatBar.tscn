@@ -1,11 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://dda28f5te2f4y"]
+[gd_scene load_steps=3 format=3 uid="uid://dda28f5te2f4y"]
 
 [ext_resource type="Theme" uid="uid://x6m3btvacua5" path="res://Resources/Styles/TextboxDefaultTheme.tres" id="1_flgt2"]
-[ext_resource type="Script" uid="uid://bhf7tnyf4bsaa" path="res://Scenes/Battle/UI/PartyInfoPanel/PartyHPBar/PartyHPBar.cs" id="2_flgt2"]
-[ext_resource type="StyleBox" uid="uid://dg2wmvgh5xkej" path="res://Resources/Styles/HPBarBg.tres" id="3_cr2ce"]
-[ext_resource type="StyleBox" uid="uid://n57md1ke4av6" path="res://Resources/Styles/HPBarFill.tres" id="4_gmnei"]
+[ext_resource type="Script" uid="uid://bhf7tnyf4bsaa" path="res://Scenes/Battle/UI/PartyInfoPanel/StatBar/StatBar.cs" id="2_flgt2"]
 
-[node name="PartyHPBar" type="HBoxContainer"]
+[node name="StatBar" type="HBoxContainer"]
 z_index = 1
 offset_right = 134.0
 offset_bottom = 20.0
@@ -17,17 +15,15 @@ clip_contents = false
 custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
 size_flags_horizontal = 2
-size_flags_vertical = 4
-text = "HP
-"
+size_flags_vertical = 0
+text = "??"
 fit_content = true
 
 [node name="ProgressBar" type="ProgressBar" parent="."]
 custom_minimum_size = Vector2(100, 24)
 layout_mode = 2
 size_flags_horizontal = 0
-theme_override_styles/background = ExtResource("3_cr2ce")
-theme_override_styles/fill = ExtResource("4_gmnei")
+size_flags_vertical = 4
 value = 50.0
 show_percentage = false
 
