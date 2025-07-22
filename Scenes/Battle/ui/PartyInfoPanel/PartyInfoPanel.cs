@@ -2,13 +2,12 @@ using Godot;
 using System.Threading.Tasks;
 
 using Signal;
-using Combat.Attack;
 using Combat.Actors;
 
 [GlobalClass]
 public partial class PartyInfoPanel : PanelContainer
 {
-    public Ally PartyMember { get; set; }
+    public Fighter PartyMember { get; set; }
 
     private RichTextLabel _nameLabel;
     private PartyHPBar _hpBar;
@@ -33,13 +32,16 @@ public partial class PartyInfoPanel : PanelContainer
     {
         if (args.Defender == PartyMember)
         {
-            if (args.Attack.HasDamage)
-            {
-                int dmg = args.Attack.ComputeDamage();
-                PartyMember.HP -= dmg;
-            }
+            int dmg = args.Attack.ComputeDamage();
+            PartyMember.HP -= dmg;
 
             args.Attacker.AP -= args.Attack.APCost;
+
+            if (args.Defender is not Player)
+                SoundManager.Instance.PlaySfx(SoundManager.Sfx.Hurt, 8.0f);
+
+            SignalHub.Instance.EmitSignal(SignalHub.SignalName.CombatLogUpdateRequested, $"{args.Defender.Name} took {dmg} damage.");
+            await ToSignal(SignalHub.Instance, SignalHub.SignalName.CombatLogUpdated);
             SignalHub.RaiseFighterAttacked(args.Attacker, args.Defender, args.Attack);
         }
 

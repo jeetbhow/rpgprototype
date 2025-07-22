@@ -4,30 +4,34 @@ using Combat.Attack;
 
 namespace Items;
 
-public enum WeaponType
+public enum PhysicalDamageType
 {
     Bladed,
     Blunt,
 }
 
 [GlobalClass]
-public partial class Weapon : Item, IAttacker
+public partial class Weapon : Item, IAttack
 {
-    [Export]
-    public int APCost { get; private set; }
-
-    [Export]
-    public DamageRange DamageRange { get; private set; }
-
-    [Export]
-    public WeaponType WeaponType { get; private set; }
+    [Export] public int APCost { get; private set; }
+    [Export] public float CritChance { get; set; }
+    [Export] public float CritMultiplier { get; set; }
+    [Export] public DamageRange DamageRange { get; set; }
+    [Export] public PhysicalDamageType DamageType { get; private set; }
 
     public int Damage { get; private set; }
     public bool HasDamage { get; set; } = true;
+    public bool LandedCrit { get; set; } = false;
 
-    public int ComputeDamage()
+    public int ComputeDamage(float multiplier = 1.0f)
     {
-        Damage = DamageRange.Roll();
+        LandedCrit = false;
+        Damage = Mathf.RoundToInt(DamageRange.Roll() * multiplier);
+        if (GD.Randf() < CritChance)
+        {
+            Damage = Mathf.RoundToInt(Damage * CritMultiplier);
+            LandedCrit = true;
+        }
         return Damage;
     }
 

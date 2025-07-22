@@ -1,11 +1,13 @@
-[gd_resource type="Resource" script_class="Enemy" load_steps=22 format=3 uid="uid://d4785ruwpdcw"]
+[gd_resource type="Resource" script_class="Enemy" load_steps=27 format=3 uid="uid://d4785ruwpdcw"]
 
-[ext_resource type="Resource" uid="uid://csvt78dlccdgf" path="res://Resources/Enemies/Jeff/Attacks/JeffAI.tres" id="1_1u7we"]
 [ext_resource type="Script" uid="uid://cq7dqoi4kd4vd" path="res://Scripts/Classes/Skill/Skill.cs" id="1_bk74h"]
 [ext_resource type="SpriteFrames" uid="uid://dqitn7jtgv3ri" path="res://Resources/Enemies/Jeff/JeffSF.tres" id="2_1u7we"]
 [ext_resource type="Script" uid="uid://bfsq0i25vcarl" path="res://Scripts/Combat/Actors/Enemy.cs" id="2_2np04"]
+[ext_resource type="Script" uid="uid://cjx5nq3eiwik8" path="res://Scripts/Combat/AI/Behaviours/RandomBehaviour.cs" id="2_dj5qp"]
+[ext_resource type="Script" uid="uid://dbfni13yxb2qm" path="res://Scripts/Combat/Attack/DamageRange.cs" id="2_u2v2x"]
 [ext_resource type="Resource" uid="uid://cc0rqxiu5p5u2" path="res://Resources/Items/Misc/SlimeJelly.tres" id="3_dj5qp"]
 [ext_resource type="Texture2D" uid="uid://cddkxetbmoyh3" path="res://Assets/Enemies/jerry.png" id="3_ds453"]
+[ext_resource type="Script" uid="uid://erew6y3n24ro" path="res://Scripts/Combat/AI/Actions/NPCAttackAction.cs" id="3_u2v2x"]
 [ext_resource type="Resource" uid="uid://cw7jc4vlgcr1e" path="res://Resources/Enemies/Jeff/TalkActions/AskAboutWeakness.tres" id="5_1h15v"]
 [ext_resource type="Resource" uid="uid://0h6dwasw5bg8" path="res://Resources/Enemies/Jeff/TalkActions/BrandishKnife.tres" id="7_dj5qp"]
 [ext_resource type="Resource" uid="uid://cih7whrrff0dm" path="res://Resources/Enemies/Jeff/TalkActions/Barter.tres" id="7_junf6"]
@@ -50,6 +52,25 @@ script = ExtResource("1_bk74h")
 Type = 5
 Value = 0
 
+[sub_resource type="Resource" id="Resource_c4r0r"]
+script = ExtResource("2_u2v2x")
+Max = 2
+Min = 1
+metadata/_custom_type_script = "uid://dbfni13yxb2qm"
+
+[sub_resource type="Resource" id="Resource_heh2o"]
+script = ExtResource("3_u2v2x")
+DamageRange = SubResource("Resource_c4r0r")
+CritChance = 0.0
+CritMultiplier = 0.0
+APCost = 2
+LogEntry = "Jeff wiggles sporadically."
+metadata/_custom_type_script = "uid://erew6y3n24ro"
+
+[sub_resource type="Resource" id="Resource_ee4xw"]
+script = ExtResource("2_dj5qp")
+metadata/_custom_type_script = "uid://cjx5nq3eiwik8"
+
 [sub_resource type="Resource" id="Resource_ldtig"]
 script = ExtResource("1_bk74h")
 Type = 11
@@ -73,14 +94,17 @@ Value = 0
 [resource]
 script = ExtResource("2_2np04")
 SpriteFrames = ExtResource("2_1u7we")
-AI = ExtResource("1_1u7we")
 TalkActions = Array[Object]([ExtResource("5_1h15v"), ExtResource("7_dj5qp"), ExtResource("7_junf6")])
-HeldItems = Array[Object]([ExtResource("3_dj5qp"), ExtResource("3_dj5qp"), ExtResource("3_dj5qp"), ExtResource("3_dj5qp"), ExtResource("3_dj5qp")])
+PhysicalWeakness = 0
+PhysicalResistance = 1
 IntroLog = "Jeff creeps up on you from behind."
 IntroBalloon = "Will you be my girlfriend?"
 DeathMsgLog = "Jeff will die alone."
 DeathMsgBalloon = "I guess nice slimes really do finish last."
-AttackBalloonText = PackedStringArray("Why does no one like me?", "Is it because I\'m only 2\'3?", "I\'m so lonely...")
+AttackBalloonText = PackedStringArray("Why does no one like me?", "You were ugly anyways.", "I\'m so lonely...", "*wiggling intensifies*")
+NPCActions = Array[Object]([SubResource("Resource_heh2o")])
+NPCBehaviour = SubResource("Resource_ee4xw")
+HeldItems = Array[Object]([ExtResource("3_dj5qp"), ExtResource("3_dj5qp")])
 Portrait = ExtResource("3_ds453")
 Name = "Jeff"
 Level = 1

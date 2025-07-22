@@ -1,5 +1,5 @@
 using Godot;
-using System.Collections.Generic;
+using Godot.Collections;
 using System.Threading.Tasks;
 
 using Combat.Actors;
@@ -30,19 +30,19 @@ public partial class Game : Node
         }
     }
 
-    public List<Ally> Party { get; set; } = [];
+    public Array<Fighter> Party { get; set; } = [];
 
     public override void _Ready()
     {
         Instance = this;
     }
 
-    public void AddPartyMember(Ally member)
+    public void AddPartyMember(PartyMember member)
     {
         Party.Add(member);
     }
 
-    public void RemovePartyMember(Ally member)
+    public void RemovePartyMember(PartyMember member)
     {
         Party.Remove(member);
     }
@@ -70,6 +70,12 @@ public partial class Game : Node
             12 => 0.03f,
             > 12 => 0.0f
         };
+    }
+
+    public T PickRandomElement<T>(T[] arr)
+    {
+        int index = _rng.RandiRange(0, arr.Length - 1);
+        return arr[index];
     }
 
     public ValueTuple<int, int> RollTwoD6()

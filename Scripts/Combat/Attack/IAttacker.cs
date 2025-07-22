@@ -1,8 +1,12 @@
 namespace Combat.Attack;
 
-public interface IAttacker
+public interface IAttack
 {
-    bool HasDamage { get; set; }
+    DamageRange DamageRange { get; set; }
+    bool LandedCrit { get; set; }
+    float CritChance { get; set; }
+    float CritMultiplier { get; }
     int APCost { get; }
-    public int ComputeDamage();
+
+    public int ComputeDamage(float multiplier = 1.0f);
 }

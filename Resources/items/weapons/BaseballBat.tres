@@ -7,15 +7,16 @@
 script = ExtResource("1_rxamx")
 Max = 6
 Min = 3
-CritChance = 0.05
-CritMultiplier = 2.0
 metadata/_custom_type_script = "uid://dbfni13yxb2qm"
 
 [resource]
 script = ExtResource("2_8vrg1")
 APCost = 3
+CritChance = 0.0
+CritMultiplier = 0.0
 DamageRange = SubResource("Resource_otuss")
-WeaponType = 1
+DamageType = 1
+LogEntry = ""
 Name = "Baseball Bat"
 ID = 1
 Value = 0

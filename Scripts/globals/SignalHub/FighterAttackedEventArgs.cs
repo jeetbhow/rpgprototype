@@ -15,12 +15,12 @@ public class FighterEventArgs : EventArgs
 {
     public Fighter Attacker { get; }
     public Fighter Defender { get; }
-    public IAttacker Attack { get; }
+    public IAttack Attack { get; }
 
     public FighterEventArgs(
         Fighter attacker,
         Fighter defender,
-        IAttacker attack)
+        IAttack attack)
     {
         Attacker = attacker;
         Defender = defender;

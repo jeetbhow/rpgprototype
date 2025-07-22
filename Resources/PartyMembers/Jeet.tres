@@ -1,0 +1,100 @@
+[gd_resource type="Resource" script_class="PartyMember" load_steps=20 format=3 uid="uid://b7s5c67qkd5yo"]
+
+[ext_resource type="Script" uid="uid://cq7dqoi4kd4vd" path="res://Scripts/Classes/Skill/Skill.cs" id="1_4bli4"]
+[ext_resource type="Texture2D" uid="uid://citvlndc7pyyk" path="res://Assets/Characters/Jeet/jeet.png" id="2_1vrae"]
+[ext_resource type="Script" uid="uid://cjx5nq3eiwik8" path="res://Scripts/Combat/AI/Behaviours/RandomBehaviour.cs" id="2_ee2sh"]
+[ext_resource type="Resource" uid="uid://cpgiswthhpyrs" path="res://Resources/Items/Weapons/Knife.tres" id="4_ee2sh"]
+[ext_resource type="Script" uid="uid://cwye4ocj3fsm4" path="res://Scripts/Combat/Actors/PartyMember.cs" id="5_cqd6r"]
+
+[sub_resource type="Resource" id="Resource_ioy6n"]
+script = ExtResource("1_4bli4")
+Type = 3
+Value = 3
+
+[sub_resource type="Resource" id="Resource_8ccrv"]
+script = ExtResource("1_4bli4")
+Type = 7
+Value = 3
+
+[sub_resource type="Resource" id="Resource_5xrh3"]
+script = ExtResource("1_4bli4")
+Type = 9
+Value = 3
+
+[sub_resource type="Resource" id="Resource_gushd"]
+script = ExtResource("1_4bli4")
+Type = 10
+Value = 3
+
+[sub_resource type="Resource" id="Resource_8exhj"]
+script = ExtResource("1_4bli4")
+Type = 8
+Value = 3
+
+[sub_resource type="Resource" id="Resource_svadj"]
+script = ExtResource("1_4bli4")
+Type = 2
+Value = 3
+
+[sub_resource type="Resource" id="Resource_1baau"]
+script = ExtResource("1_4bli4")
+Type = 6
+Value = 3
+
+[sub_resource type="Resource" id="Resource_x0ow1"]
+script = ExtResource("1_4bli4")
+Type = 5
+Value = 3
+
+[sub_resource type="Resource" id="Resource_ee2sh"]
+script = ExtResource("2_ee2sh")
+metadata/_custom_type_script = "uid://cjx5nq3eiwik8"
+
+[sub_resource type="Resource" id="Resource_asna7"]
+script = ExtResource("1_4bli4")
+Type = 11
+Value = 3
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nsoc3"]
+atlas = ExtResource("2_1vrae")
+region = Rect2(1.09504, 0.730789, 29.6059, 20.8838)
+
+[sub_resource type="Resource" id="Resource_u1q2x"]
+script = ExtResource("1_4bli4")
+Type = 12
+Value = 3
+
+[sub_resource type="Resource" id="Resource_0rsj7"]
+script = ExtResource("1_4bli4")
+Type = 4
+Value = 3
+
+[sub_resource type="Resource" id="Resource_3ym6q"]
+script = ExtResource("1_4bli4")
+Type = 1
+Value = 3
+
+[resource]
+script = ExtResource("5_cqd6r")
+Weapon = ExtResource("4_ee2sh")
+NPCActions = null
+NPCBehaviour = SubResource("Resource_ee2sh")
+HeldItems = null
+Portrait = SubResource("AtlasTexture_nsoc3")
+Name = "Jeet"
+Level = 1
+MaxHP = 10
+MaxAP = 4
+Strength = SubResource("Resource_3ym6q")
+Endurance = SubResource("Resource_svadj")
+Athletics = SubResource("Resource_ioy6n")
+Rhetoric = SubResource("Resource_0rsj7")
+Logic = SubResource("Resource_x0ow1")
+Knowledge = SubResource("Resource_1baau")
+Authority = SubResource("Resource_8ccrv")
+Empathy = SubResource("Resource_8exhj")
+Charisma = SubResource("Resource_5xrh3")
+Perception = SubResource("Resource_asna7")
+Reflexes = SubResource("Resource_u1q2x")
+Dexterity = SubResource("Resource_gushd")
+metadata/_custom_type_script = "uid://cwye4ocj3fsm4"

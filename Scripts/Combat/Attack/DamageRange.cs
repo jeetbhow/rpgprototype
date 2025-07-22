@@ -1,19 +1,15 @@
 using Godot;
+using Signal;
 using System;
+using System.Threading.Tasks;
 
 namespace Combat.Attack;
 
 [GlobalClass]
 public partial class DamageRange : Resource
 {
-    [Export]
-    public int Max { get; set; }
-    [Export]
-    public int Min { get; set; }
-    [Export]
-    public float CritChance { get; set; }
-    [Export]
-    public float CritMultiplier { get; set; }
+    [Export] public int Max { get; set; }
+    [Export] public int Min { get; set; }
 
     /// <summary>
     /// Compute a random damage value between the values in the damage range and
@@ -24,10 +20,6 @@ public partial class DamageRange : Resource
     public int Roll()
     {
         float dmg = GD.RandRange(Min, Max);
-        if (CritChance >= GD.Randf())
-        {
-            dmg *= CritMultiplier;
-        }
-        return (int)Math.Round(dmg);
+        return Mathf.RoundToInt(dmg);
     }
 }

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Signal;
 using Combat.Actors;
 using Combat.UI;
+using Combat.Attack;
 
 namespace Combat;
 
@@ -30,7 +31,7 @@ public partial class EnemyTarget : StateNode
             return;
         }
 
-        int pnlIndex = Battle.Party.IndexOf((Ally)Battle.CurrFighter);
+        int pnlIndex = Battle.Party.IndexOf(Battle.CurrFighter);
         PartyInfoPanel panel = Battle.UI.GetPartyInfoPanel(pnlIndex);
 
         switch (keyEvent)
@@ -76,7 +77,7 @@ public partial class EnemyTarget : StateNode
 
         Enemy enemy = Battle.Enemies[_selectedEnemyIndex];
 
-        await Battle.UI.Log.AppendLine($"{player.Name} attacks {enemy.Name}.");
+        await Battle.UI.Log.AppendLine((player as IWeaponUser).CreateLogEntry(enemy));
         await Game.Instance.Wait(200);
 
         SignalHub.RaiseAttackRequested(
@@ -86,7 +87,6 @@ public partial class EnemyTarget : StateNode
         );
 
         await attackFinished;
-        await Battle.UI.Log.AppendLine($"{enemy.Name} takes {player.Weapon.Damage} damage.");
 
         EmitSignal(SignalName.StateUpdate, PlayerTurn.Name);
     }

@@ -88,7 +88,8 @@ layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_tw16v")
 
 [node name="Log" parent="MarginContainer/BattleInfo" instance=ExtResource("3_aswum")]
-custom_minimum_size = Vector2(600, 160)
+clip_contents = true
+custom_minimum_size = Vector2(600, 220)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_lsd6r")
 

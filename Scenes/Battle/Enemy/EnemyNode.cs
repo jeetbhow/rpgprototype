@@ -6,6 +6,7 @@ using Items;
 using Signal;
 using Combat.Talk;
 using Combat.Actors;
+using Combat.Attack;
 
 namespace Combat.UI;
 
@@ -42,10 +43,10 @@ public partial class EnemyNode : Node2D
 
     public override void _Ready()
     {
-        SignalHub.Instance.EnemySelected += OnEnemySelected;
-        SignalHub.Instance.AttackCancelled += OnAttackCancelled;
+        SignalHub.Instance.EnemySelected += async (enemy, index) => await OnEnemySelected(enemy, index);
+        SignalHub.Instance.AttackCancelled += async () => await OnAttackCancelled();
         SignalHub.AttackRequested += OnAttackRequested;
-        SignalHub.FighterAttacked += args => HideHP();
+        SignalHub.FighterAttacked += async args => await HideHP();
 
         _animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 
@@ -59,9 +60,6 @@ public partial class EnemyNode : Node2D
         _shadow = GetNode<Sprite2D>("Sprite/Shadow");
         _hpLabel = GetNode<RichTextLabel>("Healthbar/RichTextLabel");
 
-        _hpTimer = GetNode<Timer>("HPTimer");
-        _hpTimer.Timeout += OnHPTimerTimeout;
-
         ChatBalloon = GetNode<ChatBallloon>("ChatBalloon");
         DeathParticles = GetNode<GpuParticles2D>("DeathParticles");
         Healthbar = GetNode<ProgressBar>("Healthbar");
@@ -70,28 +68,28 @@ public partial class EnemyNode : Node2D
         _hpLabel.Text = $"{EnemyData.HP}/{EnemyData.MaxHP}";
     }
 
-    public void OnEnemySelected(Enemy enemy, int index)
+    public async Task OnEnemySelected(Enemy enemy, int index)
     {
         if (enemy == EnemyData)
         {
-            ShowHP();
+            await ShowHP();
         }
         else
         {
-            HideHP();
+            await HideHP();
         }
     }
 
-    public void OnAttackCancelled()
+    public async Task OnAttackCancelled()
     {
-        HideHP();
+        await HideHP();
     }
 
     public async void Surrender()
     {
         try
         {
-            HideHP();
+            await HideHP();
             _animationPlayer.Play("fade_out");
             await ToSignal(_animationPlayer, "animation_finished");
             QueueFree();
@@ -104,15 +102,48 @@ public partial class EnemyNode : Node2D
 
     public async void OnAttackRequested(FighterEventArgs args)
     {
-        if (args.Attacker is Ally && args.Defender == EnemyData)
+        bool attackerCondition = args.Attacker is PartyMember || args.Attacker is Player;
+        if (attackerCondition && args.Defender == EnemyData)
         {
-            await PlayEffects(args.Attack as Weapon);
-            args.Attacker.AP -= args.Attack.APCost;
-            await TakeDamage(args.Attack.ComputeDamage());
-            HideHP();
 
+            if (!Healthbar.Visible)
+            {
+                await ShowHP();
+            }
+
+            await PlayEffects(args.Attack as Weapon);
+            await CalculateDamage(args.Attacker, args.Attack);
             SignalHub.RaiseFighterAttacked(args.Attacker, args.Defender, args.Attack);
         }
+    }
+
+    public async Task CalculateDamage(Fighter attacker, IAttack attack)
+    {
+        attacker.AP -= attack.APCost;
+        int damage = 0;
+
+        if (attacker is IWeaponUser weaponUser)
+        {
+            if (weaponUser.Weapon.DamageType == EnemyData.PhysicalWeakness)
+            {
+                damage = attack.ComputeDamage(2.0f);
+            }
+            else if (weaponUser.Weapon.DamageType == EnemyData.PhysicalResistance)
+            {
+                damage = attack.ComputeDamage(0.5f);
+            }
+        }
+
+        _ = TakeDamage(damage);
+
+        if (attack.LandedCrit)
+        {
+            SignalHub.Instance.EmitSignal(SignalHub.SignalName.CombatLogUpdateRequested, "It was a critical hit!.");
+            await ToSignal(SignalHub.Instance, SignalHub.SignalName.CombatLogUpdated);
+        }
+
+        SignalHub.Instance.EmitSignal(SignalHub.SignalName.CombatLogUpdateRequested, $"{EnemyData.Name} took {damage} damage.");
+        await ToSignal(SignalHub.Instance, SignalHub.SignalName.CombatLogUpdated);
     }
 
     public async Task PlayEffects(Weapon weapon)
@@ -149,7 +180,7 @@ public partial class EnemyNode : Node2D
 
     public async Task<TalkActionEffect> RespondToTalkAction(Player player, TalkAction action)
     {
-        HideHP();
+        await HideHP();
         TalkActionResult result = action.Result;
         SignalHub.Instance.EmitSignal(SignalHub.SignalName.CombatLogUpdateRequested, result.InitialLogEntry);
         await ToSignal(SignalHub.Instance, SignalHub.SignalName.CombatLogUpdated);
@@ -174,8 +205,6 @@ public partial class EnemyNode : Node2D
             SignalHub.Instance.EmitSignal(SignalHub.SignalName.CombatLogUpdateRequested, result.FailureLogEntry);
             return TalkActionEffect.None;
         }
-
-
     }
 
     private void ApplyTalkActionEffect(TalkActionEffect effect, Player player)
@@ -198,20 +227,17 @@ public partial class EnemyNode : Node2D
         }
     }
 
-    public void ShowHP()
+    public async Task ShowHP()
     {
         Healthbar.Visible = true;
         _animationPlayer.Play("hp_appear");
+        await ToSignal(_animationPlayer, AnimationPlayer.SignalName.AnimationFinished);
     }
 
-    public void HideHP()
+    public async Task HideHP()
     {
         _animationPlayer.Play("hp_hide");
-        _hpTimer.Start();
-    }
-
-    public void OnHPTimerTimeout()
-    {
+        await ToSignal(_animationPlayer, AnimationPlayer.SignalName.AnimationFinished);
         Healthbar.Visible = false;
     }
 

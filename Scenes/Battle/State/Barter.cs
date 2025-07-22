@@ -17,11 +17,16 @@ public partial class Barter : StateNode
         {
             int index = Battle.UI.Commands.Choices.SelectedIndex;
             Item item = _enemy.HeldItems[index];
+            Game.Instance.Player.Money -= item.Value;
+            
+            Battle.UI.Commands.TextLabel.Text = $"Money: ${Game.Instance.Player.Money}";
 
             await Battle.UI.Log.AppendLine($"You purchased the {item.Name} from {_enemy.Name}.");
 
             _enemy.HeldItems.RemoveAt(index);
+
             Game.Instance.Player.Inventory.Add(item);
+
             EmitSignal(SignalName.StateUpdate, PlayerTurn.Name);
         }
     }
@@ -50,6 +55,7 @@ public partial class Barter : StateNode
 
     public override async Task Exit()
     {
+        Battle.UI.Commands.TextLabel.Visible = false;
         Battle.UI.Commands.Choices.RemoveAll();
         Battle.UI.Commands.Choices.Active = false;
     }

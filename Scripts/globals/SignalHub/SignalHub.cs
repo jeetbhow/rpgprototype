@@ -36,7 +36,7 @@ public partial class SignalHub : Node
 
     // Textbox Signals
 
-    public static void RaiseAttackRequested(Fighter attacker, Fighter defender, IAttacker attack)
+    public static void RaiseAttackRequested(Fighter attacker, Fighter defender, IAttack attack)
     {
         AttackRequested?.Invoke(new FighterEventArgs(
             attacker,
@@ -45,7 +45,7 @@ public partial class SignalHub : Node
         ));
     }
 
-    public static void RaiseFighterAttacked(Fighter attacker, Fighter defender, IAttacker attack)
+    public static void RaiseFighterAttacked(Fighter attacker, Fighter defender, IAttack attack)
     {
         FighterAttacked?.Invoke(new FighterEventArgs(
             attacker,

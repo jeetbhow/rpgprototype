@@ -1,8 +1,9 @@
-[gd_scene load_steps=23 format=3 uid="uid://bhlaeslv50jid"]
+[gd_scene load_steps=24 format=3 uid="uid://bhlaeslv50jid"]
 
 [ext_resource type="Script" uid="uid://bxwqvj1ig43b2" path="res://Scenes/Battle/Battle.cs" id="1_07e4u"]
 [ext_resource type="PackedScene" uid="uid://dw7vckg81r5s3" path="res://Scenes/Battle/UI/PartyInfoPanel/PartyInfoPanel.tscn" id="2_cmwrv"]
-[ext_resource type="Resource" uid="uid://dxrs5ympbge7y" path="res://Resources/Player.tres" id="2_tx6ec"]
+[ext_resource type="Resource" uid="uid://b05c0vk0vxeos" path="res://Resources/PartyMembers/Player.tres" id="2_tx6ec"]
+[ext_resource type="Resource" uid="uid://b7s5c67qkd5yo" path="res://Resources/PartyMembers/Jeet.tres" id="3_0fd0c"]
 [ext_resource type="Resource" uid="uid://d4785ruwpdcw" path="res://Resources/Enemies/Jeff/Jeff.tres" id="3_jsxpm"]
 [ext_resource type="Script" uid="uid://bxy8ovbqm6hg6" path="res://Scenes/Battle/State/BattleStart.cs" id="4_g1sps"]
 [ext_resource type="Script" uid="uid://c6hmuq7bnmysi" path="res://Scripts/Components/StateMachine/StateMachine.cs" id="4_odh8s"]
@@ -26,7 +27,7 @@
 
 [node name="Battle" type="Node2D"]
 script = ExtResource("1_07e4u")
-Party = Array[Object]([ExtResource("2_tx6ec")])
+Party = Array[Object]([ExtResource("2_tx6ec"), ExtResource("3_0fd0c")])
 Enemies = [ExtResource("3_jsxpm")]
 PartyInfoPanelScene = ExtResource("2_cmwrv")
 EnemyNodeScene = ExtResource("5_rremj")
@@ -127,6 +128,7 @@ metadata/_custom_type_script = "uid://dcifapt71jp00"
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("13_gibtw")
+autoplay = true
 
 [node name="TextureRect" type="TextureRect" parent="."]
 visible = false

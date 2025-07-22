@@ -25,7 +25,7 @@ public partial class TurnStart : StateNode
             case Player:
                 EmitSignal(SignalName.StateUpdate, PlayerTurn.Name);
                 break;
-            case Ally:
+            case PartyMember:
                 EmitSignal(SignalName.StateUpdate, NPCTurn.Name);
                 break;
         }

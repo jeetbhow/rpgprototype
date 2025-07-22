@@ -19,6 +19,6 @@ Text = "Barter"
 Description = "Purchase their items."
 Difficulty = 3
 Visible = true
-Type = 0
+Enabled = true
 Result = SubResource("Resource_dap48")
 metadata/_custom_type_script = "uid://c5u74yuyjsqlf"

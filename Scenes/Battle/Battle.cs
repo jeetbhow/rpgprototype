@@ -8,6 +8,8 @@ using System.Collections.Generic;
 using Signal;
 using Combat.UI;
 using Combat.Actors;
+using Combat.Attack;
+using Combat.AI;
 
 public partial class Battle : Node2D
 {
@@ -19,7 +21,7 @@ public partial class Battle : Node2D
 
     [Signal] public delegate void BattleReadyEventHandler();
 
-    [Export] public Array<Ally> Party { get; private set; }
+    [Export] public Array<Fighter> Party { get; private set; }
     [Export] public Array<Enemy> Enemies { get; private set; }
     [Export] public PackedScene PartyInfoPanelScene { get; set; }
     [Export] public PackedScene EnemyNodeScene { get; set; }
@@ -50,17 +52,17 @@ public partial class Battle : Node2D
 
     public async Task AsyncReady()
     {
-        SignalHub.FighterAttacked += OnFighterAttacked;
+        SignalHub.AttackRequested += OnFighterAttackRequested;
 
         UI = GetNode<BattleUI>("BattleUI");
         _camera = GetNode<Camera2D>("Camera2D");
-
         try
         {
             Enemies.ToList().ForEach(enemy => enemy.InitializeHPAndAP());
             Party.ToList().ForEach(member => member.InitializeHPAndAP());
 
             SetupPartyInfoPanels();
+            CreateNPCWeaponSkills();
             await SetupEnemyNodes();
             await DetermineTurnOrder();
             EmitSignal(SignalName.BattleReady);
@@ -96,11 +98,26 @@ public partial class Battle : Node2D
 
     public void SetupPartyInfoPanels()
     {
-        foreach (Ally ally in Party)
+        foreach (Fighter partyMember in Party)
         {
             PartyInfoPanel panel = PartyInfoPanelScene.Instantiate<PartyInfoPanel>();
-            panel.PartyMember = ally;
+            panel.PartyMember = partyMember;
             UI.AddPartyInfoPanel(panel: panel);
+        }
+    }
+
+    public void CreateNPCWeaponSkills()
+    {
+        foreach (Fighter partyMember in Party)
+        {
+            if (partyMember is IWeaponUser weaponUser)
+            {
+                NPCWeaponAttackAction action = weaponUser.CreateNPCWeaponAttackAction();
+                if (weaponUser is NPCFighter npc && action != null)
+                {
+                    npc.NPCActions.Add(action);
+                }
+            }
         }
     }
 
@@ -122,12 +139,12 @@ public partial class Battle : Node2D
         }
     }
 
-    public void OnFighterAttacked(FighterEventArgs args)
+    public void OnFighterAttackRequested(FighterEventArgs args)
     {
-        if (args.Defender is Player && args.Attack.HasDamage)
+        if (args.Defender is Player)
         {
+            SoundManager.Instance.PlaySfx(SoundManager.Sfx.Hurt, 8.0f);
             ShakeCamera(1.0f, 8.0f);
-            SoundManager.Instance.PlaySfx(SoundManager.Sfx.Hurt);
         }
     }
 
