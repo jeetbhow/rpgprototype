@@ -192,9 +192,9 @@ amount = 10
 
 [node name="HealthBar" type="ProgressBar" parent="."]
 visible = false
-offset_left = -21.0
+offset_left = -25.0
 offset_top = -21.0
-offset_right = 27.1
+offset_right = 23.1
 offset_bottom = -15.0
 theme_override_styles/background = ExtResource("5_sloyy")
 theme_override_styles/fill = ExtResource("4_rgfcb")

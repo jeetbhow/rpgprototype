@@ -147,7 +147,7 @@ public partial class EnemyNode : Node2D
     public async Task PlayEffects(Weapon weapon)
     {
         _audioStreamPlayer.Stream = weapon.Sfx;
-        _audioStreamPlayer.VolumeDb = weapon.SfxVolume; 
+        _audioStreamPlayer.VolumeDb = weapon.SfxVolume;
         _audioStreamPlayer.Play();
 
         await Game.Instance.Wait(weapon.HitDelayMs);
@@ -157,6 +157,7 @@ public partial class EnemyNode : Node2D
             var effect = weapon.Effect.Instantiate<AnimatedSprite2D>();
             effect.GlobalPosition = GlobalPosition;
             AddChild(effect);
+            effect.Play();
             await ToSignal(effect, AnimatedSprite2D.SignalName.AnimationFinished);
             SoundManager.Instance.PlaySfx(SoundManager.Sfx.Hurt, 9.0f);
         }
@@ -170,14 +171,15 @@ public partial class EnemyNode : Node2D
             effect.QueueFree();
         }
 
-        if (weapon.ID == ItemID.Knife)
+        switch (weapon.DamageType)
         {
-            Bleed();
-            Blink();
-        }
-        else if (weapon.ID == ItemID.BaseballBat)
-        {
-            Shake();
+            case PhysicalDamageType.Bladed:
+                Bleed();
+                Blink();
+                break;
+            case PhysicalDamageType.Blunt:
+                Shake();
+                break;
         }
     }
 

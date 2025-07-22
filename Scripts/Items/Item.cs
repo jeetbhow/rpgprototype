@@ -7,6 +7,7 @@ public enum ItemID
     None,
     BaseballBat,
     Knife,
+    Katana,
     SlimeJelly
 }
 

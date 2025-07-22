@@ -1,7 +1,9 @@
-[gd_resource type="Resource" script_class="Weapon" load_steps=4 format=3 uid="uid://d4affp705nm63"]
+[gd_resource type="Resource" script_class="Weapon" load_steps=6 format=3 uid="uid://d4affp705nm63"]
 
 [ext_resource type="Script" uid="uid://bqwt2t7k1a4gc" path="res://Scripts/Items/Weapon.cs" id="1_hb0p0"]
 [ext_resource type="Script" uid="uid://dbfni13yxb2qm" path="res://Scripts/Combat/Attack/DamageRange.cs" id="1_tbei8"]
+[ext_resource type="PackedScene" uid="uid://c53u8tfysj37u" path="res://Scenes/Battle/Effects/KatanaSlash.tscn" id="2_50ugq"]
+[ext_resource type="AudioStream" uid="uid://b82re1o118521" path="res://Assets/Audio/SFX/slash.wav" id="2_f82l2"]
 
 [sub_resource type="Resource" id="Resource_f82l2"]
 script = ExtResource("1_tbei8")
@@ -11,13 +13,18 @@ metadata/_custom_type_script = "uid://dbfni13yxb2qm"
 
 [resource]
 script = ExtResource("1_hb0p0")
-APCost = 2
+APCost = 3
 CritChance = 0.25
 CritMultiplier = 5.0
 DamageRange = SubResource("Resource_f82l2")
 DamageType = 0
-Name = ""
-ID = 0
+Effect = ExtResource("2_50ugq")
+HasAnimation = true
+Sfx = ExtResource("2_f82l2")
+SfxVolume = 8
+HitDelayMs = 200
+Name = "Katana"
+ID = 3
 Value = 0
 Description = ""
 metadata/_custom_type_script = "uid://bqwt2t7k1a4gc"

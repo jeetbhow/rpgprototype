@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://b82crb5en50jb"]
+
+[ext_resource type="Texture2D" uid="uid://dtoto23bfubdq" path="res://Assets/Effects/Combat/bat.png" id="1_8byao"]
+
+[node name="BatHit" type="Sprite2D"]
+z_index = 1
+position = Vector2(0, 4)
+scale = Vector2(2, 2)
+texture = ExtResource("1_8byao")

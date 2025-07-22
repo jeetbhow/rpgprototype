@@ -1,0 +1,53 @@
+[gd_scene load_steps=8 format=3 uid="uid://c53u8tfysj37u"]
+
+[ext_resource type="Texture2D" uid="uid://cl8tig06flsfq" path="res://Assets/Effects/Combat/katana_slash.png" id="1_syuh3"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tf1ui"]
+atlas = ExtResource("1_syuh3")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uhkib"]
+atlas = ExtResource("1_syuh3")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3vdwy"]
+atlas = ExtResource("1_syuh3")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oxtew"]
+atlas = ExtResource("1_syuh3")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0ueu5"]
+atlas = ExtResource("1_syuh3")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1uey8"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tf1ui")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uhkib")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3vdwy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oxtew")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0ueu5")
+}],
+"loop": false,
+"name": &"default",
+"speed": 10.0
+}]
+
+[node name="KatanaSlash" type="AnimatedSprite2D"]
+z_index = 1
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_1uey8")
+frame = 4
+frame_progress = 1.0

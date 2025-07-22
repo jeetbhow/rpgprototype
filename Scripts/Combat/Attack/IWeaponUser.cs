@@ -17,12 +17,14 @@ public interface IWeaponUser
     public NPCWeaponAttackAction CreateNPCWeaponAttackAction()
     {
         NPCWeaponAttackAction action = new();
-        switch (Weapon.ID)
+        action.Weapon = Weapon.ID switch
         {
-            case ItemID.Knife:
-                action.Weapon = ResourceLoader.Load<Weapon>(_basePath + "Knife.tres");
-                break;
-        }
+            ItemID.Knife => ResourceLoader.Load<Weapon>(_basePath + "Knife.tres"),
+            ItemID.BaseballBat => ResourceLoader.Load<Weapon>(_basePath + "BaseballBat.tres"),
+            ItemID.Katana => ResourceLoader.Load<Weapon>(_basePath + "Katana.tres"),
+            _ => throw new NotSupportedException($"IWeaponUser: The weapon with ID {Weapon.ID} does not have an NPCWeaponAttackAction."),
+        };
+
         return action;
     }
     public string CreateLogEntry(Fighter defender)
@@ -30,7 +32,8 @@ public interface IWeaponUser
         return Weapon.ID switch
         {
             ItemID.Knife => $"{Name} lunges at {defender.Name} with their knife.",
-            ItemID.BaseballBat => $"{Name} swings their baseball bat at {defender.Name}.",
+            ItemID.BaseballBat => $"{Name} winds up and prepares to deliver a blow to {defender.Name}.",
+            ItemID.Katana => $"{Name} draws their blade and prepares to strike {defender.Name}.",
             _ => throw new InvalidOperationException($"PartyMember: weapon {Weapon.ID} not supported."),
         };
     }

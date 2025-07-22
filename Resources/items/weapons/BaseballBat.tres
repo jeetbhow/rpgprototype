@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dbfni13yxb2qm" path="res://Scripts/Combat/Attack/DamageRange.cs" id="1_rxamx"]
 [ext_resource type="Script" uid="uid://bqwt2t7k1a4gc" path="res://Scripts/Items/Weapon.cs" id="2_8vrg1"]
-[ext_resource type="PackedScene" uid="uid://b82crb5en50jb" path="res://Scenes/Battle/Effects/baseball_bat_hit/BaseballBatHit.tscn" id="2_otuss"]
+[ext_resource type="PackedScene" uid="uid://b82crb5en50jb" path="res://Scenes/Battle/Effects/BaseballBatHit.tscn" id="2_otuss"]
 [ext_resource type="AudioStream" uid="uid://clu2uvcvwj6oh" path="res://Assets/Audio/SFX/baseball_bat_swing.wav" id="3_a5l36"]
 
 [sub_resource type="Resource" id="Resource_otuss"]
@@ -13,7 +13,7 @@ metadata/_custom_type_script = "uid://dbfni13yxb2qm"
 
 [resource]
 script = ExtResource("2_8vrg1")
-APCost = 3
+APCost = 4
 CritChance = 0.0
 CritMultiplier = 0.0
 DamageRange = SubResource("Resource_otuss")
