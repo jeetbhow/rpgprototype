@@ -48,17 +48,19 @@ public partial class Log : PanelContainer
             TextLabel.AppendText(part);
             int end = TextLabel.GetTotalCharacterCount();
 
-            await Typewriter(start, end);
-
+            if (end > start)
+                await Typewriter(start, end);
             _visibleChars = end;
         }
 
+        _sfxTimer.Stop();
         SignalHub.Instance.EmitSignal(SignalHub.SignalName.CombatLogUpdated);
     }
 
     private async Task Typewriter(int start, int end)
     {
-        _sfxTimer.Start();
+        if (_sfxTimer.IsStopped())
+            _sfxTimer.Start();
 
         int curr = start;
         while (TextLabel.VisibleCharacters < end)
@@ -66,7 +68,5 @@ public partial class Log : PanelContainer
             TextLabel.VisibleCharacters = ++curr;
             await ToSignal(GetTree().CreateTimer(0.02f), Timer.SignalName.Timeout);
         }
-
-        _sfxTimer.Stop();
     }
 }
