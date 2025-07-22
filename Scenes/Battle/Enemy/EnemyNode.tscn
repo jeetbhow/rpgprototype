@@ -1,10 +1,8 @@
-[gd_scene load_steps=20 format=3 uid="uid://d1yvb465tt7ik"]
+[gd_scene load_steps=18 format=3 uid="uid://d1yvb465tt7ik"]
 
 [ext_resource type="Script" uid="uid://bkb5mjrrkux0b" path="res://Scenes/Battle/Enemy/EnemyNode.cs" id="1_5aqwu"]
 [ext_resource type="Texture2D" uid="uid://4eerix34hw16" path="res://Assets/Characters/shadow.png" id="1_cgxef"]
 [ext_resource type="Texture2D" uid="uid://cddkxetbmoyh3" path="res://Assets/Enemies/jerry.png" id="1_jodb1"]
-[ext_resource type="PackedScene" uid="uid://ds5bn58vh87nf" path="res://Scenes/Battle/Effects/knife_slash.tscn" id="2_du0bn"]
-[ext_resource type="PackedScene" uid="uid://b82crb5en50jb" path="res://Scenes/Battle/Effects/baseball_bat_hit/baseball_bat_hit.tscn" id="3_7cgrk"]
 [ext_resource type="Shader" uid="uid://cvtq4of3uub7q" path="res://Shaders/enemy.gdshader" id="3_a65ju"]
 [ext_resource type="SpriteFrames" uid="uid://dqitn7jtgv3ri" path="res://Resources/Enemies/Jeff/JeffSF.tres" id="4_q7m7l"]
 [ext_resource type="StyleBox" uid="uid://n57md1ke4av6" path="res://Resources/Styles/HPBarFill.tres" id="4_rgfcb"]
@@ -12,7 +10,7 @@
 [ext_resource type="Shader" uid="uid://b64ptem30f7km" path="res://Shaders/disintegrate.gdshader" id="5_w5rdf"]
 [ext_resource type="Theme" uid="uid://x6m3btvacua5" path="res://Resources/Styles/TextboxDefaultTheme.tres" id="6_evwod"]
 [ext_resource type="PackedScene" uid="uid://beqsl0i7k4bc0" path="res://Scenes/Battle/UI/ChatBalloon/ChatBallloon.tscn" id="9_0o85k"]
-[ext_resource type="PackedScene" uid="uid://cbmyss2a0ljm8" path="res://Scenes/Battle/Effects/blood.tscn" id="11_rhcfp"]
+[ext_resource type="PackedScene" uid="uid://cbmyss2a0ljm8" path="res://Scenes/Battle/Effects/Blood.tscn" id="11_rhcfp"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_du0bn"]
 shader = ExtResource("3_a65ju")
@@ -43,7 +41,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Healthbar:modulate")
+tracks/0/path = NodePath("HealthBar:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -55,7 +53,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Healthbar:position")
+tracks/1/path = NodePath("HealthBar:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -67,7 +65,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Healthbar:scale")
+tracks/2/path = NodePath("HealthBar:scale")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -83,7 +81,7 @@ length = 0.4
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Healthbar:modulate")
+tracks/0/path = NodePath("HealthBar:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -95,7 +93,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Healthbar:position")
+tracks/1/path = NodePath("HealthBar:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -107,7 +105,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Healthbar:scale")
+tracks/2/path = NodePath("HealthBar:scale")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -123,7 +121,7 @@ length = 0.4
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Healthbar:modulate")
+tracks/0/path = NodePath("HealthBar:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -135,7 +133,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Healthbar:position")
+tracks/1/path = NodePath("HealthBar:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -147,7 +145,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Healthbar:scale")
+tracks/2/path = NodePath("HealthBar:scale")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -166,8 +164,6 @@ _data = {
 
 [node name="EnemyNode" type="Node2D"]
 script = ExtResource("1_5aqwu")
-KnifeSlashEffect = ExtResource("2_du0bn")
-BaseballBatHitEffect = ExtResource("3_7cgrk")
 ShakeDuration = 1.0
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
@@ -194,18 +190,18 @@ process_material = SubResource("ShaderMaterial_hx7ra")
 scale = Vector2(0.3, 0.3)
 amount = 10
 
-[node name="Healthbar" type="ProgressBar" parent="."]
+[node name="HealthBar" type="ProgressBar" parent="."]
 visible = false
-offset_left = -25.0
+offset_left = -21.0
 offset_top = -21.0
-offset_right = 23.1
+offset_right = 27.1
 offset_bottom = -15.0
 theme_override_styles/background = ExtResource("5_sloyy")
 theme_override_styles/fill = ExtResource("4_rgfcb")
 value = 100.0
 show_percentage = false
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Healthbar"]
+[node name="RichTextLabel" type="RichTextLabel" parent="HealthBar"]
 clip_contents = false
 layout_mode = 1
 anchors_preset = 15
@@ -241,3 +237,5 @@ libraries = {
 &"": SubResource("AnimationLibrary_tmwix")
 }
 autoplay = "Default"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]

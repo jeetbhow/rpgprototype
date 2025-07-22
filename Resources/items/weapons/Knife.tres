@@ -1,7 +1,9 @@
-[gd_resource type="Resource" script_class="Weapon" load_steps=4 format=3 uid="uid://cpgiswthhpyrs"]
+[gd_resource type="Resource" script_class="Weapon" load_steps=6 format=3 uid="uid://cpgiswthhpyrs"]
 
 [ext_resource type="Script" uid="uid://bqwt2t7k1a4gc" path="res://Scripts/Items/Weapon.cs" id="1_8r2dc"]
 [ext_resource type="Script" uid="uid://dbfni13yxb2qm" path="res://Scripts/Combat/Attack/DamageRange.cs" id="1_64mus"]
+[ext_resource type="PackedScene" uid="uid://ds5bn58vh87nf" path="res://Scenes/Battle/Effects/KnifeSlash.tscn" id="2_lrfqi"]
+[ext_resource type="AudioStream" uid="uid://b82re1o118521" path="res://Assets/Audio/SFX/slash.wav" id="3_wanxo"]
 
 [sub_resource type="Resource" id="Resource_gitxv"]
 script = ExtResource("1_64mus")
@@ -16,6 +18,11 @@ CritChance = 0.2
 CritMultiplier = 4.0
 DamageRange = SubResource("Resource_gitxv")
 DamageType = 0
+Effect = ExtResource("2_lrfqi")
+HasAnimation = true
+Sfx = ExtResource("3_wanxo")
+SfxVolume = 8
+HitDelayMs = 300
 Name = "Knife"
 ID = 2
 Value = 0

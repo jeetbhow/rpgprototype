@@ -1,7 +1,9 @@
-[gd_resource type="Resource" script_class="Weapon" load_steps=4 format=3 uid="uid://bjrxbljk8ydl4"]
+[gd_resource type="Resource" script_class="Weapon" load_steps=6 format=3 uid="uid://bjrxbljk8ydl4"]
 
 [ext_resource type="Script" uid="uid://dbfni13yxb2qm" path="res://Scripts/Combat/Attack/DamageRange.cs" id="1_rxamx"]
 [ext_resource type="Script" uid="uid://bqwt2t7k1a4gc" path="res://Scripts/Items/Weapon.cs" id="2_8vrg1"]
+[ext_resource type="PackedScene" uid="uid://b82crb5en50jb" path="res://Scenes/Battle/Effects/baseball_bat_hit/BaseballBatHit.tscn" id="2_otuss"]
+[ext_resource type="AudioStream" uid="uid://clu2uvcvwj6oh" path="res://Assets/Audio/SFX/baseball_bat_swing.wav" id="3_a5l36"]
 
 [sub_resource type="Resource" id="Resource_otuss"]
 script = ExtResource("1_rxamx")
@@ -16,7 +18,11 @@ CritChance = 0.0
 CritMultiplier = 0.0
 DamageRange = SubResource("Resource_otuss")
 DamageType = 1
-LogEntry = ""
+Effect = ExtResource("2_otuss")
+HasAnimation = false
+Sfx = ExtResource("3_a5l36")
+SfxVolume = 8
+HitDelayMs = 900
 Name = "Baseball Bat"
 ID = 1
 Value = 0

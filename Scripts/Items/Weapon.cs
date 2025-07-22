@@ -18,9 +18,13 @@ public partial class Weapon : Item, IAttack
     [Export] public float CritMultiplier { get; set; }
     [Export] public DamageRange DamageRange { get; set; }
     [Export] public PhysicalDamageType DamageType { get; private set; }
+    [Export] public PackedScene Effect { get; set; }
+    [Export] public bool HasAnimation { get; set; }
+    [Export] public AudioStream Sfx { get; set; }
+    [Export] public int SfxVolume { get; set; }
+    [Export] public int HitDelayMs { get; set; }
 
     public int Damage { get; private set; }
-    public bool HasDamage { get; set; } = true;
     public bool LandedCrit { get; set; } = false;
 
     public int ComputeDamage(float multiplier = 1.0f)

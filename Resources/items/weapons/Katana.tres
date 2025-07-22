@@ -16,7 +16,6 @@ CritChance = 0.25
 CritMultiplier = 5.0
 DamageRange = SubResource("Resource_f82l2")
 DamageType = 0
-LogEntry = ""
 Name = ""
 ID = 0
 Value = 0

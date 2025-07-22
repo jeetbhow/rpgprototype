@@ -13,8 +13,6 @@ namespace Combat.UI;
 public partial class EnemyNode : Node2D
 {
     [Export] public Enemy EnemyData { get; set; }
-    [Export] public PackedScene KnifeSlashEffect { get; set; }
-    [Export] public PackedScene BaseballBatHitEffect { get; set; }
 
     [ExportGroup("Text Effects")]
     [Export] public int TextShakeRate = 50;
@@ -34,6 +32,7 @@ public partial class EnemyNode : Node2D
 
     private AnimatedSprite2D _animatedSprite2D;
     private AnimationPlayer _animationPlayer;
+    private AudioStreamPlayer _audioStreamPlayer;
     private Sprite2D _shadow;
     private RichTextLabel _hpLabel;
     private Timer _hpTimer;
@@ -49,22 +48,21 @@ public partial class EnemyNode : Node2D
         SignalHub.FighterAttacked += async args => await HideHP();
 
         _animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
-
         _animatedSprite2D = GetNode<AnimatedSprite2D>("Sprite");
-        _animatedSprite2D.SpriteFrames = EnemyData.SpriteFrames;
-
-        _shader = (ShaderMaterial)_animatedSprite2D.Material;
-
+        _audioStreamPlayer = GetNode<AudioStreamPlayer>("AudioStreamPlayer");
         _bloodParticles = GetNode<GpuParticles2D>("Blood");
-
         _shadow = GetNode<Sprite2D>("Sprite/Shadow");
-        _hpLabel = GetNode<RichTextLabel>("Healthbar/RichTextLabel");
-
+        _hpLabel = GetNode<RichTextLabel>("HealthBar/RichTextLabel");
         ChatBalloon = GetNode<ChatBallloon>("ChatBalloon");
         DeathParticles = GetNode<GpuParticles2D>("DeathParticles");
-        Healthbar = GetNode<ProgressBar>("Healthbar");
+        Healthbar = GetNode<ProgressBar>("HealthBar");
+
+        _animatedSprite2D.SpriteFrames = EnemyData.SpriteFrames;
+        _shader = (ShaderMaterial)_animatedSprite2D.Material;
+
         Healthbar.MaxValue = EnemyData.HP;
         Healthbar.Value = EnemyData.HP;
+
         _hpLabel.Text = $"{EnemyData.HP}/{EnemyData.MaxHP}";
     }
 
@@ -148,32 +146,37 @@ public partial class EnemyNode : Node2D
 
     public async Task PlayEffects(Weapon weapon)
     {
+        _audioStreamPlayer.Stream = weapon.Sfx;
+        _audioStreamPlayer.VolumeDb = weapon.SfxVolume; 
+        _audioStreamPlayer.Play();
+
+        await Game.Instance.Wait(weapon.HitDelayMs);
+
+        if (weapon.HasAnimation)
+        {
+            var effect = weapon.Effect.Instantiate<AnimatedSprite2D>();
+            effect.GlobalPosition = GlobalPosition;
+            AddChild(effect);
+            await ToSignal(effect, AnimatedSprite2D.SignalName.AnimationFinished);
+            SoundManager.Instance.PlaySfx(SoundManager.Sfx.Hurt, 9.0f);
+        }
+        else
+        {
+            var effect = weapon.Effect.Instantiate<Sprite2D>();
+            effect.GlobalPosition = GlobalPosition;
+            AddChild(effect);
+            SoundManager.Instance.PlaySfx(SoundManager.Sfx.Hurt, 9.0f);
+            await Game.Instance.Wait(200);
+            effect.QueueFree();
+        }
+
         if (weapon.ID == ItemID.Knife)
         {
-            SoundManager.Instance.PlaySfx(SoundManager.Sfx.KnifeSlash);
-
-            var effect = KnifeSlashEffect.Instantiate<AnimatedSprite2D>();
-            effect.GlobalPosition = GlobalPosition;
-            GetTree().Root.AddChild(effect);
-
-            await ToSignal(effect, "animation_finished");
-            SoundManager.Instance.PlaySfx(SoundManager.Sfx.Hurt, 9.0f);
-            effect.QueueFree();
             Bleed();
             Blink();
         }
         else if (weapon.ID == ItemID.BaseballBat)
         {
-            SoundManager.Instance.PlaySfx(SoundManager.Sfx.BaseballBatSwing, 1.0f);
-
-            await Game.Instance.Wait(1000);
-
-            var effect = BaseballBatHitEffect.Instantiate<BaseballBatHit>();
-            AddChild(effect);
-
-            SoundManager.Instance.PlaySfx(SoundManager.Sfx.Hurt, 9.0f);
-            await Game.Instance.Wait(200);
-            effect.QueueFree();
             Shake();
         }
     }
